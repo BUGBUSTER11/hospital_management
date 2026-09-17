@@ -1,32 +1,38 @@
 package com.nt.hospital.model;
 
 import ch.qos.logback.classic.pattern.ClassOfCallerConverter;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public class MedicalRecord {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String diagnosis;
     private String symptoms;
     private String treatment;
     private String notes;
-    private LocalDate recordDate;
+    private Date recordDate;
+    @ManyToOne
+    @JoinColumn(name = "patiend_id")
+    private Patient patient;
 
     public MedicalRecord(){}
 
-    public MedicalRecord(String diagnosis, String treatment, String symptoms, LocalDate recordDate, String notes, int id) {
-        this.id = id;
+    public MedicalRecord(String diagnosis, String symptoms, String treatment, String notes, Date recordDate, Patient patient) {
         this.diagnosis = diagnosis;
         this.symptoms = symptoms;
         this.treatment = treatment;
         this.notes = notes;
         this.recordDate = recordDate;
+        this.patient = patient;
     }
+
+
 
     public void setId(int id) {
         this.id = id;
@@ -48,7 +54,7 @@ public class MedicalRecord {
         this.notes = notes;
     }
 
-    public void setRecordDate(LocalDate recordDate) {
+    public void setRecordDate(Date recordDate) {
         this.recordDate = recordDate;
     }
 
@@ -68,12 +74,20 @@ public class MedicalRecord {
         return symptoms;
     }
 
-    public LocalDate getRecordDate() {
+    public Date getRecordDate() {
         return recordDate;
     }
 
     public String getNotes() {
         return notes;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 
     @Override

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  ```
+  <title>Admin Login | CarePlus</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" th:href="@{/css/admin-login.css}">
+  ```
+
+</head>
+
+<body>
+
+<div class="login-page">
+
+  ```
+  <!-- Left Section -->
+  <div class="login-info">
+
+    <div class="info-content">
+
+      <a href="/" class="brand">
+        <span class="brand-icon">+</span>
+        CarePlus
+      </a>
+
+      <div class="info-text">
+
+            <span class="info-label">
+                HOSPITAL MANAGEMENT SYSTEM
+            </span>
+
+        <h1>
+          Manage your hospital
+          <span>with confidence.</span>
+        </h1>
+
+        <p>
+          Access your administration dashboard to manage
+          doctors, patients, appointments, staff and
+          hospital operations from one place.
+        </p>
+
+      </div>
+
+      <div class="info-features">
+
+        <div class="feature">
+          <span class="feature-icon">✓</span>
+          <span>Centralized hospital management</span>
+        </div>
+
+        <div class="feature">
+          <span class="feature-icon">✓</span>
+          <span>Secure administrator access</span>
+        </div>
+
+        <div class="feature">
+          <span class="feature-icon">✓</span>
+          <span>Efficient hospital operations</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Right Section -->
+  <div class="login-section">
+
+    <div class="login-card">
+
+      <div class="mobile-brand">
+        <a href="/" class="brand">
+          <span class="brand-icon">+</span>
+          CarePlus
+        </a>
+      </div>
+
+      <div class="login-header">
+
+        <div class="admin-icon">
+          👨‍💼
+        </div>
+
+        <h2>Welcome back</h2>
+
+        <p>
+          Sign in to your administrator account
+        </p>
+
+      </div>
+
+
+      <!-- Login Form -->
+      <form action="/admin/login" method="post">
+
+        <!-- Email -->
+        <div class="mb-3">
+
+          <label for="email" class="form-label">
+            Email Address
+          </label>
+
+          <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="form-control"
+                  placeholder="Enter your email"
+                  required>
+
+        </div>
+
+
+        <!-- Password -->
+        <div class="mb-3">
+
+          <div class="password-label">
+
+            <label for="password" class="form-label">
+              Password
+            </label>
+
+            <a href="#" class="forgot-link">
+              Forgot password?
+            </a>
+
+          </div>
+
+          <div class="password-wrapper">
+
+            <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    class="form-control"
+                    placeholder="Enter your password"
+                    required>
+
+            <button
+                    type="button"
+                    class="password-toggle"
+                    onclick="togglePassword()"
+                    aria-label="Show password">
+              Show
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- Remember Me -->
+        <div class="remember-row">
+
+          <div class="form-check">
+
+            <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="rememberMe"
+                    name="rememberMe">
+
+            <label
+                    class="form-check-label"
+                    for="rememberMe">
+              Remember me
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <!-- Login Button -->
+        <button
+                type="submit"
+                class="btn login-btn w-100">
+          Sign In
+        </button>
+
+      </form>
+
+
+      <div class="login-footer">
+
+        <a href="/">
+          ← Back to Home
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+  ```
+
+</div>
+
+<script>
+  function togglePassword() {
+
+      const passwordInput = document.getElementById("password");
+      const toggleButton = document.querySelector(".password-toggle");
+
+      if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          toggleButton.textContent = "Hide";
+      } else {
+          passwordInput.type = "password";
+          toggleButton.textContent = "Show";
+      }
+  }
+</script>
+
+</body>
+</html>

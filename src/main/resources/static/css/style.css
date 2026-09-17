@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.min-vh-75 {
+    min-height: 75vh;
+}
+
+.hero-section {
+    background: linear-gradient(
+            135deg,
+            #f4f9ff,
+            #ffffff
+    );
+}
+
+.hero-image {
+    max-height: 480px;
+    object-fit: cover;
+}
+
+.service-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 24px;
+}
+
+.department-card {
+    transition: transform 0.3s ease;
+}
+
+.department-card:hover {
+    transform: translateY(-8px);
+}
+
+.department-icon {
+    font-size: 45px;
+    color: #0d6efd;
+}
+
+.doctor-image {
+    height: 280px;
+    object-fit: cover;
+}
+
+.contact-icon {
+    font-size: 35px;
+    color: #0d6efd;
+}

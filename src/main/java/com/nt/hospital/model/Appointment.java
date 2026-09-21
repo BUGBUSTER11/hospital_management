@@ -9,8 +9,16 @@ import java.time.LocalDateTime;
 public class Appointment {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int appointmentId;
 
+    private String email_Id;
+
+    private String service;
+    private String doctor;
+
+    private long contactNO;
+    private String  location;
     private LocalDate appointmentDate;
 
     private LocalTime appointmentTime;
@@ -23,27 +31,23 @@ public class Appointment {
 
     private LocalDateTime createdAt;
 
-
     public Appointment() {
     }
 
-    public Appointment(LocalDate appointmentDate,
-                       LocalTime appointmentTime,
-                       String status,
-                       String reason,
-                       String notes,
-                       LocalDateTime createdAt
-                     ) {
-
+    public Appointment(int appointmentId, String email_Id, String service, String doctor, long contactNO, String location, LocalDate appointmentDate, LocalTime appointmentTime, String status, String reason, String notes, LocalDateTime createdAt) {
+        this.appointmentId = appointmentId;
+        this.email_Id = email_Id;
+        this.service = service;
+        this.doctor = doctor;
+        this.contactNO = contactNO;
+        this.location = location;
         this.appointmentDate = appointmentDate;
         this.appointmentTime = appointmentTime;
         this.status = status;
         this.reason = reason;
         this.notes = notes;
         this.createdAt = createdAt;
-
     }
-
 
     public int getAppointmentId() {
         return appointmentId;
@@ -101,16 +105,61 @@ public class Appointment {
         this.createdAt = createdAt;
     }
 
+    public String getEmail_Id() {
+        return email_Id;
+    }
 
+    public void setEmail_Id(String email_Id) {
+        this.email_Id = email_Id;
+    }
+
+    public String getService() {
+        return service;
+    }
+
+    public void setService(String service) {
+        this.service = service;
+    }
+
+    public String getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(String doctor) {
+        this.doctor = doctor;
+    }
+
+    public long getContactNO() {
+        return contactNO;
+    }
+
+    public void setContactNO(long contactNO) {
+        this.contactNO = contactNO;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     @Override
     public String toString() {
-        return "Appointment [appointmentId=" + appointmentId
-                + ", appointmentDate=" + appointmentDate
-                + ", appointmentTime=" + appointmentTime
-                + ", status=" + status
-                + ", reason=" + reason
-                + ", notes=" + notes
-                + ", createdAt=" + createdAt + "]";
+        return "Appointment{" +
+                "appointmentId=" + appointmentId +
+                ", email_Id='" + email_Id + '\'' +
+                ", service='" + service + '\'' +
+                ", doctor='" + doctor + '\'' +
+                ", contactNO=" + contactNO +
+                ", location='" + location + '\'' +
+                ", appointmentDate=" + appointmentDate +
+                ", appointmentTime=" + appointmentTime +
+                ", status='" + status + '\'' +
+                ", reason='" + reason + '\'' +
+                ", notes='" + notes + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
     }
 }

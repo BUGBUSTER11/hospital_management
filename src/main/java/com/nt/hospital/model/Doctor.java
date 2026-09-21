@@ -12,6 +12,7 @@ public class Doctor {
 
     @Id
     private int doctorId;
+    private int userId;
     private String firstName;
     private String lastName;
     private String email;
@@ -27,9 +28,10 @@ public class Doctor {
     public Doctor() {
     }
 
-    public Doctor(int experience, int doctorId, String firstName, String lastName, String email, String phone, String specialization, String qualification, String licenseNumber, BigDecimal consultationFee, LocalDate joiningDate) {
+    public Doctor(int experience, int doctorId,int userId, String firstName, String lastName, String email, String phone, String specialization, String qualification, String licenseNumber, BigDecimal consultationFee, LocalDate joiningDate) {
         this.experience = experience;
         this.doctorId = doctorId;
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -40,6 +42,14 @@ public class Doctor {
         this.consultationFee = consultationFee;
         this.joiningDate = joiningDate;
 
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getEmail() {

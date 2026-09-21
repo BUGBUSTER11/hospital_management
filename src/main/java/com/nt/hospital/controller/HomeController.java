@@ -16,5 +16,11 @@ public class HomeController {
         return "/Admin/adminLogin";
     }
 
+    @GetMapping("/admin/doctors/add")
+    public String addDoctorPage(){
+
+        return "/Admin/addDoctor";
+    }
+
 
 }

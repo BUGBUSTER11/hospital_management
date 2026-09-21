@@ -1,5 +1,6 @@
 package com.nt.hospital.service.impl;
 
+import com.nt.hospital.model.Doctor;
 import com.nt.hospital.model.User;
 import com.nt.hospital.repository.DoctorRepository;
 import com.nt.hospital.repository.UserRepositry;
@@ -29,5 +30,16 @@ public class DoctorServiceImpl implements DoctorService {
 
         return true;
 
+    }
+
+    @Override
+    public boolean completeDroctor(Doctor doctor) {
+       if ( userRepositry.existsByEmail(doctor.getEmail())){
+           return false;
+       }
+
+        doctorRepository.save(doctor);
+
+        return true;
     }
 }

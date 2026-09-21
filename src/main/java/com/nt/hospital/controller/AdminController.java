@@ -1,5 +1,6 @@
 package com.nt.hospital.controller;
 
+import com.nt.hospital.model.Doctor;
 import com.nt.hospital.model.User;
 import com.nt.hospital.service.AdminService;
 import com.nt.hospital.service.DoctorService;
@@ -33,10 +34,38 @@ public class AdminController {
             doctorSession.setAttribute("userId", user.getId());
             doctorSession.setAttribute("userName", user.getName());
 
+            model.addAttribute("success","Doctor add successfully");
+
+        }else {
+            model.addAttribute("error","Doctor not added");
+
         }
 
 
+        return "Admin/addDoctor";
+
+    }
+
+    @GetMapping("/admin/completedroctor")
+    public String completeDoctorPage(){
         return "Admin/completeDoctor";
+    }
+
+    @PostMapping("/admin/add-doctor-details")
+    public  String completeDroctor(@ModelAttribute Doctor doctor, HttpSession doctorSession){
+
+        User user = (User) doctorSession.getAttribute("addDoctor");
+
+        int userId = user.getId();
+        doctor.setUserId(userId);
+
+
+
+       boolean isCompleted =  doctorService.completeDroctor(doctor);
+
+
+
+        return "Admin/adminDashboard";
 
     }
 }

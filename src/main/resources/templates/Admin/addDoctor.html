@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,11 +32,44 @@
 
                 <div class="card-body p-4">
 
-                    <form action="/admin/register-doctor" method="post">
+                    <!-- SUCCESS MESSAGE -->
+                    <div th:if="${success}"
+                         class="alert alert-success alert-dismissible fade show"
+                         role="alert">
+
+                        <strong>Success!</strong>
+                        <span th:text="${success}"></span>
+
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert">
+                        </button>
+                    </div>
+
+
+                    <!-- ERROR MESSAGE -->
+                    <div th:if="${error}"
+                         class="alert alert-danger alert-dismissible fade show"
+                         role="alert">
+
+                        <strong>Error!</strong>
+                        <span th:text="${error}"></span>
+
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert">
+                        </button>
+                    </div>
+
+
+                    <form action="/admin/register-doctor"
+                          method="post">
 
                         <!-- Doctor Name -->
                         <div class="mb-3">
-                            <label for="name" class="form-label">
+
+                            <label for="name"
+                                   class="form-label">
                                 Doctor Name
                             </label>
 
@@ -44,12 +79,15 @@
                                    name="name"
                                    placeholder="Enter doctor's name"
                                    required>
+
                         </div>
 
 
                         <!-- Email -->
                         <div class="mb-3">
-                            <label for="email" class="form-label">
+
+                            <label for="email"
+                                   class="form-label">
                                 Email
                             </label>
 
@@ -59,12 +97,15 @@
                                    name="email"
                                    placeholder="Enter doctor's email"
                                    required>
+
                         </div>
 
 
                         <!-- Password -->
                         <div class="mb-3">
-                            <label for="password" class="form-label">
+
+                            <label for="password"
+                                   class="form-label">
                                 Password
                             </label>
 
@@ -74,12 +115,15 @@
                                    name="password"
                                    placeholder="Create password"
                                    required>
+
                         </div>
 
 
                         <!-- Contact -->
                         <div class="mb-3">
-                            <label for="contact" class="form-label">
+
+                            <label for="contact"
+                                   class="form-label">
                                 Contact Number
                             </label>
 
@@ -91,11 +135,11 @@
                                    pattern="[0-9]{10}"
                                    maxlength="10"
                                    required>
+
                         </div>
 
 
                         <!-- Role -->
-                        <!-- Admin cannot change the role -->
                         <input type="hidden"
                                name="role"
                                value="DOCTOR">
@@ -103,7 +147,9 @@
 
                         <!-- Status -->
                         <div class="mb-3">
-                            <label for="status" class="form-label">
+
+                            <label for="status"
+                                   class="form-label">
                                 Status
                             </label>
 
@@ -112,22 +158,34 @@
                                     name="status"
                                     required>
 
-                                <option value="">Select Status</option>
-                                <option value="ACTIVE">Active</option>
-                                <option value="INACTIVE">Inactive</option>
+                                <option value="">
+                                    Select Status
+                                </option>
+
+                                <option value="ACTIVE">
+                                    Active
+                                </option>
+
+                                <option value="INACTIVE">
+                                    Inactive
+                                </option>
 
                             </select>
+
                         </div>
 
 
                         <!-- Buttons -->
                         <div class="d-flex justify-content-between mt-4">
 
+                            <!-- Cancel -->
                             <a href="/admin/dashboard"
                                class="btn btn-secondary">
                                 Cancel
                             </a>
 
+
+                            <!-- Register -->
                             <button type="submit"
                                     class="btn btn-primary">
                                 Register Doctor
@@ -136,6 +194,20 @@
                         </div>
 
                     </form>
+
+
+                    <!-- NEXT BUTTON -->
+                    <div
+                         class="text-end mt-3">
+
+                        <a href="/admin/completedroctor"
+                           class="btn btn-success">
+
+                            Next →
+
+                        </a>
+
+                    </div>
 
                 </div>
 
@@ -146,6 +218,7 @@
     </div>
 
 </div>
+
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">

@@ -1,0 +1,89 @@
+body {
+    background-color: #f5f8fc;
+    font-family: Arial, sans-serif;
+}
+
+
+/* Appointment Section */
+
+.appointment-section {
+    padding: 60px 0;
+    min-height: calc(100vh - 120px);
+}
+
+
+/* Appointment Card */
+
+.appointment-card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 40px;
+}
+
+
+/* Header */
+
+.appointment-header {
+    margin-bottom: 35px;
+}
+
+.appointment-icon {
+    width: 70px;
+    height: 70px;
+
+    margin: auto;
+
+    border-radius: 50%;
+
+    background-color: #e7f1ff;
+    color: #0d6efd;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 32px;
+}
+
+
+/* Form */
+
+.form-label {
+    font-weight: 600;
+}
+
+.form-control,
+.form-select {
+    padding: 11px 14px;
+    border-radius: 8px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+
+/* Buttons */
+
+.btn {
+    border-radius: 8px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+    .appointment-section {
+        padding: 30px 15px;
+    }
+
+    .appointment-card {
+        padding: 25px 20px;
+    }
+
+}

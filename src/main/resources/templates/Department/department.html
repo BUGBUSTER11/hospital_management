@@ -1,0 +1,627 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Department Management | Hospital Management System</title>
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/Department/department.css}">
+</head>
+
+<body>
+
+<div class="dashboard-wrapper">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="brand-icon">
+                🏥
+            </div>
+
+            <div>
+                <h5>Hospital HMS</h5>
+                <small>Super Admin</small>
+            </div>
+
+        </div>
+
+
+        <ul class="sidebar-menu">
+
+            <li>
+                <a href="/superadmin/dashboard">
+                    <span>📊</span>
+                    Dashboard
+                </a>
+            </li>
+
+            <li class="active">
+                <a href="/superadmin/departments">
+                    <span>🏥</span>
+                    Departments
+                </a>
+            </li>
+
+            <li>
+                <a href="/superadmin/doctors">
+                    <span>👨‍⚕️</span>
+                    Doctors
+                </a>
+            </li>
+
+            <li>
+                <a href="/superadmin/patients">
+                    <span>👥</span>
+                    Patients
+                </a>
+            </li>
+
+            <li>
+                <a href="/superadmin/appointments">
+                    <span>📅</span>
+                    Appointments
+                </a>
+            </li>
+
+            <li>
+                <a href="/superadmin/users">
+                    <span>👤</span>
+                    Users
+                </a>
+            </li>
+
+            <li>
+                <a href="/superadmin/reports">
+                    <span>📈</span>
+                    Reports
+                </a>
+            </li>
+
+            <li>
+                <a href="/superadmin/settings">
+                    <span>⚙️</span>
+                    Settings
+                </a>
+            </li>
+
+        </ul>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="/logout" class="logout-link">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOP NAVBAR -->
+
+        <nav class="top-navbar">
+
+            <div>
+                <h4>Department Management</h4>
+                <p>Manage hospital departments and department administrators.</p>
+            </div>
+
+
+            <div class="admin-profile">
+
+                <div class="notification">
+                    🔔
+                    <span class="notification-count">3</span>
+                </div>
+
+                <div class="profile-avatar">
+                    SA
+                </div>
+
+                <div class="profile-info">
+                    <strong>Super Admin</strong>
+                    <small>Administrator</small>
+                </div>
+
+            </div>
+
+        </nav>
+
+
+        <!-- PAGE CONTENT -->
+
+        <section class="page-content">
+
+
+            <!-- ================= STATISTICS ================= -->
+
+            <div class="row g-4 mb-4">
+
+                <div class="col-md-3">
+
+                    <div class="stat-card">
+
+                        <div>
+                            <p>Total Departments</p>
+                            <h2 id="totalDepartments">8</h2>
+                        </div>
+
+                        <div class="stat-icon">
+                            🏥
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <div class="stat-card">
+
+                        <div>
+                            <p>Active Departments</p>
+                            <h2 id="activeDepartments">7</h2>
+                        </div>
+
+                        <div class="stat-icon">
+                            ✓
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <div class="stat-card">
+
+                        <div>
+                            <p>Inactive Departments</p>
+                            <h2 id="inactiveDepartments">1</h2>
+                        </div>
+
+                        <div class="stat-icon">
+                            ⏸
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <div class="stat-card">
+
+                        <div>
+                            <p>Department Admins</p>
+                            <h2 id="departmentAdmins">7</h2>
+                        </div>
+
+                        <div class="stat-icon">
+                            👤
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= DEPARTMENT TABLE ================= -->
+
+            <div class="content-card">
+
+
+                <!-- HEADER -->
+
+                <div class="content-header">
+
+                    <div>
+
+                        <h5>Departments</h5>
+
+                        <p>
+                            Manage all departments in the hospital.
+                        </p>
+
+                    </div>
+
+
+                    <a href="/departments/add" class="btn btn-primary">
+                        + Add Department
+                    </a>
+
+                </div>
+
+
+                <!-- SEARCH & FILTER -->
+
+                <div class="filter-section">
+
+                    <div class="search-box">
+
+                        <span>🔍</span>
+
+                        <input
+                                type="text"
+                                id="searchDepartment"
+                                placeholder="Search department...">
+
+                    </div>
+
+
+                    <select
+                            class="form-select status-filter"
+                            id="statusFilter">
+
+                        <option value="ALL">
+                            All Status
+                        </option>
+
+                        <option value="ACTIVE">
+                            Active
+                        </option>
+
+                        <option value="INACTIVE">
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- TABLE -->
+
+                <div class="table-responsive">
+
+                    <table class="table department-table">
+
+                        <thead>
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Department</th>
+
+                            <th>Department Head</th>
+
+                            <th>Admin</th>
+
+                            <th>Doctors</th>
+
+                            <th>Patients</th>
+
+                            <th>Status</th>
+
+                            <th>Actions</th>
+
+                        </tr>
+
+                        </thead>
+
+
+                        <tbody id="departmentTableBody">
+
+
+                        <!-- CARDIOLOGY -->
+
+                        <tr>
+
+                            <td>1</td>
+
+                            <td>
+
+                                <div class="department-name">
+
+                                    <div class="department-icon">
+                                        ❤️
+                                    </div>
+
+                                    <div>
+
+                                        <strong>Cardiology</strong>
+
+                                        <small>
+                                            DEP001
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                Dr. John Smith
+                            </td>
+
+
+                            <td>
+                                Rahul Patil
+                            </td>
+
+
+                            <td>
+                                12
+                            </td>
+
+
+                            <td>
+                                156
+                            </td>
+
+
+                            <td>
+
+                                <span class="status active">
+                                    Active
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="action-buttons">
+
+                                    <button
+                                            class="action-btn view"
+                                            title="View"
+                                            onclick="viewDepartment(1)">
+
+                                        👁
+
+                                    </button>
+
+
+                                    <button
+                                            class="action-btn edit"
+                                            title="Edit"
+                                            onclick="editDepartment(1)">
+
+                                        ✏️
+
+                                    </button>
+
+
+                                    <button
+                                            class="action-btn toggle"
+                                            title="Deactivate"
+                                            onclick="toggleDepartment(1)">
+
+                                        ⏸
+
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- NEUROLOGY -->
+
+                        <tr>
+
+                            <td>2</td>
+
+                            <td>
+
+                                <div class="department-name">
+
+                                    <div class="department-icon">
+                                        🧠
+                                    </div>
+
+                                    <div>
+
+                                        <strong>Neurology</strong>
+
+                                        <small>
+                                            DEP002
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                Dr. Sarah Williams
+                            </td>
+
+
+                            <td>
+                                Amit Sharma
+                            </td>
+
+
+                            <td>
+                                9
+                            </td>
+
+
+                            <td>
+                                112
+                            </td>
+
+
+                            <td>
+
+                                <span class="status active">
+                                    Active
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="action-buttons">
+
+                                    <button
+                                            class="action-btn view"
+                                            onclick="viewDepartment(2)">
+                                        👁
+                                    </button>
+
+                                    <button
+                                            class="action-btn edit"
+                                            onclick="editDepartment(2)">
+                                        ✏️
+                                    </button>
+
+                                    <button
+                                            class="action-btn toggle"
+                                            onclick="toggleDepartment(2)">
+                                        ⏸
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- ORTHOPEDICS -->
+
+                        <tr>
+
+                            <td>3</td>
+
+                            <td>
+
+                                <div class="department-name">
+
+                                    <div class="department-icon">
+                                        🦴
+                                    </div>
+
+                                    <div>
+
+                                        <strong>Orthopedics</strong>
+
+                                        <small>
+                                            DEP003
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                Dr. Michael Brown
+                            </td>
+
+
+                            <td>
+                                Priya Shah
+                            </td>
+
+
+                            <td>
+                                8
+                            </td>
+
+
+                            <td>
+                                98
+                            </td>
+
+
+                            <td>
+
+                                <span class="status active">
+                                    Active
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="action-buttons">
+
+                                    <button
+                                            class="action-btn view"
+                                            onclick="viewDepartment(3)">
+                                        👁
+                                    </button>
+
+                                    <button
+                                            class="action-btn edit"
+                                            onclick="editDepartment(3)">
+                                        ✏️
+                                    </button>
+
+                                    <button
+                                            class="action-btn toggle"
+                                            onclick="toggleDepartment(3)">
+                                        ⏸
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<!-- Bootstrap -->
+
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+<script src="/js/departments.js"></script>
+
+</body>
+
+</html>
+

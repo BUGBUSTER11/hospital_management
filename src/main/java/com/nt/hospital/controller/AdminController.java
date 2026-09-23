@@ -3,6 +3,7 @@ package com.nt.hospital.controller;
 import com.nt.hospital.model.User;
 import com.nt.hospital.service.AdminService;
 import jakarta.servlet.http.HttpSession;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,7 +57,7 @@ public class AdminController {
 
 
     @GetMapping("/admin/logout")
-    public String logout(HttpSession session) {
+    public String logout(@NotNull HttpSession session) {
 
         session.invalidate();
 

@@ -34,12 +34,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public boolean completeDroctor(Doctor doctor) {
-       if ( userRepositry.existsByEmail(doctor.getEmail())){
-           return false;
-       }
-
         doctorRepository.save(doctor);
-
         return true;
     }
 }

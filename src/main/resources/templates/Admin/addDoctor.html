@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
@@ -44,6 +45,7 @@
                                 class="btn-close"
                                 data-bs-dismiss="alert">
                         </button>
+
                     </div>
 
 
@@ -59,9 +61,11 @@
                                 class="btn-close"
                                 data-bs-dismiss="alert">
                         </button>
+
                     </div>
 
 
+                    <!-- REGISTER DOCTOR FORM -->
                     <form action="/admin/register-doctor"
                           method="post">
 
@@ -140,6 +144,7 @@
 
 
                         <!-- Role -->
+                        <!-- Role is automatically DOCTOR -->
                         <input type="hidden"
                                name="role"
                                value="DOCTOR">
@@ -185,7 +190,7 @@
                             </a>
 
 
-                            <!-- Register -->
+                            <!-- Register Doctor -->
                             <button type="submit"
                                     class="btn btn-primary">
                                 Register Doctor
@@ -194,20 +199,6 @@
                         </div>
 
                     </form>
-
-
-                    <!-- NEXT BUTTON -->
-                    <div
-                         class="text-end mt-3">
-
-                        <a href="/admin/completedroctor"
-                           class="btn btn-success">
-
-                            Next →
-
-                        </a>
-
-                    </div>
 
                 </div>
 
@@ -225,4 +216,6 @@
 </script>
 
 </body>
+
 </html>
+```

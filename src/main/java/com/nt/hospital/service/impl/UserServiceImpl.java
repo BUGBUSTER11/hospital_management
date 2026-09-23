@@ -27,4 +27,15 @@ public class UserServiceImpl implements UserService {
 
         return null;
     }
+
+    @Override
+    public User getUserIdAndRoleByEmail(String email) {
+        Optional<User> isPresentUser = userRepositry.findByEmailAndRole(email, "DOCTOR");
+        if (isPresentUser.isPresent()) {
+
+            return isPresentUser.get();
+        }
+        return null;
+
+    }
 }

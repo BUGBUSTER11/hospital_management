@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Department {
 
     @Id
-    private int departmentId;
+    private String departmentId;
 
     private String departmentName;
 
@@ -15,24 +15,30 @@ public class Department {
 
     private String location;
 
-    private String phone;
+    @ManyToOne
+    @JoinColumn(name = "director_id")
+    private User director;
+
+    private long phone;
 
     public Department() {
     }
 
-    public Department(String departmentName, String description,
-                      String location, String phone) {
+    public Department(String departmentId, String departmentName, String description,
+                      String location, User director, long phone) {
+        this.departmentId = departmentId;
         this.departmentName = departmentName;
         this.description = description;
         this.location = location;
+        this.director = director;
         this.phone = phone;
     }
 
-    public int getDepartmentId() {
+    public String getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(int departmentId) {
+    public void setDepartmentId(String departmentId) {
         this.departmentId = departmentId;
     }
 
@@ -60,12 +66,20 @@ public class Department {
         this.location = location;
     }
 
-    public String getPhone() {
+    public long getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(long phone) {
         this.phone = phone;
+    }
+
+    public User getDirector() {
+        return director;
+    }
+
+    public void setDirector(User director) {
+        this.director = director;
     }
 
     @Override
@@ -74,6 +88,7 @@ public class Department {
                 + ", departmentName=" + departmentName
                 + ", description=" + description
                 + ", location=" + location
+                + ", director_id=" + director
                 + ", phone=" + phone + "]";
     }
 }

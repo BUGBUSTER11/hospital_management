@@ -16,5 +16,10 @@ public class HomeController {
         return "/Admin/adminLogin";
     }
 
+    @GetMapping("/admin/departments")
+    public String departmentDashboard() {
+        return "/Department/addD epartment";
+    }
+
 
 }

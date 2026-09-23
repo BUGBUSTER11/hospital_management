@@ -26,6 +26,14 @@ public class AdminController {
     private UserService userService;
 
 
+    @GetMapping("/admin/doctors/add")
+    public String AddDoctorPage(){
+
+
+        return "Admin/addDoctor";
+    }
+
+
 
     @PostMapping("/admin/register-doctor")
     public String addDoctor(@ModelAttribute User user,

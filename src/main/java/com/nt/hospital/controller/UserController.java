@@ -2,6 +2,7 @@ package com.nt.hospital.controller;
 
 import com.nt.hospital.model.User;
 import com.nt.hospital.service.AdminService;
+import com.nt.hospital.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,10 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class AdminController {
+public class UserController {
 
     @Autowired
-    private AdminService adminService;
+    private UserService userService;
 
 
     @GetMapping("/adminLoginPage")
@@ -24,13 +25,9 @@ public class AdminController {
     }
 
     @PostMapping("/adminLogin")
-    public String adminLogin(
-            @RequestParam String email,
-            @RequestParam String password,
-            HttpSession session,
-            Model model) {
+    public String adminLogin(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
 
-        User user = adminService.loginUser(email, password);
+        User user = userService.loginUser(email, password);
 
         if (user != null) {
 

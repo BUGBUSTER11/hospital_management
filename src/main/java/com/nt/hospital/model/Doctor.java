@@ -2,6 +2,8 @@ package com.nt.hospital.model;
 
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.math.BigDecimal;
@@ -11,11 +13,13 @@ import java.time.LocalDate;
 public class Doctor {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int doctorId;
-    private String firstName;
-    private String lastName;
+    private int userId;
+    private String drName;
+
     private String email;
-    private String phone;
+    private Long phone;
     private String specialization;
     private String qualification;
     private String licenseNumber;
@@ -27,27 +31,27 @@ public class Doctor {
     public Doctor() {
     }
 
-    public Doctor(int experience, int doctorId, String firstName, String lastName, String email, String phone, String specialization, String qualification, String licenseNumber, BigDecimal consultationFee, LocalDate joiningDate) {
-        this.experience = experience;
+    public Doctor(int doctorId, int userId, String drName, String email, Long phone, String specialization, String qualification, String licenseNumber, int experience, BigDecimal consultationFee, LocalDate joiningDate) {
         this.doctorId = doctorId;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.userId = userId;
+        this.drName = drName;
         this.email = email;
         this.phone = phone;
         this.specialization = specialization;
         this.qualification = qualification;
         this.licenseNumber = licenseNumber;
+        this.experience = experience;
         this.consultationFee = consultationFee;
         this.joiningDate = joiningDate;
-
     }
 
-    public String getEmail() {
-        return email;
+
+    public String getSpecialization() {
+        return specialization;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
     }
 
     public int getDoctorId() {
@@ -58,36 +62,36 @@ public class Doctor {
         this.doctorId = doctorId;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getDrName() {
+        return drName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setDrName(String drName) {
+        this.drName = drName;
     }
 
-    public String getPhone() {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Long getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(Long phone) {
         this.phone = phone;
-    }
-
-    public String getSpecialization() {
-        return specialization;
-    }
-
-    public void setSpecialization(String specialization) {
-        this.specialization = specialization;
     }
 
     public String getQualification() {
@@ -130,14 +134,12 @@ public class Doctor {
         this.joiningDate = joiningDate;
     }
 
-
-
     @Override
     public String toString() {
         return "Doctor{" +
                 "doctorId=" + doctorId +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", firstName='" + drName + '\'' +
+
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", specialization='" + specialization + '\'' +

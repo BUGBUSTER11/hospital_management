@@ -1,11 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Complete Doctor Profile</title>
 
@@ -14,7 +16,9 @@
           rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet"
+          href="/css/style.css">
+
 </head>
 
 <body>
@@ -40,10 +44,9 @@
 
                 </div>
 
-
                 <div class="card-body p-4">
 
-                    <!-- SUCCESS MESSAGE -->
+                    <!-- Success Message -->
                     <div th:if="${success}"
                          class="alert alert-success alert-dismissible fade show"
                          role="alert">
@@ -59,8 +62,7 @@
 
                     </div>
 
-
-                    <!-- ERROR MESSAGE -->
+                    <!-- Error Message -->
                     <div th:if="${error}"
                          class="alert alert-danger alert-dismissible fade show"
                          role="alert">
@@ -76,23 +78,11 @@
 
                     </div>
 
-
-                    <!-- DOCTOR PROFILE FORM -->
+                    <!-- Doctor Profile Form -->
                     <form action="/admin/add-doctor-details"
-                          method="post">
-
-
-
-
-                        <!-- Last Name -->
-
-
-
-
-
-
-                        <!-- Phone -->
-
+                          method="post"
+                          id="doctorForm"
+                          novalidate>
 
                         <!-- Specialization -->
                         <div class="mb-3">
@@ -161,8 +151,11 @@
 
                             </select>
 
-                        </div>
+                            <div class="invalid-feedback">
+                                Please select a specialization.
+                            </div>
 
+                        </div>
 
                         <!-- Qualification -->
                         <div class="mb-3">
@@ -177,28 +170,44 @@
                                    id="qualification"
                                    name="qualification"
                                    placeholder="e.g. MBBS, MD, MS"
+                                   minlength="2"
+                                   maxlength="100"
+                                   pattern="[A-Za-z][A-Za-z .,&-]*"
                                    required>
 
-                        </div>
+                            <div class="invalid-feedback">
+                                Enter a valid qualification.
+                            </div>
 
+                        </div>
 
                         <!-- License Number -->
                         <div class="mb-3">
 
                             <label for="licenseNumber"
                                    class="form-label">
-                                Medical License Number
+                                Doctor License Number
                             </label>
 
                             <input type="text"
                                    class="form-control"
                                    id="licenseNumber"
                                    name="licenseNumber"
-                                   placeholder="Enter medical license number"
+                                   placeholder="Enter Doctor license number"
+                                   minlength="3"
+                                   maxlength="30"
+                                   pattern="[A-Za-z0-9/-]+"
                                    required>
 
-                        </div>
+                            <div class="form-text">
+                                Only letters, numbers, slash and hyphen are allowed.
+                            </div>
 
+                            <div class="invalid-feedback">
+                                Enter a valid Doctor license number.
+                            </div>
+
+                        </div>
 
                         <!-- Experience -->
                         <div class="mb-3">
@@ -214,10 +223,15 @@
                                    name="experience"
                                    placeholder="Enter years of experience"
                                    min="0"
+                                   max="70"
+                                   step="1"
                                    required>
 
-                        </div>
+                            <div class="invalid-feedback">
+                                Experience must be between 0 and 70 years.
+                            </div>
 
+                        </div>
 
                         <!-- Consultation Fee -->
                         <div class="mb-3">
@@ -239,13 +253,17 @@
                                        name="consultationFee"
                                        placeholder="Enter consultation fee"
                                        min="0"
+                                       max="100000"
                                        step="0.01"
                                        required>
+
+                                <div class="invalid-feedback">
+                                    Consultation fee must be between ₹0 and ₹100000.
+                                </div>
 
                             </div>
 
                         </div>
-
 
                         <!-- Joining Date -->
                         <div class="mb-3">
@@ -261,24 +279,25 @@
                                    name="joiningDate"
                                    required>
 
-                        </div>
+                            <div class="invalid-feedback">
+                                Joining date is required and cannot be a future date.
+                            </div>
 
+                        </div>
 
                         <!-- Buttons -->
                         <div class="d-flex justify-content-between mt-4">
 
-                            <!-- Cancel -->
                             <a href="/admin/dashboard"
                                class="btn btn-secondary">
-                                Cancel
+                                Back to AdminDashBoard
                             </a>
 
-
-                            <!-- Save Doctor Profile -->
                             <button type="submit"
                                     class="btn btn-primary">
                                 Save Doctor Profile
                             </button>
+
 
                         </div>
 
@@ -294,12 +313,290 @@
 
 </div>
 
-
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+<!-- Custom Validation JavaScript -->
+<script>
+
+    const doctorForm = document.getElementById("doctorForm");
+
+    const joiningDateInput = document.getElementById("joiningDate");
+
+    const experienceInput = document.getElementById("experience");
+
+    const feeInput = document.getElementById("consultationFee");
+
+    const qualificationInput = document.getElementById("qualification");
+
+    const licenseInput = document.getElementById("licenseNumber");
+
+
+    /*
+     * Get today's date in YYYY-MM-DD format
+     */
+    const today = new Date();
+
+    const year = today.getFullYear();
+
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+
+    const day = String(today.getDate()).padStart(2, "0");
+
+    const todayFormatted = `${year}-${month}-${day}`;
+
+
+    /*
+     * Joining date:
+     * Default value = today
+     * Future dates are not allowed
+     */
+    joiningDateInput.value = todayFormatted;
+
+    joiningDateInput.max = todayFormatted;
+
+
+    /*
+     * Experience validation
+     */
+    experienceInput.addEventListener("input", function () {
+
+        if (this.value < 0) {
+            this.value = 0;
+        }
+
+        if (this.value > 70) {
+            this.value = 70;
+        }
+
+    });
+
+
+    /*
+     * Consultation fee validation
+     */
+    feeInput.addEventListener("input", function () {
+
+        if (this.value < 0) {
+            this.value = 0;
+        }
+
+        if (this.value > 100000) {
+            this.value = 100000;
+        }
+
+    });
+
+
+    /*
+     * Qualification validation
+     */
+    qualificationInput.addEventListener("input", function () {
+
+        this.value = this.value.replace(
+            /[^A-Za-z .,&-]/g,
+            ""
+        );
+
+    });
+
+
+    /*
+     * License number validation
+     */
+    licenseInput.addEventListener("input", function () {
+
+        this.value = this.value.replace(
+            /[^A-Za-z0-9/-]/g,
+            ""
+        ).toUpperCase();
+
+    });
+
+
+    /*
+     * Joining date validation
+     */
+    joiningDateInput.addEventListener("change", function () {
+
+        if (this.value > todayFormatted) {
+
+            this.value = todayFormatted;
+
+            alert("Joining date cannot be a future date.");
+
+        }
+
+    });
+
+
+    /*
+     * Form submit validation
+     */
+    doctorForm.addEventListener("submit", function (event) {
+
+        event.preventDefault();
+
+        let isValid = true;
+
+
+        /*
+         * Remove previous validation classes
+         */
+        doctorForm.querySelectorAll(".form-control, .form-select")
+            .forEach(function (input) {
+
+                input.classList.remove("is-invalid");
+                input.classList.remove("is-valid");
+
+            });
+
+
+        /*
+         * Browser validation
+         */
+        if (!doctorForm.checkValidity()) {
+
+            isValid = false;
+
+        }
+
+
+        /*
+         * Specialization
+         */
+        const specialization = document.getElementById("specialization");
+
+        if (specialization.value === "") {
+
+            specialization.classList.add("is-invalid");
+
+            isValid = false;
+
+        } else {
+
+            specialization.classList.add("is-valid");
+
+        }
+
+
+        /*
+         * Qualification
+         */
+        if (!/^[A-Za-z][A-Za-z .,&-]{1,99}$/
+            .test(qualificationInput.value.trim())) {
+
+            qualificationInput.classList.add("is-invalid");
+
+            isValid = false;
+
+        } else {
+
+            qualificationInput.classList.add("is-valid");
+
+        }
+
+
+        /*
+         * License number
+         */
+        if (!/^[A-Za-z0-9/-]{3,30}$/
+            .test(licenseInput.value.trim())) {
+
+            licenseInput.classList.add("is-invalid");
+
+            isValid = false;
+
+        } else {
+
+            licenseInput.classList.add("is-valid");
+
+        }
+
+
+        /*
+         * Experience
+         */
+        const experience = Number(experienceInput.value);
+
+        if (
+            experienceInput.value === "" ||
+            !Number.isInteger(experience) ||
+            experience < 0 ||
+            experience > 70
+        ) {
+
+            experienceInput.classList.add("is-invalid");
+
+            isValid = false;
+
+        } else {
+
+            experienceInput.classList.add("is-valid");
+
+        }
+
+
+        /*
+         * Consultation fee
+         */
+        const fee = Number(feeInput.value);
+
+        if (
+            feeInput.value === "" ||
+            !Number.isFinite(fee) ||
+            fee < 0 ||
+            fee > 100000
+        ) {
+
+            feeInput.classList.add("is-invalid");
+
+            isValid = false;
+
+        } else {
+
+            feeInput.classList.add("is-valid");
+
+        }
+
+
+        /*
+         * Joining date
+         */
+        if (
+            joiningDateInput.value === "" ||
+            joiningDateInput.value > todayFormatted
+        ) {
+
+            joiningDateInput.classList.add("is-invalid");
+
+            isValid = false;
+
+        } else {
+
+            joiningDateInput.classList.add("is-valid");
+
+        }
+
+
+        /*
+         * Submit form if everything is valid
+         */
+        if (isValid) {
+
+            doctorForm.submit();
+
+        } else {
+
+            alert("Please correct the highlighted fields.");
+
+        }
+
+    });
+
 </script>
 
 </body>
 
 </html>
-```

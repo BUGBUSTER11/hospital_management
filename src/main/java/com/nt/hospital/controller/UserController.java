@@ -18,11 +18,7 @@ public class UserController {
     private UserService userService;
 
 
-    @GetMapping("/adminLoginPage")
-    public String adminLoginPage() {
 
-        return "admin/adminLogin";
-    }
 
     @PostMapping("/adminLogin")
     public String adminLogin(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
@@ -45,18 +41,5 @@ public class UserController {
     }
 
 
-    @GetMapping("/admin/dashboard")
-    public String adminDashboard() {
 
-        return "admin/adminDashboard";
-    }
-
-
-    @GetMapping("/admin/logout")
-    public String logout(HttpSession session) {
-
-        session.invalidate();
-
-        return "redirect:/adminLoginPage";
-    }
 }

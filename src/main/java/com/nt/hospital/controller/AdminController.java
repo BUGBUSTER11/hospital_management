@@ -9,9 +9,13 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 @Controller
 public class AdminController {
@@ -27,10 +31,14 @@ public class AdminController {
 
 
 
+
     @PostMapping("/admin/register-doctor")
     public String addDoctor(@ModelAttribute User user,
                             HttpSession doctorSession,
                             Model model) {
+
+        user.setRole("DOCTOR");
+
 
         boolean isRegister = doctorService.addDoctor(user);
 
@@ -55,7 +63,8 @@ public class AdminController {
 
 
     @PostMapping("/admin/add-doctor-details")
-    public String completeDroctor(@ModelAttribute Doctor doctor,
+    public String completeDroctor( @Validated @ModelAttribute Doctor doctor,
+                                   BindingResult result,
                                   HttpSession doctorSession,
                                   Model model) {
 
@@ -69,15 +78,8 @@ public class AdminController {
             return "Admin/addDoctor";
         }
 
-        int userId = user.getId();
-        String useName = user.getName();
-        String email = user.getEmail();
-        Long contactNo = user.getContact();
 
-        doctor.setUserId(userId);
-        doctor.setDrName(useName);
-        doctor.setEmail(email);
-        doctor.setPhone(contactNo);
+        doctor.setUser(user);
 
         boolean isCompleted = doctorService.completeDroctor(doctor);
 
@@ -88,7 +90,7 @@ public class AdminController {
             model.addAttribute("success",
                     "Doctor added successfully");
 
-            return "Admin/adminDashboard";
+            return "Admin/completeDoctor";
 
         } else {
 
@@ -98,4 +100,21 @@ public class AdminController {
             return "Admin/completeDoctor";
         }
     }
+
+    @GetMapping("/admin/doctors")
+    public String showAllDoctorPage(HttpSession session, Model model) {
+
+        User user = (User) session.getAttribute("loggedInUser");
+
+        if (user == null) {
+            return "redirect:/Auth/adminLogin";
+        }
+
+        List<Doctor> doctorsData = doctorService.getAllDoctorsData();
+
+        model.addAttribute("doctorsData", doctorsData);
+
+        return "Admin/showAllDetails";
+    }
+
 }

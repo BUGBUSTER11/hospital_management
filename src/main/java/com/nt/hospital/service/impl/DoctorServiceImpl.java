@@ -8,6 +8,8 @@ import com.nt.hospital.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DoctorServiceImpl implements DoctorService {
 
@@ -36,5 +38,11 @@ public class DoctorServiceImpl implements DoctorService {
     public boolean completeDroctor(Doctor doctor) {
         doctorRepository.save(doctor);
         return true;
+    }
+
+    @Override
+    public List<Doctor> getAllDoctorsData() {
+
+        return doctorRepository.findAll();
     }
 }

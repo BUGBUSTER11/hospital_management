@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Department - Hospital Management</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7fb;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: #1976d2;
+            color: white;
+            padding: 20px 40px;
+        }
+
+        .header h1 {
+            font-size: 26px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+            margin: 40px auto;
+        }
+
+        .form-card {
+            background-color: white;
+            padding: 35px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-card h2 {
+            margin-bottom: 25px;
+            color: #333;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #1976d2;
+        }
+
+        .required {
+            color: red;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 11px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: #1976d2;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #125ca5;
+        }
+
+        .btn-secondary {
+            background-color: #777;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #555;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <h1>Hospital Management System</h1>
+
+</header>
+
+
+<div class="container">
+
+    <div class="form-card">
+
+        <h2>Create Department</h2>
+
+
+        <form th:action="@{/Department/addDepartment}"
+              th:object="${department}"
+              method="post">
+
+
+            <!-- Department ID -->
+
+            <div class="form-group">
+
+                <label for="departmentId">
+                    Department ID
+                    <span class="required">*</span>
+                </label>
+
+                <input type="text"
+                       id="departmentId"
+                       th:field="*{departmentId}"
+                       placeholder="Enter department ID"
+                       required>
+
+            </div>
+
+
+            <!-- Department Name -->
+
+            <div class="form-group">
+
+                <label for="departmentName">
+                    Department Name
+                    <span class="required">*</span>
+                </label>
+
+                <input type="text"
+                       id="departmentName"
+                       th:field="*{departmentName}"
+                       placeholder="Enter department name"
+                       required>
+
+            </div>
+
+
+            <!-- Description -->
+
+            <div class="form-group">
+
+                <label for="description">
+                    Description
+                    <span class="required">*</span>
+                </label>
+
+                <textarea id="description"
+                          th:field="*{description}"
+                          placeholder="Enter department description"
+                          required></textarea>
+
+            </div>
+
+
+            <!-- Location -->
+
+            <div class="form-group">
+
+                <label for="location">
+                    Location
+                    <span class="required">*</span>
+                </label>
+
+                <input type="text"
+                       id="location"
+                       th:field="*{location}"
+                       placeholder="Enter department location"
+                       required>
+
+            </div>
+
+
+            <!-- Director -->
+
+            <div class="form-group">
+
+                <label for="director">
+                    Department Director
+                    <span class="required">*</span>
+                </label>
+
+                <select id="director"
+                        name="directorId"
+                        required>
+
+                    <option value="">
+                        -- Select Director --
+                    </option>
+
+                    <option th:each="director : ${directors}"
+                            th:value="${director.id}"
+                            th:text="${director.name}">
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Contact Number -->
+
+            <div class="form-group">
+
+                <label for="phone">
+                    Contact Number
+                </label>
+
+                <input type="number"
+                       id="phone"
+                       th:field="*{phone}"
+                       placeholder="Enter department contact number">
+
+            </div>
+
+
+            <!-- Buttons -->
+
+            <div class="button-container">
+
+                <a th:href="@{/admin/dashboard}"
+                   class="btn btn-secondary">
+
+                    Cancel
+
+                </a>
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    Create Department
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
+

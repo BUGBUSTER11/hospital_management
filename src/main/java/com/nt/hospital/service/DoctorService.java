@@ -12,4 +12,6 @@ public interface DoctorService {
     boolean completeDroctor(Doctor doctor);
 
     List<Doctor> getAllDoctorsData();
+
+    long getAllDoctorCount();
 }

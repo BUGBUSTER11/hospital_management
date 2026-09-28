@@ -57,4 +57,9 @@ public class AddDepartmentServiceImpl implements AddDepartmentService {
         // Save Department
         return addDepartmentRepository.save(department);
     }
+
+    @Override
+    public long DepartmentCount() {
+        return addDepartmentRepository.count();
+    }
 }

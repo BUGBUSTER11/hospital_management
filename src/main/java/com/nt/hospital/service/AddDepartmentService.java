@@ -11,4 +11,6 @@ public interface AddDepartmentService {
 
     Department addDepartment(Department department, int directorId);
 
+
+    long DepartmentCount();
 }

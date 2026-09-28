@@ -20,7 +20,7 @@ public class UserController {
 
 
 
-    @PostMapping("/adminLogin")
+    @PostMapping("/Auth/adminLogin")
     public String adminLogin(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
 
         User user = userService.loginUser(email, password);
@@ -32,7 +32,7 @@ public class UserController {
             session.setAttribute("userName", user.getName());
             session.setAttribute("role", user.getRole());
 
-            return "redirect:/admin/dashboard";
+            return "redirect:/Admin/adminDashboard";
         }
 
         model.addAttribute("error", "Invalid email or password");

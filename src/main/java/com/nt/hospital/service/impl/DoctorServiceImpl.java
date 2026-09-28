@@ -45,4 +45,9 @@ public class DoctorServiceImpl implements DoctorService {
 
         return doctorRepository.findAll();
     }
+
+    @Override
+    public long getAllDoctorCount() {
+       return doctorRepository.count();
+    }
 }

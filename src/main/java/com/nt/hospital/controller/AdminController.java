@@ -2,6 +2,7 @@ package com.nt.hospital.controller;
 
 import com.nt.hospital.model.Doctor;
 import com.nt.hospital.model.User;
+import com.nt.hospital.service.AddDepartmentService;
 import com.nt.hospital.service.AdminService;
 import com.nt.hospital.service.DoctorService;
 import com.nt.hospital.service.UserService;
@@ -28,6 +29,9 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AddDepartmentService addDepartmentService;
 
 
 
@@ -60,6 +64,14 @@ public class AdminController {
             return "Admin/addDoctor";
         }
     }
+
+
+
+    @GetMapping("/admin/doctors/add")
+        public String addDoctor() {
+        return "Admin/addDoctor";
+    }
+
 
 
     @PostMapping("/admin/add-doctor-details")
@@ -117,4 +129,18 @@ public class AdminController {
         return "Admin/showAllDetails";
     }
 
+    @GetMapping("/Admin/adminDashboard")
+    public String getAllRecordCount(Model model) {
+
+        long departmentCount = addDepartmentService.DepartmentCount();
+        model.addAttribute("departmentCount" , departmentCount);
+
+
+        long doctorCount = doctorService.getAllDoctorCount();
+        model.addAttribute("doctorCount",doctorCount);
+
+        return "Admin/adminDashboard";
+
+
+    }
 }

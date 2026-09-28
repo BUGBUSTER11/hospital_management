@@ -40,6 +40,6 @@ public class AddDepartmentController {
 
         departmentService.addDepartment(department, directorId);
 
-        return "redirect:/Admin/adminDashboard";
-    }
+        return "redirect:/Admin/adminDashboard";    }
+
 }

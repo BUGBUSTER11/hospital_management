@@ -1,5 +1,6 @@
 package com.nt.hospital.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -10,21 +11,33 @@ public class HomeController {
     public String landingPage(){
         return "index";
     }
-
-    @GetMapping("/Admin/login")
-    public String adminLogin(){
+//UserLogin Page
+    @GetMapping("/UserLoginPage")
+    public String userLoginPage(){
         return "Auth/adminLogin";
     }
 
-//    @GetMapping("/Admin/adminDashboard")
-//    public String adminDashboard() {
-//        return "Admin/adminDashboard";
-//    }
+    // Add Doctor Page
+
+    @GetMapping("/admin/doctors/add")
+    public String addDoctorPage() {
+        return "Admin/addDoctor";
+    }
+
 
     @GetMapping("/admin/departments")
     public String departmentDashboard() {
         return "/Department/addDepartment";
     }
 
+
+    // Admin Logout
+    @GetMapping("/Userlogout")
+    public String logout(HttpSession session) {
+
+        session.invalidate();
+
+        return "redirect:/UserLoginPage";
+    }
 
 }

@@ -21,10 +21,7 @@ public class HomeController {
 //        return "Admin/adminDashboard";
 //    }
 
-    @GetMapping("/admin/departments")
-    public String departmentDashboard() {
-        return "/Department/addDepartment";
-    }
+
 
 
 }

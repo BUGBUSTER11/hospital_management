@@ -1,11 +1,9 @@
 package com.nt.hospital.controller;
 
+import com.nt.hospital.model.Department;
 import com.nt.hospital.model.Doctor;
 import com.nt.hospital.model.User;
-import com.nt.hospital.service.AddDepartmentService;
-import com.nt.hospital.service.AdminService;
-import com.nt.hospital.service.DoctorService;
-import com.nt.hospital.service.UserService;
+import com.nt.hospital.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +30,9 @@ public class AdminController {
 
     @Autowired
     private AddDepartmentService addDepartmentService;
+
+    @Autowired
+    private DepartmentService departmentService;
 
 
 
@@ -129,6 +130,16 @@ public class AdminController {
         return "Admin/showAllDetails";
     }
 
+    @GetMapping("/admin/department")
+    public String departmentDashboard(Model model) {
+
+        List<Department> departments = departmentService.getAllDepartmets();
+
+        model.addAttribute("departments", departments);
+
+        return "Admin/departmentManagement";
+    }
+
     @GetMapping("/Admin/adminDashboard")
     public String getAllRecordCount(Model model) {
 
@@ -143,4 +154,6 @@ public class AdminController {
 
 
     }
+
+
 }

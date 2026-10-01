@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Department Dashboard | Hospital Management</title>
+
+    <!-- Bootstrap -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet"
+          href="/css/departmentDashboard.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", "Segoe UI", sans-serif;
+            background: #f5f7fa;
+            color: #172033;
+        }
+
+        .department-page {
+            max-width: 1450px;
+            margin: auto;
+            padding: 42px 48px 60px;
+        }
+
+        /* HEADER */
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 34px;
+        }
+
+        .breadcrumb-text {
+            font-size: 13px;
+            color: #8b94a7;
+            margin-bottom: 12px;
+        }
+
+        .breadcrumb-text i {
+            font-size: 10px;
+            margin: 0 8px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+
+        .dashboard-header p {
+            color: #7a8497;
+            font-size: 15px;
+            max-width: 600px;
+        }
+
+        /* ADD BUTTON */
+
+        .add-department-btn {
+            border: none;
+            background: #172033;
+            color: white;
+
+            padding: 14px 21px;
+            border-radius: 11px;
+
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            transition: 0.25s ease;
+        }
+
+        .add-department-btn:hover {
+            background: #27344d;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(23, 32, 51, 0.18);
+        }
+
+        /* OVERVIEW */
+
+        .overview-section {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+
+            min-height: 190px;
+
+            background: #ffffff;
+
+            border: 1px solid #e8ebf0;
+            border-radius: 18px;
+
+            overflow: hidden;
+
+            margin-bottom: 45px;
+
+            box-shadow: 0 5px 25px rgba(30, 45, 70, 0.04);
+        }
+
+        .overview-main {
+            padding: 30px 35px;
+            background: #172033;
+            color: white;
+        }
+
+        .overview-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.3px;
+            opacity: 0.65;
+
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .live-dot {
+            width: 7px;
+            height: 7px;
+
+            background: #68d391;
+            border-radius: 50%;
+        }
+
+        .overview-content {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+
+            margin-top: 22px;
+        }
+
+        .total-number {
+            font-size: 64px;
+            line-height: 1;
+            font-weight: 700;
+        }
+
+        .overview-description h2 {
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+
+        .overview-description p {
+            color: #aeb8c9;
+            font-size: 13px;
+            max-width: 390px;
+        }
+
+        /* MINI STATS */
+
+        .overview-stats {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+
+            padding: 25px;
+        }
+
+        .mini-stat {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .stat-icon {
+            width: 43px;
+            height: 43px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background: #f1f4f8;
+
+            color: #4c5b73;
+        }
+
+        .mini-stat strong {
+            display: block;
+            font-size: 20px;
+        }
+
+        .mini-stat small {
+            color: #929bab;
+            font-size: 12px;
+        }
+
+        /* TOOLBAR */
+
+        .department-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+
+            margin-bottom: 20px;
+        }
+
+        .department-toolbar h2 {
+            font-size: 21px;
+            margin-bottom: 4px;
+        }
+
+        .department-toolbar p {
+            color: #8b94a7;
+            font-size: 13px;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box {
+            width: 240px;
+
+            background: white;
+            border: 1px solid #e1e5eb;
+
+            border-radius: 9px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 13px;
+        }
+
+        .search-box i {
+            color: #9ba4b3;
+        }
+
+        .search-box input {
+            width: 100%;
+
+            border: none;
+            outline: none;
+
+            padding: 11px 9px;
+
+            font-size: 13px;
+        }
+
+        .filter-btn {
+            border: 1px solid #e1e5eb;
+            background: white;
+
+            border-radius: 9px;
+
+            padding: 0 15px;
+
+            color: #596579;
+        }
+
+        /* DEPARTMENT CONTAINER */
+
+        .departments-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* DEPARTMENT ROW */
+
+        .department-row {
+            min-height: 105px;
+
+            background: white;
+
+            border: 1px solid #e6e9ee;
+            border-radius: 13px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 17px 20px;
+
+            transition: all 0.22s ease;
+        }
+
+        .department-row:hover {
+            border-color: #ccd3df;
+            transform: translateX(4px);
+
+            box-shadow: 0 8px 24px rgba(30, 45, 70, 0.07);
+        }
+
+        /* SYMBOL */
+
+        .department-symbol {
+            width: 57px;
+            height: 57px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 15px;
+
+            font-size: 23px;
+
+            margin-right: 19px;
+
+            background: #eef1ff;
+            color: #6473d9;
+        }
+
+        /* INFORMATION */
+
+        .department-info {
+            flex: 1;
+        }
+
+        .department-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .department-title h3 {
+            font-size: 17px;
+            font-weight: 650;
+            margin: 0;
+        }
+
+        .department-info > p {
+            font-size: 12px;
+            color: #8a93a3;
+
+            margin: 4px 0 10px;
+        }
+
+        .status-badge {
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 20px;
+        }
+
+        .status-badge.active {
+            color: #27845b;
+            background: #e9f8f0;
+        }
+
+        .department-meta {
+            display: flex;
+            gap: 24px;
+
+            font-size: 11px;
+            color: #687386;
+        }
+
+        .department-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .department-meta i {
+            color: #9ca5b4;
+        }
+
+        /* ACTIONS */
+
+        .department-actions {
+            display: flex;
+            gap: 5px;
+            margin-left: 20px;
+        }
+
+        .department-actions button {
+            width: 35px;
+            height: 35px;
+
+            border: none;
+
+            background: transparent;
+
+            border-radius: 8px;
+
+            color: #7e8899;
+
+            transition: 0.2s;
+        }
+
+        .department-actions button:hover {
+            background: #f1f3f6;
+            color: #172033;
+        }
+
+        /* INSIGHT */
+
+        .department-insight {
+            margin-top: 30px;
+
+            background: #eef3f7;
+
+            border: 1px solid #e0e6ec;
+
+            border-radius: 14px;
+
+            padding: 20px 24px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 17px;
+        }
+
+        .insight-icon {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 11px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: white;
+
+            color: #596a80;
+
+            font-size: 18px;
+        }
+
+        .department-insight span {
+            color: #7e8998;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .department-insight h3 {
+            font-size: 14px;
+            margin: 4px 0;
+        }
+
+        .department-insight p {
+            color: #8993a2;
+            font-size: 12px;
+            margin: 0;
+        }
+
+        /* EMPTY DATA */
+
+        .no-departments {
+            background: white;
+            border: 1px solid #e6e9ee;
+            border-radius: 13px;
+
+            padding: 40px;
+            text-align: center;
+
+            color: #8a93a3;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1000px) {
+
+            .department-page {
+                padding: 30px 25px;
+            }
+
+            .overview-section {
+                grid-template-columns: 1fr;
+            }
+
+            .overview-stats {
+                justify-content: space-around;
+            }
+
+            .dashboard-header {
+                align-items: flex-start;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .department-page {
+                padding: 25px 16px;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+            }
+
+            .dashboard-header h1 {
+                font-size: 29px;
+            }
+
+            .add-department-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .overview-content {
+                gap: 18px;
+            }
+
+            .total-number {
+                font-size: 48px;
+            }
+
+            .overview-stats {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 18px;
+            }
+
+            .department-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 15px;
+            }
+
+            .toolbar-actions {
+                width: 100%;
+            }
+
+            .search-box {
+                flex: 1;
+                width: auto;
+            }
+
+            .department-row {
+                align-items: flex-start;
+                position: relative;
+            }
+
+            .department-symbol {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+                margin-right: 12px;
+            }
+
+            .department-meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .department-actions {
+                position: absolute;
+                right: 8px;
+                top: 12px;
+            }
+
+            .department-actions button:nth-child(2),
+            .department-actions button:nth-child(3) {
+                display: none;
+            }
+
+            .department-title {
+                padding-right: 70px;
+            }
+
+            .department-insight {
+                align-items: flex-start;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="department-page">
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="dashboard-header">
+
+        <div>
+
+            <div class="breadcrumb-text">
+                <span>Administration</span>
+                <i class="bi bi-chevron-right"></i>
+                Departments
+            </div>
+
+            <h1>Department Center</h1>
+
+            <p>
+                Organize departments, monitor resources and manage
+                department leadership from one place.
+            </p>
+
+        </div>
+
+        <a href="/Admin/addDepartment"
+           style="text-decoration: none;">
+
+            <button class="add-department-btn"
+                    type="button">
+
+                <i class="bi bi-plus-lg"></i>
+
+                <span>Add Department</span>
+
+            </button>
+
+        </a>
+
+    </header>
+
+
+    <!-- ================= OVERVIEW ================= -->
+
+    <section class="overview-section">
+
+        <div class="overview-main">
+
+            <div class="overview-label">
+
+                <span class="live-dot"></span>
+
+                Hospital Overview
+
+            </div>
+
+            <div class="overview-content">
+
+                <div class="total-number"
+                     th:text="${#lists.size(departments)}">
+
+                    0
+
+                </div>
+
+                <div class="overview-description">
+
+                    <h2>Active Departments</h2>
+
+                    <p>
+                        Currently operating across the hospital,
+                        supporting clinical and administrative services.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="overview-stats">
+
+            <div class="mini-stat">
+
+                <span class="stat-icon">
+
+                    <i class="bi bi-person-badge"></i>
+
+                </span>
+
+                <div>
+
+                    <strong>42</strong>
+
+                    <small>Doctors</small>
+
+                </div>
+
+            </div>
+
+
+            <div class="mini-stat">
+
+                <span class="stat-icon">
+
+                    <i class="bi bi-people"></i>
+
+                </span>
+
+                <div>
+
+                    <strong>1,248</strong>
+
+                    <small>Patients</small>
+
+                </div>
+
+            </div>
+
+
+            <div class="mini-stat">
+
+                <span class="stat-icon">
+
+                    <i class="bi bi-person-workspace"></i>
+
+                </span>
+
+                <div>
+
+                    <strong>96</strong>
+
+                    <small>Staff Members</small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= TOOLBAR ================= -->
+
+    <section class="department-toolbar">
+
+        <div>
+
+            <h2>Hospital Departments</h2>
+
+            <p>
+                Select a department to manage its details.
+            </p>
+
+        </div>
+
+
+        <div class="toolbar-actions">
+
+            <div class="search-box">
+
+                <i class="bi bi-search"></i>
+
+                <input
+                        type="text"
+                        id="departmentSearch"
+                        placeholder="Search department..."
+                        onkeyup="searchDepartments()">
+
+            </div>
+
+            <button class="filter-btn"
+                    type="button">
+
+                <i class="bi bi-sliders2"></i>
+
+                Filter
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= DEPARTMENTS ================= -->
+
+    <section class="departments-container">
+
+
+        <!-- DISPLAY WHEN DEPARTMENTS EXIST -->
+
+        <div class="department-row"
+             th:each="department : ${departments}">
+
+
+            <!-- SYMBOL -->
+
+            <div class="department-symbol">
+
+                <i class="bi bi-hospital"></i>
+
+            </div>
+
+
+            <!-- DEPARTMENT INFORMATION -->
+
+            <div class="department-info">
+
+                <div class="department-title">
+
+                    <h3 th:text="${department.departmentName}">
+                        Department Name
+                    </h3>
+
+                    <span class="status-badge active">
+                        Active
+                    </span>
+
+                </div>
+
+
+                <p th:text="${department.description}">
+                    Department description
+                </p>
+
+
+                <div class="department-meta">
+
+
+                    <!-- DEPARTMENT ID -->
+
+                    <span>
+
+                        <i class="bi bi-hash"></i>
+
+                        <span th:text="${department.departmentId}">
+                            ID
+                        </span>
+
+                    </span>
+
+
+                    <!-- LOCATION -->
+
+                    <span>
+
+                        <i class="bi bi-geo-alt"></i>
+
+                        <span th:text="${department.location}">
+                            Location
+                        </span>
+
+                    </span>
+
+
+                    <!-- PHONE -->
+
+                    <span>
+
+                        <i class="bi bi-telephone"></i>
+
+                        <span th:text="${department.phone}">
+                            Phone
+                        </span>
+
+                    </span>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="department-actions">
+
+                <button type="button"
+                        title="Edit">
+
+                    <i class="bi bi-pencil"></i>
+
+                </button>
+
+                <button type="button"
+                        title="View">
+
+                    <i class="bi bi-eye"></i>
+
+                </button>
+
+                <button type="button"
+                        title="Delete">
+
+                    <i class="bi bi-trash"></i>
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- DISPLAY WHEN NO DEPARTMENTS EXIST -->
+
+        <div class="no-departments"
+             th:if="${#lists.isEmpty(departments)}">
+
+            <i class="bi bi-building"
+               style="font-size: 35px;">
+            </i>
+
+            <h4>No Departments Found</h4>
+
+            <p>
+                There are currently no departments registered
+                in the hospital.
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- ================= FOOTER INSIGHT ================= -->
+
+    <section class="department-insight">
+
+        <div class="insight-icon">
+
+            <i class="bi bi-lightbulb"></i>
+
+        </div>
+
+        <div>
+
+            <span>Department Insight</span>
+
+            <h3>
+                Keep department information updated.
+            </h3>
+
+            <p>
+                Maintain accurate department names, descriptions,
+                locations and contact numbers.
+            </p>
+
+        </div>
+
+    </section>
+
+
+</div>
+
+
+<!-- Bootstrap JS -->
+
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+<!-- Search -->
+
+<script>
+
+    function searchDepartments() {
+
+        const input =
+            document.getElementById("departmentSearch");
+
+        const searchValue =
+            input.value.toLowerCase();
+
+        const departments =
+            document.querySelectorAll(".department-row");
+
+
+        departments.forEach(function(department) {
+
+            const text =
+                department.innerText.toLowerCase();
+
+            if (text.includes(searchValue)) {
+
+                department.style.display = "flex";
+
+            } else {
+
+                department.style.display = "none";
+
+            }
+
+        });
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

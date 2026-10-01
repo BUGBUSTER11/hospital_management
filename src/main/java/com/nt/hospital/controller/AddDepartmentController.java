@@ -20,7 +20,7 @@ public class AddDepartmentController {
     private AddDepartmentService departmentService;
 
 
-    @GetMapping("/Department/addDepartment")
+    @GetMapping("/Admin/departmentManagement")
     public String showAddDepartmentForm(Model model) {
 
         List<User> directors = departmentService.getDirectors();
@@ -29,11 +29,15 @@ public class AddDepartmentController {
 
         model.addAttribute("department", new Department());
 
-        return "/Department/addDepartment";
+        return "/Admin/addDepartment";
     }
 
+    @GetMapping
+    public String showaddDepartment() {
+        return  "/Admin/addDepartment";
+    }
 
-    @PostMapping("/Department/addDepartment")
+    @PostMapping("/Admin/addDepartment")
     public String addDepartment(
             @ModelAttribute("department") Department department,
             @RequestParam("directorId") int directorId) {

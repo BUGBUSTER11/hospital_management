@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>All Doctors | CarePlus</title>
+
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+
+    <!-- Bootstrap Icons -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f5f7fb;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #1f2937;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            width: 225px;
+
+            background: #ffffff;
+
+            border-right: 1px solid #e5e7eb;
+
+            padding: 20px 14px;
+
+            z-index: 1000;
+        }
+
+
+        .brand {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 8px 12px 28px;
+
+            font-size: 18px;
+
+            font-weight: 700;
+        }
+
+
+        .brand-icon {
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #1677ff;
+
+            color: white;
+
+            border-radius: 9px;
+        }
+
+
+        .menu-title {
+            font-size: 11px;
+
+            font-weight: 700;
+
+            color: #9ca3af;
+
+            margin: 12px 10px 8px;
+
+            letter-spacing: .5px;
+        }
+
+
+        .sidebar-link {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 11px 12px;
+
+            margin-bottom: 4px;
+
+            color: #374151;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            transition: .2s;
+        }
+
+
+        .sidebar-link:hover {
+            background: #eef5ff;
+
+            color: #1677ff;
+        }
+
+
+        .sidebar-link.active {
+            background: #1677ff;
+
+            color: white;
+        }
+
+
+        .logout {
+            color: #ef4444;
+        }
+
+
+        .logout:hover {
+            background: #fff1f2;
+
+            color: #dc2626;
+        }
+
+
+
+        /* =====================================================
+           MAIN CONTENT
+        ===================================================== */
+
+        .main-content {
+            margin-left: 225px;
+
+            padding: 28px;
+        }
+
+
+
+        /* =====================================================
+           PAGE HEADER
+        ===================================================== */
+
+        .page-header {
+            background: linear-gradient(
+                    135deg,
+                    #1677ff,
+                    #438cf5
+            );
+
+            color: white;
+
+            border-radius: 15px;
+
+            padding: 28px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .page-header h2 {
+            margin: 0 0 7px;
+
+            font-weight: 600;
+        }
+
+
+        .page-header p {
+            margin: 0;
+
+            opacity: .9;
+        }
+
+
+
+        /* =====================================================
+           STAT CARDS
+        ===================================================== */
+
+        .stat-card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 13px;
+
+            padding: 20px;
+
+            height: 100%;
+
+            transition: .2s;
+        }
+
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+
+            box-shadow: 0 8px 25px rgba(0,0,0,.06);
+        }
+
+
+        .stat-icon {
+            width: 46px;
+            height: 46px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 11px;
+
+            font-size: 21px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .blue {
+            background: #eaf2ff;
+
+            color: #1677ff;
+        }
+
+
+        .green {
+            background: #eaf8ef;
+
+            color: #16a34a;
+        }
+
+
+        .red {
+            background: #fff0f0;
+
+            color: #dc2626;
+        }
+
+
+        .purple {
+            background: #f2eaff;
+
+            color: #7c3aed;
+        }
+
+
+        .stat-number {
+            font-size: 28px;
+
+            font-weight: 700;
+
+            margin-bottom: 3px;
+        }
+
+
+        .stat-label {
+            color: #6b7280;
+
+            font-size: 14px;
+        }
+
+
+
+        /* =====================================================
+           DOCTOR SECTION
+        ===================================================== */
+
+        .doctor-section {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 15px;
+
+            padding: 24px;
+
+            margin-top: 25px;
+        }
+
+
+        .section-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 22px;
+        }
+
+
+        .section-header h4 {
+            margin: 0;
+
+            font-weight: 700;
+        }
+
+
+        .section-header p {
+            margin: 5px 0 0;
+
+            color: #6b7280;
+
+            font-size: 14px;
+        }
+
+
+
+        /* =====================================================
+           SEARCH
+        ===================================================== */
+
+        .search-box {
+            max-width: 350px;
+        }
+
+
+        .search-box .input-group-text {
+            background: white;
+
+            border-right: none;
+        }
+
+
+        .search-box input {
+            border-left: none;
+        }
+
+
+        .search-box input:focus {
+            box-shadow: none;
+
+            border-color: #dee2e6;
+        }
+
+
+
+        /* =====================================================
+           DOCTOR CARD
+        ===================================================== */
+
+        .doctor-card {
+            background: #ffffff;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 14px;
+
+            padding: 22px;
+
+            margin-bottom: 18px;
+
+            transition: .2s;
+        }
+
+
+        .doctor-card:hover {
+            border-color: #bcd4ff;
+
+            box-shadow: 0 8px 25px rgba(22,119,255,.08);
+        }
+
+
+        .doctor-top {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            margin-bottom: 20px;
+        }
+
+
+        .doctor-profile {
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        .doctor-avatar {
+            width: 58px;
+            height: 58px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: #eaf2ff;
+
+            color: #1677ff;
+
+            border-radius: 50%;
+
+            font-size: 26px;
+        }
+
+
+        .doctor-name {
+            font-size: 18px;
+
+            font-weight: 700;
+
+            margin-bottom: 3px;
+        }
+
+
+        .doctor-specialization {
+            color: #1677ff;
+
+            font-size: 14px;
+
+            font-weight: 500;
+        }
+
+
+        .doctor-id {
+            color: #9ca3af;
+
+            font-size: 12px;
+
+            margin-top: 3px;
+        }
+
+
+
+        /* =====================================================
+           STATUS
+        ===================================================== */
+
+        .status-badge {
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        .status-active {
+            background: #dcfce7;
+
+            color: #15803d;
+        }
+
+
+        .status-inactive {
+            background: #fee2e2;
+
+            color: #b91c1c;
+        }
+
+
+
+        /* =====================================================
+           DETAILS
+        ===================================================== */
+
+        .doctor-details {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+
+            padding-top: 18px;
+
+            border-top: 1px solid #edf0f4;
+        }
+
+
+        .detail-item {
+            padding: 8px 0;
+        }
+
+
+        .detail-label {
+            display: block;
+
+            color: #9ca3af;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .4px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .detail-value {
+            color: #374151;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            word-break: break-word;
+        }
+
+
+
+        /* =====================================================
+           EMPTY
+        ===================================================== */
+
+        .empty-box {
+            text-align: center;
+
+            padding: 70px 20px;
+
+            color: #6b7280;
+        }
+
+
+        .empty-box i {
+            font-size: 55px;
+
+            color: #cbd5e1;
+        }
+
+
+        .empty-box h5 {
+            margin-top: 15px;
+
+            color: #374151;
+        }
+
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .page-footer {
+            text-align: center;
+
+            color: #9ca3af;
+
+            font-size: 13px;
+
+            padding: 25px 0 10px;
+        }
+
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1100px) {
+
+            .doctor-details {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 850px) {
+
+            .sidebar {
+                width: 70px;
+            }
+
+            .brand-text,
+            .sidebar-link span,
+            .menu-title {
+                display: none;
+            }
+
+            .sidebar-link {
+                justify-content: center;
+            }
+
+            .main-content {
+                margin-left: 70px;
+            }
+
+            .doctor-details {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .main-content {
+                padding: 15px;
+            }
+
+            .doctor-top {
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+            .doctor-details {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+            .search-box {
+                max-width: 100%;
+
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<div class="sidebar">
+
+
+    <!-- BRAND -->
+
+    <div class="brand">
+
+        <div class="brand-icon">
+
+            <i class="bi bi-plus-lg"></i>
+
+        </div>
+
+        <span class="brand-text">
+
+            CarePlus
+
+        </span>
+
+    </div>
+
+
+    <!-- MAIN MENU -->
+
+    <div class="menu-title">
+
+        MAIN MENU
+
+    </div>
+
+
+    <a href="/Admin/adminDashboard"
+       class="sidebar-link">
+
+        <i class="bi bi-grid-fill"></i>
+
+        <span>
+
+            Dashboard
+
+        </span>
+
+    </a>
+
+
+    <a href="/admin/doctors"
+       class="sidebar-link active">
+
+        <i class="bi bi-person-badge"></i>
+
+        <span>
+
+            Doctors
+
+        </span>
+
+    </a>
+
+
+    <a href="/admin/patients"
+       class="sidebar-link">
+
+        <i class="bi bi-people"></i>
+
+        <span>
+
+            Patients
+
+        </span>
+
+    </a>
+
+
+    <a href="/admin/appointments"
+       class="sidebar-link">
+
+        <i class="bi bi-calendar-check"></i>
+
+        <span>
+
+            Appointments
+
+        </span>
+
+    </a>
+
+
+    <a href="/admin/departments"
+       class="sidebar-link">
+
+        <i class="bi bi-building"></i>
+
+        <span>
+
+            Departments
+
+        </span>
+
+    </a>
+
+
+
+    <!-- HOSPITAL MANAGEMENT -->
+
+    <div class="menu-title mt-4">
+
+        HOSPITAL MANAGEMENT
+
+    </div>
+
+
+    <a href="#"
+       class="sidebar-link">
+
+        <i class="bi bi-file-medical"></i>
+
+        <span>
+
+            Medical Records
+
+        </span>
+
+    </a>
+
+
+    <a href="#"
+       class="sidebar-link">
+
+        <i class="bi bi-prescription2"></i>
+
+        <span>
+
+            Prescriptions
+
+        </span>
+
+    </a>
+
+
+    <a href="#"
+       class="sidebar-link">
+
+        <i class="bi bi-person-gear"></i>
+
+        <span>
+
+            Users
+
+        </span>
+
+    </a>
+
+
+
+    <!-- ACCOUNT -->
+
+    <div class="menu-title mt-4">
+
+        ACCOUNT
+
+    </div>
+
+
+    <a href="/Userlogout"
+       class="sidebar-link logout">
+
+        <i class="bi bi-box-arrow-right"></i>
+
+        <span>
+
+            Logout
+
+        </span>
+
+    </a>
+
+</div>
+
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<div class="main-content">
+
+
+    <!-- =====================================================
+         PAGE HEADER
+    ===================================================== -->
+
+    <div class="page-header">
+
+        <h2>
+
+            <i class="bi bi-person-badge"></i>
+
+            All Doctors
+
+        </h2>
+
+        <p>
+
+            View complete information of all doctors
+            registered in the hospital.
+
+        </p>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         STATISTICS
+    ===================================================== -->
+
+    <div class="row g-4">
+
+
+        <!-- TOTAL -->
+
+        <div class="col-md-6 col-xl-3">
+
+            <div class="stat-card">
+
+                <div class="stat-icon blue">
+
+                    <i class="bi bi-people"></i>
+
+                </div>
+
+                <div class="stat-number"
+                     th:text="${doctorsData.size()}">
+
+                    0
+
+                </div>
+
+                <div class="stat-label">
+
+                    Total Doctors
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ACTIVE -->
+
+        <div class="col-md-6 col-xl-3">
+
+            <div class="stat-card">
+
+                <div class="stat-icon green">
+
+                    <i class="bi bi-person-check"></i>
+
+                </div>
+
+                <div class="stat-number text-success"
+                     th:text="${activeDoctors}">
+
+                    0
+
+                </div>
+
+                <div class="stat-label">
+
+                    Active Doctors
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- INACTIVE -->
+
+        <div class="col-md-6 col-xl-3">
+
+            <div class="stat-card">
+
+                <div class="stat-icon red">
+
+                    <i class="bi bi-person-x"></i>
+
+                </div>
+
+                <div class="stat-number text-danger"
+                     th:text="${inactiveDoctors}">
+
+                    0
+
+                </div>
+
+                <div class="stat-label">
+
+                    Inactive Doctors
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SPECIALIZATION -->
+
+        <div class="col-md-6 col-xl-3">
+
+            <div class="stat-card">
+
+                <div class="stat-icon purple">
+
+                    <i class="bi bi-heart-pulse"></i>
+
+                </div>
+
+                <div class="stat-number"
+                     th:text="${specializationCount}">
+
+                    0
+
+                </div>
+
+                <div class="stat-label">
+
+                    Specializations
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         ALL DOCTORS SECTION
+    ===================================================== -->
+
+    <div class="doctor-section">
+
+
+        <!-- HEADER -->
+
+        <div class="section-header">
+
+            <div>
+
+                <h4>
+
+                    <i class="bi bi-person-lines-fill text-primary"></i>
+
+                    Doctor Directory
+
+                </h4>
+
+                <p>
+
+                    Complete details of registered doctors
+
+                </p>
+
+            </div>
+
+
+            <!-- SEARCH -->
+
+            <div class="search-box">
+
+                <div class="input-group">
+
+                    <span class="input-group-text">
+
+                        <i class="bi bi-search"></i>
+
+                    </span>
+
+                    <input type="text"
+                           id="doctorSearch"
+                           class="form-control"
+                           placeholder="Search doctor...">
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             DOCTOR LIST
+        ================================================= -->
+
+        <div id="doctorList">
+
+
+            <!-- =================================================
+                 DOCTOR CARD
+            ================================================= -->
+
+            <div th:each="doctor : ${doctorsData}"
+                 class="doctor-card doctor-item">
+
+
+                <!-- TOP -->
+
+                <div class="doctor-top">
+
+
+                    <!-- PROFILE -->
+
+                    <div class="doctor-profile">
+
+
+                        <div class="doctor-avatar">
+
+                            <i class="bi bi-person"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <div class="doctor-name doctor-name-search"
+                                 th:text="${doctor.user.name}">
+
+                                Doctor Name
+
+                            </div>
+
+
+                            <div class="doctor-specialization"
+                                 th:text="${doctor.specialization}">
+
+                                Specialization
+
+                            </div>
+
+
+                            <div class="doctor-id">
+
+                                Doctor ID:
+
+                                <span th:text="${doctor.doctorId}">
+
+                                    0
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- STATUS -->
+
+                    <div>
+
+                        <span th:if="${doctor.user.status == 'ACTIVE'}"
+                              class="status-badge status-active">
+
+                            <i class="bi bi-check-circle"></i>
+
+                            Active
+
+                        </span>
+
+
+                        <span th:if="${doctor.user.status == 'INACTIVE'}"
+                              class="status-badge status-inactive">
+
+                            <i class="bi bi-x-circle"></i>
+
+                            Inactive
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     DETAILS
+                ================================================= -->
+
+                <div class="doctor-details">
+
+
+                    <!-- EMAIL -->
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+
+                            Email
+
+                        </span>
+
+                        <span class="detail-value"
+                              th:text="${doctor.user.email}">
+
+                            doctor@email.com
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- CONTACT -->
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+
+                            Contact
+
+                        </span>
+
+                        <span class="detail-value"
+                              th:text="${doctor.user.contact}">
+
+                            0000000000
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- QUALIFICATION -->
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+
+                            Qualification
+
+                        </span>
+
+                        <span class="detail-value"
+                              th:text="${doctor.qualification}">
+
+                            MBBS
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- EXPERIENCE -->
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+
+                            Experience
+
+                        </span>
+
+                        <span class="detail-value">
+
+                            <span th:text="${doctor.experience}">
+
+                                0
+
+                            </span>
+
+                            Years
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- LICENSE -->
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+
+                            License Number
+
+                        </span>
+
+                        <span class="detail-value"
+                              th:text="${doctor.licenseNumber}">
+
+                            License
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- CONSULTATION FEE -->
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+
+                            Consultation Fee
+
+                        </span>
+
+                        <span class="detail-value">
+
+                            ₹
+
+                            <span th:text="${doctor.consultationFee}">
+
+                                0
+
+                            </span>
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- JOINING DATE -->
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+
+                            Joining Date
+
+                        </span>
+
+                        <span class="detail-value"
+                              th:text="${doctor.joiningDate}">
+
+                            2026-01-01
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- ROLE -->
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+
+                            Role
+
+                        </span>
+
+                        <span class="detail-value"
+                              th:text="${doctor.user.role}">
+
+                            DOCTOR
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 NO DATA
+            ================================================= -->
+
+            <div th:if="${#lists.isEmpty(doctorsData)}"
+                 class="empty-box">
+
+                <i class="bi bi-person-x"></i>
+
+                <h5>
+
+                    No Doctors Found
+
+                </h5>
+
+                <p>
+
+                    There are currently no doctors
+                    registered in the system.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ===================================================== -->
+
+    <div class="page-footer">
+
+        © 2026 CarePlus Hospital Management System
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     SEARCH JAVASCRIPT
+========================================================= -->
+
+<script>
+
+    const searchInput =
+        document.getElementById("doctorSearch");
+
+
+    searchInput.addEventListener("keyup", function () {
+
+        const searchValue =
+            this.value.toLowerCase().trim();
+
+
+        const doctors =
+            document.querySelectorAll(".doctor-item");
+
+
+        doctors.forEach(function (doctor) {
+
+            const doctorText =
+                doctor.textContent.toLowerCase();
+
+
+            if (doctorText.includes(searchValue)) {
+
+                doctor.style.display = "";
+
+            } else {
+
+                doctor.style.display = "none";
+
+            }
+
+        });
+
+    });
+
+</script>
+
+
+<!-- Bootstrap JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+</body>
+
+</html>

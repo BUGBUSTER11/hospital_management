@@ -35,8 +35,6 @@ public class AdminController {
     private DepartmentService departmentService;
 
 
-
-
     @PostMapping("/admin/register-doctor")
     public String addDoctor(@ModelAttribute User user,
                             HttpSession doctorSession,
@@ -67,17 +65,9 @@ public class AdminController {
     }
 
 
-
-    @GetMapping("/admin/doctors/add")
-        public String addDoctor() {
-        return "Admin/addDoctor";
-    }
-
-
-
     @PostMapping("/admin/add-doctor-details")
-    public String completeDroctor( @Validated @ModelAttribute Doctor doctor,
-                                   BindingResult result,
+    public String completeDroctor(@Validated @ModelAttribute Doctor doctor,
+                                  BindingResult result,
                                   HttpSession doctorSession,
                                   Model model) {
 
@@ -114,20 +104,71 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/admin/doctors")
-    public String showAllDoctorPage(HttpSession session, Model model) {
+
+    @GetMapping("/doctorsDashboard")
+    public String doctorsDashboard(HttpSession session, Model model) {
+
+        User user = (User) session.getAttribute("loggedInUser");
+        if (user == null) {
+
+            return "redirect:/UserLoginPage";
+        }
+        List<Doctor> doctorList = doctorService.getAllDoctorsData();
+
+        long totalDoctors = doctorList.size();
+
+        long activeDoctors = doctorList.stream().filter(d -> "ACTIVE".equalsIgnoreCase(d.getUser().getStatus())).count();
+        long inactiveDoctors = doctorList.stream().filter(d -> "INACTIVE".equalsIgnoreCase(d.getUser().getStatus())).count();
+        long specializationCount = doctorList.stream().map(Doctor::getSpecialization).filter(java.util.Objects::nonNull).distinct().count();
+        model.addAttribute("totalDoctors", totalDoctors);
+        model.addAttribute("activeDoctors", activeDoctors);
+        model.addAttribute("inactiveDoctors", inactiveDoctors);
+        model.addAttribute("specializationCount",specializationCount);
+
+
+        return "Admin/doctorsDashboard";
+    }
+
+    @GetMapping("/manageAllDoctorsData")
+    public String manageAllDoctorsData(HttpSession session, Model model) {
 
         User user = (User) session.getAttribute("loggedInUser");
 
         if (user == null) {
-            return "redirect:/Auth/adminLogin";
+            return "redirect:/UserLoginPage";
         }
 
         List<Doctor> doctorsData = doctorService.getAllDoctorsData();
 
         model.addAttribute("doctorsData", doctorsData);
 
-        return "Admin/showAllDetails";
+        return "Admin/manageAllDoctors";
+    }
+
+    @GetMapping("/getAllDoctorsData")
+    public String showAllDoctorPage(HttpSession session, Model model) {
+
+        User user = (User) session.getAttribute("loggedInUser");
+
+        if (user == null) {
+            return "redirect:/UserLoginPage";
+        }
+
+        List<Doctor> doctorsData = doctorService.getAllDoctorsData();
+        long totalDoctors = doctorsData.size();
+
+        long activeDoctors = doctorsData.stream().filter(d -> "ACTIVE".equalsIgnoreCase(d.getUser().getStatus())).count();
+        long inactiveDoctors = doctorsData.stream().filter(d -> "INACTIVE".equalsIgnoreCase(d.getUser().getStatus())).count();
+        long specializationCount = doctorsData.stream().map(Doctor::getSpecialization).filter(java.util.Objects::nonNull).distinct().count();
+        model.addAttribute("totalDoctors", totalDoctors);
+        model.addAttribute("activeDoctors", activeDoctors);
+        model.addAttribute("inactiveDoctors", inactiveDoctors);
+        model.addAttribute("specializationCount",specializationCount);
+
+
+        model.addAttribute("doctorsData", doctorsData);
+
+        return "Admin/showAllDoctorsDetails";
     }
 
     @GetMapping("/admin/department")
@@ -144,11 +185,11 @@ public class AdminController {
     public String getAllRecordCount(Model model) {
 
         long departmentCount = addDepartmentService.DepartmentCount();
-        model.addAttribute("departmentCount" , departmentCount);
+        model.addAttribute("departmentCount", departmentCount);
 
 
         long doctorCount = doctorService.getAllDoctorCount();
-        model.addAttribute("doctorCount",doctorCount);
+        model.addAttribute("doctorCount", doctorCount);
 
         return "Admin/adminDashboard";
 

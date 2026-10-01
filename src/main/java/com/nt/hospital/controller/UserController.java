@@ -20,7 +20,7 @@ public class UserController {
 
 
 
-    @PostMapping("/Auth/adminLogin")
+    @PostMapping("/adminLogin")
     public String adminLogin(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
 
         User user = userService.loginUser(email, password);

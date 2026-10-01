@@ -64,6 +64,7 @@ public class Doctor {
         return specialization;
     }
 
+    //for testing git and commit
     public void setSpecialization(String specialization) {
         this.specialization = specialization;
     }

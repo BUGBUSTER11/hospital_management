@@ -1,11 +1,9 @@
 package com.nt.hospital.controller;
 
+import com.nt.hospital.model.Department;
 import com.nt.hospital.model.Doctor;
 import com.nt.hospital.model.User;
-import com.nt.hospital.service.AddDepartmentService;
-import com.nt.hospital.service.AdminService;
-import com.nt.hospital.service.DoctorService;
-import com.nt.hospital.service.UserService;
+import com.nt.hospital.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +30,9 @@ public class AdminController {
 
     @Autowired
     private AddDepartmentService addDepartmentService;
+
+    @Autowired
+    private DepartmentService departmentService;
 
 
     @PostMapping("/admin/register-doctor")
@@ -170,18 +171,89 @@ public class AdminController {
         return "Admin/showAllDoctorsDetails";
     }
 
-    @GetMapping("/Admin/adminDashboard")
-    public String getAllRecordCount(Model model) {
+    @GetMapping("/admin/department")
+    public String departmentDashboard(Model model) {
 
-        long departmentCount = addDepartmentService.DepartmentCount();
+        // Get all departments
+        List<Department> departments =
+                departmentService.getAllDepartmets();
+
+        // Total department count
+        long departmentCount =
+                addDepartmentService.DepartmentCount();
+
+        // Total doctors
+        long doctorCount =
+                doctorService.getAllDoctorCount();
+
+        long activeDepCount = departments.stream().filter(department ->"ACTIVE".equalsIgnoreCase(department.getStatus())).count();
+        long inactiveDepCount = departments.stream().filter(department -> "INACTIVE".equalsIgnoreCase(department.getStatus())).count();
+
+
+        // Send data to dashboard
+        model.addAttribute("departments", departments);
         model.addAttribute("departmentCount", departmentCount);
-
-
-        long doctorCount = doctorService.getAllDoctorCount();
         model.addAttribute("doctorCount", doctorCount);
+        model.addAttribute("activeDepCount",activeDepCount);
+        model.addAttribute("inactiveDepCount",inactiveDepCount);
 
-        return "Admin/adminDashboard";
+        // Use the SAME name that the HTML will use
+        model.addAttribute("totalDepartments", departmentCount);
 
-
+        return "Admin/departmentManagement";
     }
+
+    @GetMapping("/Admin/adminDashboard")
+    public String adminDashboard() {
+        return "Admin/adminDashboard";
+    }
+
+    @GetMapping("/admin/departments")
+    public String showAllDepartments(Model model) {
+
+        // Get all departments from database
+        List<Department> departments =
+                departmentService.getAllDepartmets();
+
+        // Calculate total
+        long totalDepartments =
+                departments.size();
+
+        // Send department list to HTML
+        model.addAttribute("departments", departments);
+
+        // Send count to HTML
+        model.addAttribute("totalDepartments", totalDepartments);
+
+        return "Department/viewDepartmentList";
+    }
+//Get All Active Department And Send to the Html Page To show list
+    @GetMapping("/admin/activeDepView")
+    public String activeDepartmentView(Model model) {
+
+        List<Department> departments = addDepartmentService.getActiveDepartments();
+
+        long totalActiveDepartments = departments.size();
+
+        model.addAttribute("activeDepartments", departments);
+        model.addAttribute("totalActiveDepartments", totalActiveDepartments);
+
+        return "Department/viewActiveDepList";
+    }
+
+    @GetMapping("/admin/inactiveDepView")
+    public String inactiveDepartmentView(Model model) {
+
+        List<Department> departments = addDepartmentService.getInActiveDepartments();
+
+        long totalInActiveDepartments = departments.size();
+
+        model.addAttribute("InactiveDepartments", departments);
+        model.addAttribute("totalActiveDepartments", totalInActiveDepartments);
+
+        return "Department/viewInActiveDepList";
+    }
+
+
+
 }

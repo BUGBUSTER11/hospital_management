@@ -7,13 +7,15 @@ import jakarta.persistence.*;
 public class Department {
 
     @Id
-    private String departmentId;
+    private String id;
 
     private String departmentName;
 
     private String description;
 
     private String location;
+
+    private String status;
 
     @ManyToOne
     @JoinColumn(name = "director_id")
@@ -24,22 +26,23 @@ public class Department {
     public Department() {
     }
 
-    public Department(String departmentId, String departmentName, String description,
-                      String location, User director, long phone) {
-        this.departmentId = departmentId;
+    public Department(String id, String departmentName, String description,
+                      String location, String status , User director, long phone) {
+        this.id = id;
         this.departmentName = departmentName;
         this.description = description;
         this.location = location;
+        this.status = status;
         this.director = director;
         this.phone = phone;
     }
 
-    public String getDepartmentId() {
-        return departmentId;
+    public String getId() {
+        return id;
     }
 
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDepartmentName() {
@@ -48,6 +51,14 @@ public class Department {
 
     public void setDepartmentName(String departmentName) {
         this.departmentName = departmentName;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public String getDescription() {
@@ -84,7 +95,7 @@ public class Department {
 
     @Override
     public String toString() {
-        return "Department [departmentId=" + departmentId
+        return "Department [departmentId=" + id
                 + ", departmentName=" + departmentName
                 + ", description=" + description
                 + ", location=" + location

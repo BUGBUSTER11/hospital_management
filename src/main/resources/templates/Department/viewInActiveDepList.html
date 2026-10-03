@@ -1,0 +1,460 @@
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Active Departments - Hospital Management</title>
+
+  <style>
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background-color: #f4f7fb;
+        min-height: 100vh;
+    }
+
+    /* Header */
+
+    .header {
+        background-color: #1976d2;
+        color: white;
+        padding: 20px 40px;
+    }
+
+    .header h1 {
+        font-size: 26px;
+    }
+
+    /* Main Container */
+
+    .container {
+        width: 92%;
+        max-width: 1300px;
+        margin: 35px auto;
+    }
+
+    /* Page Header */
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .page-header h2 {
+        color: #333;
+        font-size: 24px;
+    }
+
+    .page-header p {
+        color: #777;
+        margin-top: 6px;
+        font-size: 14px;
+    }
+
+    /* Back Button */
+
+    .back-btn {
+        background-color: #777;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .back-btn:hover {
+        background-color: #555;
+    }
+
+    /* Department Count */
+
+    .count-card {
+        background-color: white;
+        padding: 18px 22px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+        display: inline-block;
+    }
+
+    .count-card span {
+        color: #777;
+        font-size: 14px;
+    }
+
+    .count-card h3 {
+        color: #1976d2;
+        font-size: 25px;
+        margin-top: 5px;
+    }
+
+    /* Table Card */
+
+    .table-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 900px;
+    }
+
+    thead {
+        background-color: #1976d2;
+        color: white;
+    }
+
+    th {
+        padding: 15px 12px;
+        text-align: left;
+        font-size: 14px;
+    }
+
+    td {
+        padding: 14px 12px;
+        border-bottom: 1px solid #eeeeee;
+        color: #444;
+        font-size: 14px;
+    }
+
+    tbody tr:hover {
+        background-color: #f8fbff;
+    }
+
+    /* Status */
+
+    .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 5px 10px;
+        border-radius: 20px;
+        background-color: #e8f5e9;
+        color: #2e7d32;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        background-color: #2e7d32;
+        border-radius: 50%;
+    }
+
+    /* Action Buttons */
+
+    .actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    .btn {
+        padding: 7px 12px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 12px;
+        color: white;
+    }
+
+    .btn-view {
+        background-color: #1976d2;
+    }
+
+    .btn-view:hover {
+        background-color: #125ca5;
+    }
+
+    .btn-edit {
+        background-color: #f57c00;
+    }
+
+    .btn-edit:hover {
+        background-color: #d86600;
+    }
+
+    /* Empty State */
+
+    .empty-message {
+        text-align: center;
+        padding: 50px 20px;
+        color: #777;
+    }
+
+    .empty-message h3 {
+        margin-bottom: 8px;
+        color: #555;
+    }
+
+    /* Responsive */
+
+    @media (max-width: 700px) {
+
+        .container {
+            width: 95%;
+        }
+
+        .page-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .header {
+            padding: 18px 20px;
+        }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<!-- Header -->
+
+<header class="header">
+
+  <h1>Hospital Management System</h1>
+
+</header>
+
+
+<!-- Main Container -->
+
+<div class="container">
+
+
+  <!-- Page Header -->
+
+  <div class="page-header">
+
+    <div>
+
+      <h2>Active Departments</h2>
+
+      <p>
+        List of all currently active hospital departments
+      </p>
+
+    </div>
+
+
+    <a th:href="@{/admin/dashboard}"
+       class="back-btn">
+
+      ← Back to Dashboard
+
+    </a>
+
+  </div>
+
+
+  <!-- Active Department Count -->
+
+  <div class="count-card">
+
+    <span>Currently Active Departments</span>
+
+    <h3 th:text="${totalActiveDepartments}">
+      0
+    </h3>
+
+  </div>
+
+
+  <!-- Department Table -->
+
+  <div class="table-card">
+
+    <div class="table-container">
+
+      <table>
+
+
+        <!-- Table Header -->
+
+        <thead>
+
+        <tr>
+
+          <th>Department ID</th>
+
+          <th>Department Name</th>
+
+          <th>Description</th>
+
+          <th>Location</th>
+
+          <th>Director</th>
+
+          <th>Contact Number</th>
+
+          <th>Status</th>
+
+          <th>Actions</th>
+
+        </tr>
+
+        </thead>
+
+
+        <!-- Department Data -->
+
+        <tbody>
+
+        <tr th:each="department : ${InactiveDepartments}">
+
+
+          <!-- Department ID -->
+
+          <td th:text="${department.id}">
+            D001
+          </td>
+
+
+          <!-- Department Name -->
+
+          <td th:text="${department.departmentName}">
+            Cardiology
+          </td>
+
+
+          <!-- Description -->
+
+          <td th:text="${department.description}">
+            Heart related treatments
+          </td>
+
+
+          <!-- Location -->
+
+          <td th:text="${department.location}">
+            First Floor
+          </td>
+
+
+          <!-- Director -->
+
+          <td th:text="${department.director.name}">
+            Director Name
+          </td>
+
+
+          <!-- Contact -->
+
+          <td th:text="${department.phone}">
+            9876543210
+          </td>
+
+
+          <!-- Status -->
+
+          <td>
+
+                        <span class="status">
+
+                            <span class="status-dot"></span>
+
+                            <span th:text="${department.status}">
+                                ACTIVE
+                            </span>
+
+                        </span>
+
+          </td>
+
+
+          <!-- Actions -->
+
+          <td>
+
+            <div class="actions">
+
+              <a th:href="@{/Admin/viewDepartment/{id}(id=${department.id})}"
+                 class="btn btn-view">
+
+                View
+
+              </a>
+
+
+              <a th:href="@{/Admin/editDepartment/{id}(id=${department.id})}"
+                 class="btn btn-edit">
+
+                Edit
+
+              </a>
+
+            </div>
+
+          </td>
+
+
+        </tr>
+
+
+        <!-- Empty List -->
+
+        <tr th:if="${#lists.isEmpty(departments)}">
+
+          <td colspan="8">
+
+            <div class="empty-message">
+
+              <h3>No Active Departments</h3>
+
+              <p>
+                There are currently no active departments
+                in the hospital.
+              </p>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+
+</div>
+
+
+</body>
+
+</html>

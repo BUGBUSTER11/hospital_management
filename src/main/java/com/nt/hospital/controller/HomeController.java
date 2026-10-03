@@ -12,10 +12,10 @@ public class HomeController {
         return "index";
     }
 //UserLogin Page
-    @GetMapping("/UserLoginPage")
-    public String userLoginPage(){
-        return "Auth/adminLogin";
-    }
+@GetMapping("/UserLoginPage")
+public String userLoginPage(){
+    return "Auth/adminLogin";
+}
 
     // Add Doctor Page
 
@@ -23,10 +23,6 @@ public class HomeController {
     public String addDoctorPage() {
         return "Admin/addDoctor";
     }
-
-
-
-
 
     // Admin Logout
     @GetMapping("/Userlogout")
@@ -36,5 +32,6 @@ public class HomeController {
 
         return "redirect:/UserLoginPage";
     }
+
 
 }

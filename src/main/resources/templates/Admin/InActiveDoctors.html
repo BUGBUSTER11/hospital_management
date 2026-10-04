@@ -9,17 +9,13 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>All Doctors | CarePlus</title>
-
+    <title>Inactive Doctors | CarePlus</title>
 
     <!-- Bootstrap -->
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
           rel="stylesheet">
 
-
     <!-- Bootstrap Icons -->
-
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -38,9 +34,9 @@
         }
 
 
-        /* =====================================================
+        /* =========================
            SIDEBAR
-        ===================================================== */
+        ========================= */
 
         .sidebar {
             position: fixed;
@@ -69,7 +65,6 @@
             padding: 8px 12px 28px;
 
             font-size: 18px;
-
             font-weight: 700;
         }
 
@@ -128,14 +123,12 @@
 
         .sidebar-link:hover {
             background: #eef5ff;
-
             color: #1677ff;
         }
 
 
         .sidebar-link.active {
             background: #1677ff;
-
             color: white;
         }
 
@@ -147,15 +140,13 @@
 
         .logout:hover {
             background: #fff1f2;
-
             color: #dc2626;
         }
 
 
-
-        /* =====================================================
+        /* =========================
            MAIN CONTENT
-        ===================================================== */
+        ========================= */
 
         .main-content {
             margin-left: 225px;
@@ -164,16 +155,15 @@
         }
 
 
-
-        /* =====================================================
+        /* =========================
            PAGE HEADER
-        ===================================================== */
+        ========================= */
 
         .page-header {
             background: linear-gradient(
                     135deg,
-                    #1677ff,
-                    #438cf5
+                    #475569,
+                    #64748b
             );
 
             color: white;
@@ -200,17 +190,16 @@
         }
 
 
-
-        /* =====================================================
-           STAT CARDS
-        ===================================================== */
+        /* =========================
+           STAT CARD
+        ========================= */
 
         .stat-card {
             background: white;
 
             border: 1px solid #e5e7eb;
 
-            border-radius: 13px;
+            border-radius: 14px;
 
             padding: 20px;
 
@@ -228,8 +217,8 @@
 
 
         .stat-icon {
-            width: 46px;
-            height: 46px;
+            width: 45px;
+            height: 45px;
 
             display: flex;
 
@@ -240,34 +229,24 @@
 
             font-size: 21px;
 
-            margin-bottom: 15px;
+            margin-bottom: 13px;
         }
 
 
-        .blue {
-            background: #eaf2ff;
-
-            color: #1677ff;
+        .gray {
+            background: #f1f5f9;
+            color: #475569;
         }
 
 
-        .green {
-            background: #eaf8ef;
-
-            color: #16a34a;
-        }
-
-
-        .red {
-            background: #fff0f0;
-
-            color: #dc2626;
+        .orange {
+            background: #fff4e6;
+            color: #ea580c;
         }
 
 
         .purple {
             background: #f2eaff;
-
             color: #7c3aed;
         }
 
@@ -288,10 +267,9 @@
         }
 
 
-
-        /* =====================================================
+        /* =========================
            DOCTOR SECTION
-        ===================================================== */
+        ========================= */
 
         .doctor-section {
             background: white;
@@ -333,13 +311,12 @@
         }
 
 
-
-        /* =====================================================
+        /* =========================
            SEARCH
-        ===================================================== */
+        ========================= */
 
         .search-box {
-            max-width: 350px;
+            width: 320px;
         }
 
 
@@ -362,10 +339,9 @@
         }
 
 
-
-        /* =====================================================
+        /* =========================
            DOCTOR CARD
-        ===================================================== */
+        ========================= */
 
         .doctor-card {
             background: #ffffff;
@@ -383,9 +359,9 @@
 
 
         .doctor-card:hover {
-            border-color: #bcd4ff;
+            border-color: #cbd5e1;
 
-            box-shadow: 0 8px 25px rgba(22,119,255,.08);
+            box-shadow: 0 8px 25px rgba(0,0,0,.06);
         }
 
 
@@ -418,9 +394,9 @@
             align-items: center;
             justify-content: center;
 
-            background: #eaf2ff;
+            background: #f1f5f9;
 
-            color: #1677ff;
+            color: #64748b;
 
             border-radius: 50%;
 
@@ -438,7 +414,7 @@
 
 
         .doctor-specialization {
-            color: #1677ff;
+            color: #64748b;
 
             font-size: 14px;
 
@@ -455,15 +431,24 @@
         }
 
 
+        /* =========================
+           INACTIVE BADGE
+        ========================= */
 
-        /* =====================================================
-           STATUS
-        ===================================================== */
+        .inactive-badge {
+            display: inline-flex;
 
-        .status-badge {
+            align-items: center;
+
+            gap: 5px;
+
             padding: 7px 12px;
 
             border-radius: 20px;
+
+            background: #fee2e2;
+
+            color: #dc2626;
 
             font-size: 12px;
 
@@ -471,30 +456,14 @@
         }
 
 
-        .status-active {
-            background: #dcfce7;
-
-            color: #15803d;
-        }
-
-
-        .status-inactive {
-            background: #fee2e2;
-
-            color: #b91c1c;
-        }
-
-
-
-        /* =====================================================
+        /* =========================
            DETAILS
-        ===================================================== */
+        ========================= */
 
         .doctor-details {
             display: grid;
 
-            grid-template-columns:
-                repeat(4, 1fr);
+            grid-template-columns: repeat(4, 1fr);
 
             gap: 15px;
 
@@ -535,10 +504,9 @@
         }
 
 
-
-        /* =====================================================
-           EMPTY
-        ===================================================== */
+        /* =========================
+           EMPTY STATE
+        ========================= */
 
         .empty-box {
             text-align: center;
@@ -563,10 +531,9 @@
         }
 
 
-
-        /* =====================================================
+        /* =========================
            FOOTER
-        ===================================================== */
+        ========================= */
 
         .page-footer {
             text-align: center;
@@ -579,16 +546,14 @@
         }
 
 
-
-        /* =====================================================
+        /* =========================
            RESPONSIVE
-        ===================================================== */
+        ========================= */
 
         @media (max-width: 1100px) {
 
             .doctor-details {
-                grid-template-columns:
-                    repeat(3, 1fr);
+                grid-template-columns: repeat(3, 1fr);
             }
 
         }
@@ -615,8 +580,7 @@
             }
 
             .doctor-details {
-                grid-template-columns:
-                    repeat(2, 1fr);
+                grid-template-columns: repeat(2, 1fr);
             }
 
         }
@@ -628,16 +592,6 @@
                 padding: 15px;
             }
 
-            .doctor-top {
-                flex-direction: column;
-
-                gap: 15px;
-            }
-
-            .doctor-details {
-                grid-template-columns: 1fr;
-            }
-
             .section-header {
                 flex-direction: column;
 
@@ -647,9 +601,17 @@
             }
 
             .search-box {
-                max-width: 100%;
-
                 width: 100%;
+            }
+
+            .doctor-top {
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+            .doctor-details {
+                grid-template-columns: 1fr;
             }
 
         }
@@ -702,11 +664,7 @@
 
         <i class="bi bi-grid-fill"></i>
 
-        <span>
-
-            Dashboard
-
-        </span>
+        <span>Dashboard</span>
 
     </a>
 
@@ -716,11 +674,7 @@
 
         <i class="bi bi-person-badge"></i>
 
-        <span>
-
-            Doctors
-
-        </span>
+        <span>Doctors</span>
 
     </a>
 
@@ -730,11 +684,7 @@
 
         <i class="bi bi-people"></i>
 
-        <span>
-
-            Patients
-
-        </span>
+        <span>Patients</span>
 
     </a>
 
@@ -744,11 +694,7 @@
 
         <i class="bi bi-calendar-check"></i>
 
-        <span>
-
-            Appointments
-
-        </span>
+        <span>Appointments</span>
 
     </a>
 
@@ -758,14 +704,9 @@
 
         <i class="bi bi-building"></i>
 
-        <span>
-
-            Departments
-
-        </span>
+        <span>Departments</span>
 
     </a>
-
 
 
     <!-- HOSPITAL MANAGEMENT -->
@@ -782,11 +723,7 @@
 
         <i class="bi bi-file-medical"></i>
 
-        <span>
-
-            Medical Records
-
-        </span>
+        <span>Medical Records</span>
 
     </a>
 
@@ -796,11 +733,7 @@
 
         <i class="bi bi-prescription2"></i>
 
-        <span>
-
-            Prescriptions
-
-        </span>
+        <span>Prescriptions</span>
 
     </a>
 
@@ -810,14 +743,9 @@
 
         <i class="bi bi-person-gear"></i>
 
-        <span>
-
-            Users
-
-        </span>
+        <span>Users</span>
 
     </a>
-
 
 
     <!-- ACCOUNT -->
@@ -834,11 +762,7 @@
 
         <i class="bi bi-box-arrow-right"></i>
 
-        <span>
-
-            Logout
-
-        </span>
+        <span>Logout</span>
 
     </a>
 
@@ -853,24 +777,22 @@
 <div class="main-content">
 
 
-    <!-- =====================================================
-         PAGE HEADER
-    ===================================================== -->
+    <!-- HEADER -->
 
     <div class="page-header">
 
         <h2>
 
-            <i class="bi bi-person-badge"></i>
+            <i class="bi bi-person-x"></i>
 
-            All Doctors
+            Inactive Doctors
 
         </h2>
 
         <p>
 
-            View complete information of all doctors
-            registered in the hospital.
+            View doctors who are currently inactive
+            in the hospital system.
 
         </p>
 
@@ -885,80 +807,20 @@
     <div class="row g-4">
 
 
-        <!-- TOTAL -->
+        <!-- TOTAL INACTIVE -->
 
-        <div class="col-md-6 col-xl-3">
+        <div class="col-md-6 col-xl-4">
 
             <div class="stat-card">
 
-                <div class="stat-icon blue">
+                <div class="stat-icon gray">
 
-                    <i class="bi bi-people"></i>
+                    <i class="bi bi-person-x-fill"></i>
 
                 </div>
 
                 <div class="stat-number"
-                     th:text="${doctorsData.size()}">
-
-                    0
-
-                </div>
-
-                <div class="stat-label">
-
-                    Total Doctors
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- ACTIVE -->
-
-        <div class="col-md-6 col-xl-3">
-
-            <div class="stat-card">
-
-                <div class="stat-icon green">
-
-                    <i class="bi bi-person-check"></i>
-
-                </div>
-
-                <div class="stat-number text-success"
-                     th:text="${activeDoctors}">
-
-                    0
-
-                </div>
-
-                <div class="stat-label">
-
-                    Active Doctors
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- INACTIVE -->
-
-        <div class="col-md-6 col-xl-3">
-
-            <div class="stat-card">
-
-                <div class="stat-icon red">
-
-                    <i class="bi bi-person-x"></i>
-
-                </div>
-
-                <div class="stat-number text-danger"
-                     th:text="${inactiveDoctors}">
+                     th:text="${inactiveDoctors.size()}">
 
                     0
 
@@ -975,28 +837,56 @@
         </div>
 
 
-        <!-- SPECIALIZATION -->
+        <!-- PROFESSIONAL PROFILES -->
 
-        <div class="col-md-6 col-xl-3">
+        <div class="col-md-6 col-xl-4">
 
             <div class="stat-card">
 
-                <div class="stat-icon purple">
+                <div class="stat-icon orange">
 
-                    <i class="bi bi-heart-pulse"></i>
+                    <i class="bi bi-person-lines-fill"></i>
 
                 </div>
 
-                <div class="stat-number"
-                     th:text="${specializationCount}">
+                <div class="stat-number">
 
-                    0
+                    Profiles
 
                 </div>
 
                 <div class="stat-label">
 
-                    Specializations
+                    Doctor Profiles Available
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div class="col-md-6 col-xl-4">
+
+            <div class="stat-card">
+
+                <div class="stat-icon purple">
+
+                    <i class="bi bi-shield-x"></i>
+
+                </div>
+
+                <div class="stat-number">
+
+                    Inactive
+
+                </div>
+
+                <div class="stat-label">
+
+                    Current Doctor Status
 
                 </div>
 
@@ -1009,7 +899,7 @@
 
 
     <!-- =====================================================
-         ALL DOCTORS SECTION
+         DOCTOR DIRECTORY
     ===================================================== -->
 
     <div class="doctor-section">
@@ -1023,15 +913,16 @@
 
                 <h4>
 
-                    <i class="bi bi-person-lines-fill text-primary"></i>
+                    <i class="bi bi-person-lines-fill text-secondary"></i>
 
-                    Doctor Directory
+                    Inactive Doctor Directory
 
                 </h4>
 
                 <p>
 
-                    Complete details of registered doctors
+                    Complete information of currently
+                    inactive doctors
 
                 </p>
 
@@ -1070,11 +961,9 @@
         <div id="doctorList">
 
 
-            <!-- =================================================
-                 DOCTOR CARD
-            ================================================= -->
+            <!-- DOCTOR CARD -->
 
-            <div th:each="doctor : ${doctorsData}"
+            <div th:each="doctor : ${inactiveDoctors}"
                  class="doctor-card doctor-item">
 
 
@@ -1097,10 +986,13 @@
 
                         <div>
 
-                            <div class="doctor-name doctor-name-search"
-                                 th:text="${doctor.user.name}">
+                            <div class="doctor-name">
 
-                                Doctor Name
+                                <span th:text="${doctor.user.name}">
+
+                                    Doctor Name
+
+                                </span>
 
                             </div>
 
@@ -1130,31 +1022,15 @@
                     </div>
 
 
-
                     <!-- STATUS -->
 
-                    <div>
+                    <span class="inactive-badge">
 
-                        <span th:if="${doctor.user.status == 'ACTIVE'}"
-                              class="status-badge status-active">
+                        <i class="bi bi-x-circle-fill"></i>
 
-                            <i class="bi bi-check-circle"></i>
+                        Inactive
 
-                            Active
-
-                        </span>
-
-
-                        <span th:if="${doctor.user.status == 'INACTIVE'}"
-                              class="status-badge status-inactive">
-
-                            <i class="bi bi-x-circle"></i>
-
-                            Inactive
-
-                        </span>
-
-                    </div>
+                    </span>
 
                 </div>
 
@@ -1207,6 +1083,26 @@
                     </div>
 
 
+                    <!-- SPECIALIZATION -->
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+
+                            Specialization
+
+                        </span>
+
+                        <span class="detail-value"
+                              th:text="${doctor.specialization}">
+
+                            Cardiologist
+
+                        </span>
+
+                    </div>
+
+
                     <!-- QUALIFICATION -->
 
                     <div class="detail-item">
@@ -1227,6 +1123,26 @@
                     </div>
 
 
+                    <!-- LICENSE -->
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+
+                            License Number
+
+                        </span>
+
+                        <span class="detail-value"
+                              th:text="${doctor.licenseNumber}">
+
+                            LIC0001
+
+                        </span>
+
+                    </div>
+
+
                     <!-- EXPERIENCE -->
 
                     <div class="detail-item">
@@ -1241,31 +1157,11 @@
 
                             <span th:text="${doctor.experience}">
 
-                                0
+                                5
 
                             </span>
 
                             Years
-
-                        </span>
-
-                    </div>
-
-
-                    <!-- LICENSE -->
-
-                    <div class="detail-item">
-
-                        <span class="detail-label">
-
-                            License Number
-
-                        </span>
-
-                        <span class="detail-value"
-                              th:text="${doctor.licenseNumber}">
-
-                            License
 
                         </span>
 
@@ -1288,7 +1184,7 @@
 
                             <span th:text="${doctor.consultationFee}">
 
-                                0
+                                500
 
                             </span>
 
@@ -1316,51 +1212,29 @@
 
                     </div>
 
-
-                    <!-- ROLE -->
-
-                    <div class="detail-item">
-
-                        <span class="detail-label">
-
-                            Role
-
-                        </span>
-
-                        <span class="detail-value"
-                              th:text="${doctor.user.role}">
-
-                            DOCTOR
-
-                        </span>
-
-                    </div>
-
                 </div>
 
             </div>
 
 
 
-            <!-- =================================================
-                 NO DATA
-            ================================================= -->
+            <!-- EMPTY STATE -->
 
-            <div th:if="${#lists.isEmpty(doctorsData)}"
+            <div th:if="${#lists.isEmpty(inactiveDoctors)}"
                  class="empty-box">
 
-                <i class="bi bi-person-x"></i>
+                <i class="bi bi-person-check"></i>
 
                 <h5>
 
-                    No Doctors Found
+                    No Inactive Doctors
 
                 </h5>
 
                 <p>
 
-                    There are currently no doctors
-                    registered in the system.
+                    There are currently no inactive doctors
+                    registered in the hospital.
 
                 </p>
 
@@ -1372,9 +1246,7 @@
 
 
 
-    <!-- =====================================================
-         FOOTER
-    ===================================================== -->
+    <!-- FOOTER -->
 
     <div class="page-footer">
 
@@ -1387,7 +1259,7 @@
 
 
 <!-- =========================================================
-     SEARCH JAVASCRIPT
+     SEARCH
 ========================================================= -->
 
 <script>

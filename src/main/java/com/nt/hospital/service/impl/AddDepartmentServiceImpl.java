@@ -31,7 +31,7 @@ public class AddDepartmentServiceImpl implements AddDepartmentService {
 
 
     @Override
-    public Department addDepartment(
+    public boolean addDepartment(
             Department department,
             int directorId) {
 
@@ -55,11 +55,24 @@ public class AddDepartmentServiceImpl implements AddDepartmentService {
 
 
         // Save Department
-        return addDepartmentRepository.save(department);
+       addDepartmentRepository.save(department);
+
+       return true;
     }
 
     @Override
     public long DepartmentCount() {
         return addDepartmentRepository.count();
+    }
+
+    @Override
+    public List<Department> getActiveDepartments() {
+
+        return addDepartmentRepository.findByStatus("ACTIVE");
+    }
+
+    public List<Department> getInActiveDepartments() {
+
+        return addDepartmentRepository.findByStatus("INACTIVE");
     }
 }

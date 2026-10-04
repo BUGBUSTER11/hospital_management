@@ -14,4 +14,11 @@ public interface DoctorService {
     List<Doctor> getAllDoctorsData();
 
     long getAllDoctorCount();
+
+
+    Doctor getDoctorByEmail(String email);
+
+    Doctor getDoctorById(int doctorId);
+
+    boolean updateDoctor(Doctor doctor);
 }

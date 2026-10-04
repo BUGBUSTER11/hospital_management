@@ -9,8 +9,13 @@ public interface AddDepartmentService {
 
     List<User> getDirectors();
 
-    Department addDepartment(Department department, int directorId);
+    boolean addDepartment(Department department, int directorId);
 
 
     long DepartmentCount();
+
+
+    List<Department> getActiveDepartments();
+
+    List<Department> getInActiveDepartments();
 }

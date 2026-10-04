@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Update Doctor Profile | CarePlus</title>
+
+
+    <!-- =====================================================
+         BOOTSTRAP
+    ====================================================== -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+
+    <!-- =====================================================
+         BOOTSTRAP ICONS
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            background: #f5f7fb;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            color: #1f2937;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            width: 225px;
+
+            background: #ffffff;
+
+            border-right: 1px solid #e5e7eb;
+
+            padding: 20px 14px;
+
+            z-index: 1000;
+        }
+
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 8px 12px 28px;
+
+            font-size: 18px;
+
+            font-weight: 700;
+        }
+
+
+        .brand-icon {
+
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #1677ff;
+
+            color: white;
+
+            border-radius: 9px;
+        }
+
+
+        .menu-title {
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            color: #9ca3af;
+
+            margin: 12px 10px 8px;
+
+            letter-spacing: .5px;
+        }
+
+
+        .sidebar-link {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 11px 12px;
+
+            margin-bottom: 4px;
+
+            color: #374151;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            transition: .2s;
+        }
+
+
+        .sidebar-link:hover {
+
+            background: #eef5ff;
+
+            color: #1677ff;
+        }
+
+
+        .sidebar-link.active {
+
+            background: #1677ff;
+
+            color: white;
+        }
+
+
+        .logout {
+
+            color: #ef4444;
+        }
+
+
+        /* =====================================================
+           MAIN CONTENT
+        ===================================================== */
+
+        .main-content {
+
+            margin-left: 225px;
+
+            padding: 30px;
+        }
+
+
+        /* =====================================================
+           PAGE HEADER
+        ===================================================== */
+
+        .page-header {
+
+            background: linear-gradient(
+                    135deg,
+                    #1677ff,
+                    #438cf5
+            );
+
+            color: white;
+
+            border-radius: 15px;
+
+            padding: 28px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .page-header h2 {
+
+            margin: 0 0 7px;
+
+            font-weight: 600;
+        }
+
+
+        .page-header p {
+
+            margin: 0;
+
+            opacity: .9;
+        }
+
+
+        /* =====================================================
+           MESSAGE
+        ===================================================== */
+
+        .message-box {
+
+            border-radius: 10px;
+
+            padding: 14px 18px;
+
+            margin-bottom: 25px;
+
+            font-size: 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .success-message {
+
+            background: #ecfdf5;
+
+            border: 1px solid #bbf7d0;
+
+            color: #166534;
+        }
+
+
+        .error-message {
+
+            background: #fef2f2;
+
+            border: 1px solid #fecaca;
+
+            color: #991b1b;
+        }
+
+
+        /* =====================================================
+           SEARCH CARD
+        ===================================================== */
+
+        .search-card {
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 15px;
+
+            padding: 25px;
+
+            margin-bottom: 25px;
+
+            box-shadow: 0 3px 15px rgba(0,0,0,.03);
+        }
+
+
+        .search-icon {
+
+            width: 50px;
+            height: 50px;
+
+            background: #eaf2ff;
+
+            color: #1677ff;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 23px;
+        }
+
+
+        /* =====================================================
+           PROFILE CARD
+        ===================================================== */
+
+        .profile-card {
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 15px;
+
+            padding: 28px;
+
+            box-shadow: 0 3px 15px rgba(0,0,0,.03);
+        }
+
+
+        .profile-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding-bottom: 22px;
+
+            margin-bottom: 25px;
+
+            border-bottom: 1px solid #edf0f4;
+        }
+
+
+        .doctor-info {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        .doctor-avatar {
+
+            width: 62px;
+            height: 62px;
+
+            border-radius: 50%;
+
+            background: #eaf2ff;
+
+            color: #1677ff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 28px;
+        }
+
+
+        .doctor-name {
+
+            font-size: 20px;
+
+            font-weight: 700;
+
+            margin-bottom: 3px;
+        }
+
+
+        .doctor-specialization {
+
+            color: #1677ff;
+
+            font-size: 14px;
+        }
+
+
+        .doctor-id {
+
+            color: #9ca3af;
+
+            font-size: 12px;
+
+            margin-top: 3px;
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .form-section-title {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+            margin: 25px 0 17px;
+        }
+
+
+        .form-section-title i {
+
+            color: #1677ff;
+        }
+
+
+        .form-label {
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            color: #4b5563;
+        }
+
+
+        .form-control,
+        .form-select {
+
+            min-height: 44px;
+
+            border: 1px solid #dfe3e8;
+
+            border-radius: 8px;
+        }
+
+
+        .form-control:focus,
+        .form-select:focus {
+
+            border-color: #1677ff;
+
+            box-shadow: 0 0 0 3px rgba(22,119,255,.10);
+        }
+
+
+        .readonly-field {
+
+            background: #f8fafc;
+
+            color: #6b7280;
+
+            cursor: not-allowed;
+        }
+
+
+        /* =====================================================
+           INFORMATION BOX
+        ===================================================== */
+
+        .info-box {
+
+            background: #f0f7ff;
+
+            border: 1px solid #d8eaff;
+
+            border-radius: 10px;
+
+            padding: 13px 15px;
+
+            font-size: 13px;
+
+            color: #4b5563;
+
+            margin-bottom: 20px;
+        }
+
+
+        .info-box i {
+
+            color: #1677ff;
+
+            margin-right: 6px;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .page-footer {
+
+            text-align: center;
+
+            color: #9ca3af;
+
+            font-size: 13px;
+
+            padding: 25px 0 10px;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 850px) {
+
+            .sidebar {
+
+                width: 70px;
+            }
+
+            .brand-text,
+            .sidebar-link span,
+            .menu-title {
+
+                display: none;
+            }
+
+            .sidebar-link {
+
+                justify-content: center;
+            }
+
+            .main-content {
+
+                margin-left: 70px;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .main-content {
+
+                padding: 15px;
+            }
+
+            .profile-header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<div class="sidebar">
+
+
+    <!-- BRAND -->
+
+    <div class="brand">
+
+        <div class="brand-icon">
+
+            <i class="bi bi-plus-lg"></i>
+
+        </div>
+
+        <span class="brand-text">
+
+            CarePlus
+
+        </span>
+
+    </div>
+
+
+    <!-- MAIN MENU -->
+
+    <div class="menu-title">
+
+        MAIN MENU
+
+    </div>
+
+
+    <a href="/Admin/adminDashboard"
+       class="sidebar-link">
+
+        <i class="bi bi-grid-fill"></i>
+
+        <span>Dashboard</span>
+
+    </a>
+
+
+    <a href="/doctorsDashboard"
+       class="sidebar-link active">
+
+        <i class="bi bi-person-badge"></i>
+
+        <span>Doctors</span>
+
+    </a>
+
+
+    <a href="/admin/patients"
+       class="sidebar-link">
+
+        <i class="bi bi-people"></i>
+
+        <span>Patients</span>
+
+    </a>
+
+
+    <a href="/admin/appointments"
+       class="sidebar-link">
+
+        <i class="bi bi-calendar-check"></i>
+
+        <span>Appointments</span>
+
+    </a>
+
+
+    <a href="/admin/department"
+       class="sidebar-link">
+
+        <i class="bi bi-building"></i>
+
+        <span>Departments</span>
+
+    </a>
+
+
+    <!-- HOSPITAL MANAGEMENT -->
+
+    <div class="menu-title mt-4">
+
+        HOSPITAL MANAGEMENT
+
+    </div>
+
+
+    <a href="#"
+       class="sidebar-link">
+
+        <i class="bi bi-file-medical"></i>
+
+        <span>Medical Records</span>
+
+    </a>
+
+
+    <a href="#"
+       class="sidebar-link">
+
+        <i class="bi bi-prescription2"></i>
+
+        <span>Prescriptions</span>
+
+    </a>
+
+
+    <a href="#"
+       class="sidebar-link">
+
+        <i class="bi bi-person-gear"></i>
+
+        <span>Users</span>
+
+    </a>
+
+
+    <!-- ACCOUNT -->
+
+    <div class="menu-title mt-4">
+
+        ACCOUNT
+
+    </div>
+
+
+    <a href="/Userlogout"
+       class="sidebar-link logout">
+
+        <i class="bi bi-box-arrow-right"></i>
+
+        <span>Logout</span>
+
+    </a>
+
+</div>
+
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<div class="main-content">
+
+
+    <!-- =====================================================
+         PAGE HEADER
+    ===================================================== -->
+
+    <div class="page-header">
+
+        <h2>
+
+            <i class="bi bi-person-lines-fill"></i>
+
+            Update Doctor Profile
+
+        </h2>
+
+        <p>
+
+            Search for a registered doctor and update
+            their profile information.
+
+        </p>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         SUCCESS MESSAGE
+    ===================================================== -->
+
+    <div th:if="${success}"
+         class="message-box success-message">
+
+        <i class="bi bi-check-circle-fill"></i>
+
+        <span th:text="${success}">
+            Doctor profile updated successfully.
+        </span>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         ERROR MESSAGE
+    ===================================================== -->
+
+    <div th:if="${error}"
+         class="message-box error-message">
+
+        <i class="bi bi-exclamation-triangle-fill"></i>
+
+        <span th:text="${error}">
+            Doctor profile update failed.
+        </span>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         FIND DOCTOR
+    ===================================================== -->
+
+    <div class="search-card">
+
+        <div class="d-flex align-items-center gap-3">
+
+            <div class="search-icon">
+
+                <i class="bi bi-search"></i>
+
+            </div>
+
+
+            <div>
+
+                <h5 class="mb-1 fw-bold">
+
+                    Find Doctor
+
+                </h5>
+
+                <p class="text-muted mb-0 small">
+
+                    Search using the doctor's registered
+                    email address.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="mt-4">
+
+            <form action="/admin/find-doctor"
+                  method="post">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Doctor Email
+
+                    </label>
+
+                    <input type="email"
+                           name="email"
+                           class="form-control"
+                           placeholder="Enter doctor's registered email"
+                           required>
+
+                </div>
+
+
+                <button type="submit"
+                        class="btn btn-primary w-100">
+
+                    <i class="bi bi-search"></i>
+
+                    Find Doctor
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         EXISTING DOCTOR PROFILE
+    ===================================================== -->
+
+    <div th:if="${doctor != null}"
+         class="profile-card">
+
+
+        <!-- =================================================
+             PROFILE HEADER
+        ================================================= -->
+
+        <div class="profile-header">
+
+
+            <div class="doctor-info">
+
+
+                <div class="doctor-avatar">
+
+                    <i class="bi bi-person"></i>
+
+                </div>
+
+
+                <div>
+
+                    <div class="doctor-name"
+                         th:text="${doctor.user.name}">
+
+                        Doctor Name
+
+                    </div>
+
+
+                    <div class="doctor-specialization"
+                         th:text="${doctor.specialization}">
+
+                        Specialization
+
+                    </div>
+
+
+                    <div class="doctor-id">
+
+                        Doctor ID:
+
+                        <span th:text="${doctor.doctorId}">
+
+                            0
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div>
+
+                <span th:if="${doctor.user.status == 'ACTIVE'}"
+                      class="badge bg-success">
+
+                    <i class="bi bi-check-circle"></i>
+
+                    Active
+
+                </span>
+
+
+                <span th:if="${doctor.user.status == 'INACTIVE'}"
+                      class="badge bg-danger">
+
+                    <i class="bi bi-x-circle"></i>
+
+                    Inactive
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             INFORMATION MESSAGE
+        ================================================= -->
+
+        <div class="info-box">
+
+            <i class="bi bi-info-circle"></i>
+
+            Existing information has been loaded.
+            Change only the fields you want to update.
+            Fields that you do not change will retain
+            their existing values.
+
+        </div>
+
+
+
+        <!-- =================================================
+             UPDATE FORM
+        ================================================= -->
+
+        <form action="/admin/update-doctor"
+              method="post">
+
+
+            <!-- DOCTOR ID -->
+
+            <input type="hidden"
+                   name="doctorId"
+                   th:value="${doctor.doctorId}">
+
+
+
+            <!-- =================================================
+                 ACCOUNT INFORMATION
+            ================================================= -->
+
+            <div class="form-section-title">
+
+                <i class="bi bi-person-circle"></i>
+
+                Account Information
+
+            </div>
+
+
+            <div class="row g-3">
+
+
+                <!-- USER NAME -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        User Name
+
+                    </label>
+
+                    <input type="text"
+                           class="form-control readonly-field"
+                           th:value="${doctor.user.name}"
+                           readonly>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        Email Address
+
+                    </label>
+
+                    <input type="email"
+                           name="email"
+                           class="form-control"
+                           th:value="${doctor.user.email}"
+                           required>
+
+                </div>
+
+
+                <!-- CONTACT -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        Contact Number
+
+                    </label>
+
+                    <input type="tel"
+                           name="contact"
+                           class="form-control"
+                           maxlength="10"
+                           th:value="${doctor.user.contact}"
+                           required>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        Account Status
+
+                    </label>
+
+                    <select name="status"
+                            class="form-select"
+                            required>
+
+                        <option value="ACTIVE"
+                                th:selected="${doctor.user.status == 'ACTIVE'}">
+
+                            Active
+
+                        </option>
+
+                        <option value="INACTIVE"
+                                th:selected="${doctor.user.status == 'INACTIVE'}">
+
+                            Inactive
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- ROLE -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        Role
+
+                    </label>
+
+                    <input type="text"
+                           class="form-control readonly-field"
+                           th:value="${doctor.user.role}"
+                           readonly>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 DOCTOR INFORMATION
+            ================================================= -->
+
+            <div class="form-section-title">
+
+                <i class="bi bi-heart-pulse"></i>
+
+                Professional Information
+
+            </div>
+
+
+            <div class="row g-3">
+
+
+                <!-- SPECIALIZATION -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        Specialization
+
+                    </label>
+
+                    <select name="specialization"
+                            class="form-select"
+                            required>
+
+                        <option value="Cardiologist"
+                                th:selected="${doctor.specialization == 'Cardiologist'}">
+
+                            Cardiologist
+
+                        </option>
+
+                        <option value="Dermatologist"
+                                th:selected="${doctor.specialization == 'Dermatologist'}">
+
+                            Dermatologist
+
+                        </option>
+
+                        <option value="Neurologist"
+                                th:selected="${doctor.specialization == 'Neurologist'}">
+
+                            Neurologist
+
+                        </option>
+
+                        <option value="Orthopedic"
+                                th:selected="${doctor.specialization == 'Orthopedic'}">
+
+                            Orthopedic
+
+                        </option>
+
+                        <option value="Pediatrician"
+                                th:selected="${doctor.specialization == 'Pediatrician'}">
+
+                            Pediatrician
+
+                        </option>
+
+                        <option value="General Physician"
+                                th:selected="${doctor.specialization == 'General Physician'}">
+
+                            General Physician
+
+                        </option>
+
+                        <option value="Gynecologist"
+                                th:selected="${doctor.specialization == 'Gynecologist'}">
+
+                            Gynecologist
+
+                        </option>
+
+                        <option value="Dentist"
+                                th:selected="${doctor.specialization == 'Dentist'}">
+
+                            Dentist
+
+                        </option>
+
+                        <option value="ENT Specialist"
+                                th:selected="${doctor.specialization == 'ENT Specialist'}">
+
+                            ENT Specialist
+
+                        </option>
+
+                        <option value="Ophthalmologist"
+                                th:selected="${doctor.specialization == 'Ophthalmologist'}">
+
+                            Ophthalmologist
+
+                        </option>
+
+                        <option value="Psychiatrist"
+                                th:selected="${doctor.specialization == 'Psychiatrist'}">
+
+                            Psychiatrist
+
+                        </option>
+
+                        <option value="Other"
+                                th:selected="${doctor.specialization == 'Other'}">
+
+                            Other
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- QUALIFICATION -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        Qualification
+
+                    </label>
+
+                    <input type="text"
+                           name="qualification"
+                           class="form-control"
+                           th:value="${doctor.qualification}"
+                           placeholder="Enter qualification"
+                           required>
+
+                </div>
+
+
+                <!-- LICENSE -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        License Number
+
+                    </label>
+
+                    <input type="text"
+                           name="licenseNumber"
+                           class="form-control"
+                           th:value="${doctor.licenseNumber}"
+                           placeholder="Enter license number"
+                           required>
+
+                </div>
+
+
+                <!-- EXPERIENCE -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        Experience (Years)
+
+                    </label>
+
+                    <input type="number"
+                           name="experience"
+                           class="form-control"
+                           min="0"
+                           th:value="${doctor.experience}"
+                           required>
+
+                </div>
+
+
+                <!-- CONSULTATION FEE -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        Consultation Fee
+
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+
+                            ₹
+
+                        </span>
+
+                        <input type="number"
+                               name="consultationFee"
+                               class="form-control"
+                               min="0"
+                               step="0.01"
+                               th:value="${doctor.consultationFee}"
+                               required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- JOINING DATE -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        Joining Date
+
+                    </label>
+
+                    <input type="date"
+                           name="joiningDate"
+                           class="form-control"
+                           th:value="${doctor.joiningDate}"
+                           required>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 UPDATE INFORMATION
+            ================================================= -->
+
+            <div class="alert alert-light border mt-4">
+
+                <i class="bi bi-shield-check text-primary"></i>
+
+                <strong>Profile Update:</strong>
+
+                Review all information before submitting.
+                Only the values submitted through this form
+                will be updated.
+
+            </div>
+
+
+
+            <!-- =================================================
+                 BUTTONS
+            ================================================= -->
+
+            <div class="d-flex justify-content-between
+                        align-items-center mt-4">
+
+
+                <a href="/admin/doctors"
+                   class="btn btn-outline-secondary">
+
+                    <i class="bi bi-arrow-left"></i>
+
+                    Back to Doctors
+
+                </a>
+
+
+                <div class="d-flex gap-2">
+
+
+                    <button type="reset"
+                            class="btn btn-outline-secondary">
+
+                        <i class="bi bi-arrow-counterclockwise"></i>
+
+                        Reset
+
+                    </button>
+
+
+                    <button type="submit"
+                            class="btn btn-primary px-4">
+
+                        <i class="bi bi-save"></i>
+
+                        Update Doctor Profile
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         DOCTOR NOT FOUND
+    ===================================================== -->
+
+    <div th:if="${doctor == null and error != null}"
+         class="alert alert-danger mt-3">
+
+        <i class="bi bi-exclamation-triangle-fill"></i>
+
+        <span th:text="${error}">
+
+            Doctor not found.
+
+        </span>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ===================================================== -->
+
+    <div class="page-footer">
+
+        © 2026 CarePlus Hospital Management System
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

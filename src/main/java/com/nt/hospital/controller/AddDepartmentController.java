@@ -20,7 +20,7 @@ public class AddDepartmentController {
     private AddDepartmentService departmentService;
 
 
-    @GetMapping("/Department/addDepartment")
+    @GetMapping("/Admin/addDepartment")
     public String showAddDepartmentForm(Model model) {
 
         List<User> directors = departmentService.getDirectors();
@@ -29,17 +29,29 @@ public class AddDepartmentController {
 
         model.addAttribute("department", new Department());
 
-        return "/Department/addDepartment";
+
+
+        return "/Admin/addDepartment";
     }
 
 
-    @PostMapping("/Department/addDepartment")
+
+    @PostMapping("/Admin/addDepartment")
     public String addDepartment(
             @ModelAttribute("department") Department department,
-            @RequestParam("directorId") int directorId) {
+            @RequestParam("directorId") int directorId, Model model) {
 
-        departmentService.addDepartment(department, directorId);
+       boolean isAdded = departmentService.addDepartment(department, directorId);
 
-        return "redirect:/Admin/adminDashboard";    }
+       if(isAdded) {
+
+           model.addAttribute("success",
+                   "Department Created Successfully.");
+       }
+       else {
+           model.addAttribute("error", "Failed to create the department");
+       }
+        return "/Admin/addDepartment";
+    }
 
 }

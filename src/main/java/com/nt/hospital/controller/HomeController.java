@@ -33,5 +33,11 @@ public String userLoginPage(){
         return "redirect:/UserLoginPage";
     }
 
+//    update doctor page
+    @GetMapping("/admin/select-doctor-update")
+    public String updateDoctorPage(){
+        return "Admin/updateDoctor";
+    }
+
 
 }

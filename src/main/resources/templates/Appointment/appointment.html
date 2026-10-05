@@ -2,473 +2,706 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Request Appointment | CarePlus Hospital</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <!-- Bootstrap CSS -->
+    <title>Request Appointment | CarePlus</title>
+
+
+    <!-- Bootstrap 5.3 -->
+
     <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
             rel="stylesheet">
 
+
     <!-- Bootstrap Icons -->
+
     <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/appointment.css">
+
+    <style>
+
+        body {
+            background: #f5f7fb;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #212529;
+        }
+
+        .appointment-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 15px;
+        }
+
+        .appointment-card {
+            width: 100%;
+            max-width: 850px;
+            background: #ffffff;
+            border-radius: 18px;
+            border: none;
+            overflow: hidden;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Header */
+
+        .appointment-header {
+            background: linear-gradient(135deg, #1677ff, #438cf5);
+            color: white;
+            padding: 28px 32px;
+        }
+
+        .appointment-header h2 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .appointment-header p {
+            margin: 8px 0 0;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .header-icon {
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: 12px;
+            font-size: 25px;
+            margin-bottom: 15px;
+        }
+
+        /* Form */
+
+        .appointment-body {
+            padding: 32px;
+        }
+
+        .section-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .section-title i {
+            color: #1677ff;
+            margin-right: 8px;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 7px;
+        }
+
+        .form-control,
+        .form-select {
+            min-height: 46px;
+            border-radius: 9px;
+            border: 1px solid #d9dee5;
+            padding: 10px 13px;
+        }
+
+        textarea.form-control {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #1677ff;
+            box-shadow: 0 0 0 3px rgba(22, 119, 255, 0.1);
+        }
+
+        .required {
+            color: #dc3545;
+        }
+
+        .form-text {
+            font-size: 12px;
+            color: #8a93a0;
+        }
+
+        /* Buttons */
+
+        .form-actions {
+            margin-top: 30px;
+            padding-top: 22px;
+            border-top: 1px solid #e9ecef;
+
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn {
+            border-radius: 8px;
+            padding: 10px 22px;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: #1677ff;
+            border-color: #1677ff;
+        }
+
+        .btn-primary:hover {
+            background: #0d63d8;
+            border-color: #0d63d8;
+        }
+
+        /* Validation */
+
+        .error-message {
+            display: none;
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .form-control.is-invalid,
+        .form-select.is-invalid {
+            border-color: #dc3545;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 576px) {
+
+            .appointment-body {
+                padding: 22px;
+            }
+
+            .appointment-header {
+                padding: 24px;
+            }
+
+            .form-actions {
+                flex-direction: column-reverse;
+            }
+
+            .form-actions .btn {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+<div class="appointment-wrapper">
 
-    <div class="container">
+    <div class="appointment-card">
 
-        <a class="navbar-brand fw-bold" href="/">
-            <i class="bi bi-heart-pulse-fill me-2"></i>
-            CarePlus Hospital
-        </a>
 
-        <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarMenu">
+        <!-- ================= HEADER ================= -->
 
-            <span class="navbar-toggler-icon"></span>
+        <div class="appointment-header">
 
-        </button>
+            <div class="header-icon">
 
-        <div class="collapse navbar-collapse" id="navbarMenu">
+                <i class="bi bi-calendar2-plus"></i>
 
-            <ul class="navbar-nav ms-auto">
+            </div>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/">
-                        Home
-                    </a>
-                </li>
+            <h2>Request an Appointment</h2>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/#doctors">
-                        Doctors
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link active" href="/appointment">
-                        Appointment
-                    </a>
-                </li>
-
-            </ul>
+            <p>
+                Please provide the following information to
+                schedule your hospital appointment.
+            </p>
 
         </div>
 
-    </div>
 
-</nav>
+        <!-- ================= FORM ================= -->
+
+        <div class="appointment-body">
+
+            <form id="appointmentForm"
+                  action="/appointmentrequest"
+                  method="post"
+                  novalidate>
 
 
-<!-- ================= APPOINTMENT SECTION ================= -->
+                <!-- ================= PATIENT INFORMATION ================= -->
 
-<section class="appointment-section">
+                <div class="section-title">
 
-    <div class="container">
+                    <i class="bi bi-person"></i>
 
-        <div class="row justify-content-center">
+                    Patient Information
 
-            <div class="col-lg-9">
+                </div>
 
-                <div class="appointment-card shadow">
 
-                    <!-- Header -->
+                <div class="row g-4">
 
-                    <div class="appointment-header text-center">
 
-                        <div class="appointment-icon">
-                            <i class="bi bi-calendar2-plus"></i>
+                    <!-- EMAIL -->
+
+                    <div class="col-md-6">
+
+                        <label for="email_Id"
+                               class="form-label">
+
+                            Email Address
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <input type="email"
+                               class="form-control"
+                               id="email_Id"
+                               name="email_Id"
+                               placeholder="Enter email address"
+                               required>
+
+                        <div class="error-message">
+                            Please enter a valid email address.
                         </div>
-
-                        <h2 class="fw-bold mt-3">
-                            Request an Appointment
-                        </h2>
-
-                        <p class="text-muted mb-0">
-                            Fill in the details below to request
-                            an appointment with our doctor.
-                        </p>
 
                     </div>
 
 
-                    <!-- Form -->
+                    <!-- CONTACT -->
 
-                    <form id="appointmentForm"
-                          action="/appointment/request"
-                          method="post">
+                    <div class="col-md-6">
 
-                        <div class="row g-4">
+                        <label for="contactNO"
+                               class="form-label">
 
-                            <!-- Appointment ID -->
+                            Contact Number
+                            <span class="required">*</span>
 
-                            <div class="col-md-6">
+                        </label>
 
-                                <label for="appointmentId"
-                                       class="form-label">
-                                    Appointment ID
-                                </label>
+                        <input type="tel"
+                               class="form-control"
+                               id="contactNO"
+                               name="contactNO"
+                               placeholder="Enter 10 digit contact number"
+                               pattern="[0-9]{10}"
+                               maxlength="10"
+                               required>
 
-                                <input
-                                        type="text"
-                                        class="form-control"
-                                        id="appointmentId"
-                                        name="appointmentId"
-                                        placeholder="Generated by system"
-                                        readonly>
-
-                                <div class="form-text">
-                                    Appointment ID will be generated automatically.
-                                </div>
-
-                            </div>
-
-
-                            <!-- Email -->
-
-                            <div class="col-md-6">
-
-                                <label for="email_Id"
-                                       class="form-label">
-                                    Email ID
-                                    <span class="text-danger">*</span>
-                                </label>
-
-                                <input
-                                        type="email"
-                                        class="form-control"
-                                        id="email_Id"
-                                        name="email_Id"
-                                        placeholder="Enter your email"
-                                        required>
-
-                            </div>
-
-
-                            <!-- Appointment Date -->
-
-                            <div class="col-md-6">
-
-                                <label for="appointmentDate"
-                                       class="form-label">
-                                    Appointment Date
-                                    <span class="text-danger">*</span>
-                                </label>
-
-                                <input
-                                        type="date"
-                                        class="form-control"
-                                        id="appointmentDate"
-                                        name="appointmentDate"
-                                        required>
-
-                            </div>
-
-
-                            <!-- Appointment Time -->
-
-                            <div class="col-md-6">
-
-                                <label for="appointmentTime"
-                                       class="form-label">
-                                    Appointment Time
-                                    <span class="text-danger">*</span>
-                                </label>
-
-                                <input
-                                        type="time"
-                                        class="form-control"
-                                        id="appointmentTime"
-                                        name="appointmentTime"
-                                        required>
-
-                            </div>
-
-
-                            <!-- Doctor -->
-
-                            <div class="col-md-6">
-
-                                <label for="doctor"
-                                       class="form-label">
-                                    Select Doctor
-                                    <span class="text-danger">*</span>
-                                </label>
-
-                                <select
-                                        class="form-select"
-                                        id="doctor"
-                                        name="doctor"
-                                        required>
-
-                                    <option value="" selected disabled>
-                                        Select Doctor
-                                    </option>
-
-                                    <option value="doctor1">
-                                        Dr. John Smith - Cardiologist
-                                    </option>
-
-                                    <option value="doctor2">
-                                        Dr. Sarah Williams - Pediatrician
-                                    </option>
-
-                                    <option value="doctor3">
-                                        Dr. Michael Brown - Orthopedic
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-
-                            <!-- Service -->
-
-                            <div class="col-md-6">
-
-                                <label for="service"
-                                       class="form-label">
-                                    Service
-                                    <span class="text-danger">*</span>
-                                </label>
-
-                                <select
-                                        class="form-select"
-                                        id="service"
-                                        name="service"
-                                        required>
-
-                                    <option value="" selected disabled>
-                                        Select Service
-                                    </option>
-
-                                    <option value="consultation">
-                                        General Consultation
-                                    </option>
-
-                                    <option value="cardiology">
-                                        Cardiology
-                                    </option>
-
-                                    <option value="orthopedics">
-                                        Orthopedics
-                                    </option>
-
-                                    <option value="pediatrics">
-                                        Pediatrics
-                                    </option>
-
-                                    <option value="diagnostic">
-                                        Diagnostic Services
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-
-                            <!-- Contact Number -->
-
-                            <div class="col-md-6">
-
-                                <label for="contactNO"
-                                       class="form-label">
-                                    Contact Number
-                                    <span class="text-danger">*</span>
-                                </label>
-
-                                <input
-                                        type="tel"
-                                        class="form-control"
-                                        id="contactNO"
-                                        name="contactNO"
-                                        placeholder="Enter contact number"
-                                        pattern="[0-9]{10}"
-                                        maxlength="10"
-                                        required>
-
-                                <div class="form-text">
-                                    Enter 10 digit mobile number.
-                                </div>
-
-                            </div>
-
-
-                            <!-- Location -->
-
-                            <div class="col-md-6">
-
-                                <label for="location"
-                                       class="form-label">
-                                    Location
-                                    <span class="text-danger">*</span>
-                                </label>
-
-                                <input
-                                        type="text"
-                                        class="form-control"
-                                        id="location"
-                                        name="location"
-                                        placeholder="Enter your location"
-                                        required>
-
-                            </div>
-
-
-                            <!-- Reason -->
-
-                            <div class="col-12">
-
-                                <label for="reason"
-                                       class="form-label">
-                                    Reason for Appointment
-                                    <span class="text-danger">*</span>
-                                </label>
-
-                                <textarea
-                                        class="form-control"
-                                        id="reason"
-                                        name="reason"
-                                        rows="3"
-                                        placeholder="Briefly describe the reason for your appointment"
-                                        required></textarea>
-
-                            </div>
-
-
-                            <!-- Notes -->
-
-                            <div class="col-12">
-
-                                <label for="notes"
-                                       class="form-label">
-                                    Additional Notes
-                                </label>
-
-                                <textarea
-                                        class="form-control"
-                                        id="notes"
-                                        name="notes"
-                                        rows="3"
-                                        placeholder="Enter any additional information"></textarea>
-
-                            </div>
-
-
-                            <!-- Status -->
-
-                            <div class="col-md-6">
-
-                                <label for="status"
-                                       class="form-label">
-                                    Status
-                                </label>
-
-                                <input
-                                        type="text"
-                                        class="form-control"
-                                        id="status"
-                                        name="status"
-                                        value="PENDING"
-                                        readonly>
-
-                            </div>
-
-
-                            <!-- Created At -->
-
-                            <div class="col-md-6">
-
-                                <label for="createdAt"
-                                       class="form-label">
-                                    Created At
-                                </label>
-
-                                <input
-                                        type="text"
-                                        class="form-control"
-                                        id="createdAt"
-                                        name="createdAt"
-                                        placeholder="Generated by system"
-                                        readonly>
-
-                            </div>
-
-
-                            <!-- Buttons -->
-
-                            <div class="col-12">
-
-                                <hr>
-
-                                <div class="d-flex justify-content-center gap-3">
-
-                                    <!-- Request Appointment -->
-
-                                    <button
-                                            type="submit"
-                                            class="btn btn-primary px-4">
-
-                                        <i class="bi bi-calendar-check me-2"></i>
-                                        Request Appointment
-
-                                    </button>
-
-
-                                    <!-- Clear -->
-
-                                    <button
-                                            type="reset"
-                                            class="btn btn-outline-secondary px-4">
-
-                                        <i class="bi bi-arrow-counterclockwise me-2"></i>
-                                        Clear
-
-                                    </button>
-
-                                </div>
-
-                            </div>
-
+                        <div class="error-message">
+                            Please enter a valid 10 digit contact number.
                         </div>
 
-                    </form>
+                    </div>
 
                 </div>
 
-            </div>
+
+
+                <!-- ================= APPOINTMENT INFORMATION ================= -->
+
+                <div class="section-title mt-5">
+
+                    <i class="bi bi-calendar-check"></i>
+
+                    Appointment Information
+
+                </div>
+
+
+                <div class="row g-4">
+
+
+                    <!-- SERVICE -->
+
+                    <div class="col-md-6">
+
+                        <label for="service"
+                               class="form-label">
+
+                            Service
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <select class="form-select"
+                                id="service"
+                                name="service"
+                                required>
+
+                            <option value="">
+                                Select Service
+                            </option>
+
+                            <option value="General Consultation">
+                                General Consultation
+                            </option>
+
+                            <option value="Cardiology">
+                                Cardiology
+                            </option>
+
+                            <option value="Dermatology">
+                                Dermatology
+                            </option>
+
+                            <option value="Neurology">
+                                Neurology
+                            </option>
+
+                            <option value="Orthopedic">
+                                Orthopedic
+                            </option>
+
+                            <option value="Pediatrics">
+                                Pediatrics
+                            </option>
+
+                            <option value="Gynecology">
+                                Gynecology
+                            </option>
+
+                            <option value="Dental">
+                                Dental
+                            </option>
+
+                            <option value="ENT">
+                                ENT
+                            </option>
+
+                            <option value="Ophthalmology">
+                                Ophthalmology
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- DOCTOR -->
+
+                    <div class="col-md-6">
+
+                        <label for="doctor"
+                               class="form-label">
+
+                            Doctor
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <input type="text"
+                               class="form-control"
+                               id="doctor"
+                               name="doctor"
+                               placeholder="Enter doctor name"
+                               required>
+
+                        <div class="form-text">
+                            Enter the doctor you want to consult.
+                        </div>
+
+                    </div>
+
+
+                    <!-- DATE -->
+
+                    <div class="col-md-6">
+
+                        <label for="appointmentDate"
+                               class="form-label">
+
+                            Appointment Date
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <input type="date"
+                               class="form-control"
+                               id="appointmentDate"
+                               name="appointmentDate"
+                               required>
+
+                    </div>
+
+
+                    <!-- TIME -->
+
+                    <div class="col-md-6">
+
+                        <label for="appointmentTime"
+                               class="form-label">
+
+                            Appointment Time
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <input type="time"
+                               class="form-control"
+                               id="appointmentTime"
+                               name="appointmentTime"
+                               required>
+
+                    </div>
+
+
+                    <!-- LOCATION -->
+
+                    <div class="col-md-12">
+
+                        <label for="location"
+                               class="form-label">
+
+                            Location
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <input type="text"
+                               class="form-control"
+                               id="location"
+                               name="location"
+                               placeholder="Enter hospital / clinic location"
+                               required>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================= ADDITIONAL INFORMATION ================= -->
+
+                <div class="section-title mt-5">
+
+                    <i class="bi bi-chat-left-text"></i>
+
+                    Additional Information
+
+                </div>
+
+
+                <div class="row g-4">
+
+
+                    <!-- REASON -->
+
+                    <div class="col-md-12">
+
+                        <label for="reason"
+                               class="form-label">
+
+                            Reason for Appointment
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <textarea class="form-control"
+                                  id="reason"
+                                  name="reason"
+                                  placeholder="Briefly describe the reason for your appointment"
+                                  maxlength="500"
+                                  required></textarea>
+
+                        <div class="form-text">
+                            Maximum 500 characters.
+                        </div>
+
+                    </div>
+
+
+                    <!-- NOTES -->
+
+                    <div class="col-md-12">
+
+                        <label for="notes"
+                               class="form-label">
+
+                            Additional Notes
+
+                        </label>
+
+                        <textarea class="form-control"
+                                  id="notes"
+                                  name="notes"
+                                  placeholder="Enter any additional information"
+                                  maxlength="1000"></textarea>
+
+                        <div class="form-text">
+                            Optional. Maximum 1000 characters.
+                        </div>
+
+                    </div>
+
+
+                    <!-- STATUS -->
+
+                    <div class="col-md-6">
+
+                        <label for="status"
+                               class="form-label">
+
+                            Appointment Status
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <select class="form-select"
+                                id="status"
+                                name="status"
+                                required>
+
+                            <option value="">
+                                Select Status
+                            </option>
+
+                            <option value="PENDING">
+                                Pending
+                            </option>
+
+                            <option value="CONFIRMED">
+                                Confirmed
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================= BUTTONS ================= -->
+
+                <div class="form-actions">
+
+                    <button type="reset"
+                            class="btn btn-outline-secondary">
+
+                        <i class="bi bi-arrow-counterclockwise"></i>
+
+                        Clear
+
+                    </button>
+
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        <i class="bi bi-calendar-check"></i>
+
+                        Request Appointment
+
+                    </button>
+
+                </div>
+
+
+            </form>
 
         </div>
 
     </div>
 
-</section>
+</div>
 
 
-<!-- ================= FOOTER ================= -->
 
-<footer class="bg-dark text-white text-center py-3">
+<!-- ================= JAVASCRIPT ================= -->
 
-    <p class="mb-0">
-        © 2026 CarePlus Hospital. All Rights Reserved.
-    </p>
+<script>
 
-</footer>
+    const form =
+        document.getElementById("appointmentForm");
+
+
+    const dateInput =
+        document.getElementById("appointmentDate");
+
+
+    /*
+     * Prevent selecting a past appointment date.
+     */
+
+    const today =
+        new Date().toISOString().split("T")[0];
+
+    dateInput.min = today;
+
+
+
+    /*
+     * Contact number:
+     * Allow only numbers.
+     */
+
+    const contactInput =
+        document.getElementById("contactNO");
+
+
+    contactInput.addEventListener("input", function () {
+
+        this.value =
+            this.value.replace(/[^0-9]/g, "");
+
+    });
+
+
+
+    /*
+     * Form validation
+     */
+
+    form.addEventListener("submit", function (event) {
+
+        if (!form.checkValidity()) {
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+        }
+
+
+        form.classList.add("was-validated");
+
+    });
+
+
+
+    /*
+     * Reset validation when Clear is clicked.
+     */
+
+    form.addEventListener("reset", function () {
+
+        setTimeout(function () {
+
+            form.classList.remove("was-validated");
+
+        }, 0);
+
+    });
+
+</script>
+
 
 
 <!-- Bootstrap JS -->
@@ -477,9 +710,6 @@
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
 </script>
 
-<!-- Custom JS -->
-
-<script src="/js/appointment.js"></script>
 
 </body>
 

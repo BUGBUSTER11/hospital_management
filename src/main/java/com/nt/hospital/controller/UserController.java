@@ -16,10 +16,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-
-
-
     @PostMapping("/Auth/adminLogin")
     public String adminLogin(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
 
@@ -39,7 +35,4 @@ public class UserController {
 
         return "admin/adminLogin";
     }
-
-
-
 }

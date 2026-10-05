@@ -25,9 +25,6 @@ public class DoctorServiceImpl implements DoctorService {
         if (userRepositry.existsByEmail(user.getEmail())) {
             return false;
         }
-
-
-
         userRepositry.save(user);
 
         return true;
@@ -42,7 +39,6 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public List<Doctor> getAllDoctorsData() {
-
         return doctorRepository.findAll();
     }
 

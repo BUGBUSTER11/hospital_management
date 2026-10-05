@@ -18,7 +18,7 @@ public class MedicalRecord {
     private String notes;
     private Date recordDate;
     @ManyToOne
-    @JoinColumn(name = "patiend_id")
+//    @JoinColumn(name = "patiend_id")
     private Patient patient;
 
     public MedicalRecord(){}

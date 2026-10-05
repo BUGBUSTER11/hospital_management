@@ -1,10 +1,2763 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Doctor Dashboard | CarePlus Hospital</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f5f8fb;
+            color: #25364a;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100vh;
+
+            background: #102a43;
+            color: #ffffff;
+
+            z-index: 1000;
+
+            display: flex;
+            flex-direction: column;
+
+            transition: all 0.3s ease;
+        }
+
+
+        /* Brand */
+
+        .sidebar-brand {
+            height: 75px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 22px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .brand-logo {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #087cf0;
+
+            border-radius: 9px;
+
+            margin-right: 10px;
+
+            font-size: 18px;
+        }
+
+        .brand-name {
+            display: flex;
+            flex-direction: column;
+
+            line-height: 1.1;
+        }
+
+        .brand-name strong {
+            font-size: 16px;
+        }
+
+        .brand-name span {
+            color: #9fb3c8;
+
+            font-size: 9px;
+
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+
+            margin-top: 3px;
+        }
+
+
+        /* Doctor Profile */
+
+        .doctor-profile {
+            padding: 22px 18px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .doctor-profile-inner {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .doctor-avatar {
+            width: 44px;
+            height: 44px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #dceeff;
+            color: #087cf0;
+
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .doctor-info {
+            min-width: 0;
+        }
+
+        .doctor-info strong {
+            display: block;
+
+            color: #ffffff;
+
+            font-size: 12px;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .doctor-info span {
+            display: block;
+
+            color: #9fb3c8;
+
+            font-size: 10px;
+
+            margin-top: 3px;
+        }
+
+        .online-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+
+            margin-top: 7px;
+
+            color: #72d6a0;
+
+            font-size: 9px;
+        }
+
+        .online-dot {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: #31c48d;
+        }
+
+
+        /* Navigation */
+
+        .sidebar-nav {
+            padding: 18px 12px;
+
+            flex: 1;
+
+            overflow-y: auto;
+        }
+
+        .nav-label {
+            padding: 0 11px;
+
+            margin: 8px 0 10px;
+
+            color: #718ba5;
+
+            font-size: 9px;
+            font-weight: 700;
+
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 11px 12px;
+
+            margin-bottom: 4px;
+
+            border-radius: 7px;
+
+            color: #b9c9d9;
+
+            font-size: 12px;
+            font-weight: 500;
+
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-link i {
+            width: 18px;
+
+            text-align: center;
+
+            font-size: 15px;
+        }
+
+        .sidebar-link:hover {
+            background: rgba(255,255,255,0.06);
+            color: #ffffff;
+        }
+
+        .sidebar-link.active {
+            background: #087cf0;
+            color: #ffffff;
+
+            box-shadow: 0 4px 12px rgba(8,124,240,0.20);
+        }
+
+        .sidebar-badge {
+            margin-left: auto;
+
+            min-width: 20px;
+            height: 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 0 5px;
+
+            border-radius: 10px;
+
+            background: #ef5b72;
+            color: #ffffff;
+
+            font-size: 9px;
+        }
+
+
+        /* Sidebar Bottom */
+
+        .sidebar-bottom {
+            padding: 13px;
+
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .logout-link {
+            display: flex;
+            align-items: center;
+
+            gap: 11px;
+
+            padding: 11px 12px;
+
+            color: #aebfd0;
+
+            font-size: 12px;
+
+            border-radius: 7px;
+        }
+
+        .logout-link:hover {
+            background: rgba(239,91,114,0.10);
+            color: #ff8b9c;
+        }
+
+
+        /* =====================================================
+           MAIN CONTENT
+        ===================================================== */
+
+        .main-wrapper {
+            margin-left: 250px;
+
+            min-height: 100vh;
+        }
+
+
+        /* =====================================================
+           TOPBAR
+        ===================================================== */
+
+        .topbar {
+            height: 75px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 30px;
+
+            background: #ffffff;
+
+            border-bottom: 1px solid #e7edf2;
+        }
+
+        .page-heading h1 {
+            margin: 0;
+
+            color: #203449;
+
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .page-heading p {
+            margin: 4px 0 0;
+
+            color: #8997a5;
+
+            font-size: 11px;
+        }
+
+
+        /* Topbar Right */
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+
+            gap: 15px;
+        }
+
+        .top-icon {
+            width: 35px;
+            height: 35px;
+
+            position: relative;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid #e4eaf0;
+
+            border-radius: 7px;
+
+            background: #ffffff;
+
+            color: #617385;
+
+            font-size: 15px;
+
+            cursor: pointer;
+        }
+
+        .top-icon:hover {
+            color: #087cf0;
+            border-color: #b9dafa;
+        }
+
+        .notification-dot {
+            position: absolute;
+
+            top: 6px;
+            right: 6px;
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: #ef5b72;
+
+            border: 1px solid #ffffff;
+        }
+
+        .top-date {
+            padding-left: 15px;
+
+            border-left: 1px solid #e5eaf0;
+
+            color: #778695;
+
+            font-size: 11px;
+        }
+
+
+        /* =====================================================
+           DASHBOARD CONTENT
+        ===================================================== */
+
+        .dashboard-content {
+            padding: 28px 30px;
+        }
+
+
+        /* =====================================================
+           WELCOME BANNER
+        ===================================================== */
+
+        .welcome-banner {
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 23px 25px;
+
+            margin-bottom: 22px;
+
+            border-radius: 10px;
+
+            background: #087cf0;
+
+            color: #ffffff;
+        }
+
+        .welcome-banner::after {
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            right: 30px;
+            top: -85px;
+
+            border: 35px solid rgba(255,255,255,0.07);
+
+            border-radius: 50%;
+        }
+
+        .welcome-banner h2 {
+            margin: 0 0 6px;
+
+            font-size: 19px;
+            font-weight: 700;
+        }
+
+        .welcome-banner p {
+            margin: 0;
+
+            max-width: 620px;
+
+            color: rgba(255,255,255,0.78);
+
+            font-size: 11px;
+        }
+
+        .today-label {
+            display: inline-block;
+
+            margin-bottom: 7px;
+
+            color: rgba(255,255,255,0.65);
+
+            font-size: 9px;
+            font-weight: 700;
+
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+
+        /* =====================================================
+           STAT CARDS
+        ===================================================== */
+
+        .stat-card {
+            position: relative;
+
+            height: 100%;
+
+            padding: 19px;
+
+            background: #ffffff;
+
+            border: 1px solid #e3eaf0;
+
+            border-radius: 9px;
+
+            transition: all 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+
+            box-shadow: 0 7px 20px rgba(32,52,73,0.07);
+        }
+
+        .stat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .stat-label {
+            color: #82909e;
+
+            font-size: 10px;
+            font-weight: 600;
+
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-number {
+            margin-top: 7px;
+
+            color: #24394e;
+
+            font-size: 27px;
+            font-weight: 700;
+        }
+
+        .stat-description {
+            margin-top: 4px;
+
+            color: #a0aab4;
+
+            font-size: 9px;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 8px;
+
+            font-size: 17px;
+        }
+
+        .icon-blue {
+            background: #eaf4ff;
+            color: #087cf0;
+        }
+
+        .icon-green {
+            background: #eaf9f1;
+            color: #198754;
+        }
+
+        .icon-orange {
+            background: #fff5e7;
+            color: #e69519;
+        }
+
+        .icon-purple {
+            background: #f3edff;
+            color: #7652c5;
+        }
+
+
+        /* =====================================================
+           CONTENT CARDS
+        ===================================================== */
+
+        .content-card {
+            background: #ffffff;
+
+            border: 1px solid #e3eaf0;
+
+            border-radius: 9px;
+
+            overflow: hidden;
+        }
+
+        .card-header-custom {
+            min-height: 61px;
+
+            padding: 15px 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border-bottom: 1px solid #edf1f5;
+        }
+
+        .card-title-area h3 {
+            margin: 0;
+
+            color: #2d4358;
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .card-title-area p {
+            margin: 3px 0 0;
+
+            color: #97a3ae;
+
+            font-size: 9px;
+        }
+
+        .view-all {
+            color: #087cf0;
+
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .view-all:hover {
+            color: #066dcc;
+        }
+
+
+        /* =====================================================
+           APPOINTMENT TABLE
+        ===================================================== */
+
+        .appointment-table {
+            margin: 0;
+        }
+
+        .appointment-table thead th {
+            padding: 11px 15px;
+
+            background: #fafcfd;
+
+            color: #8b98a5;
+
+            border-bottom: 1px solid #edf1f5;
+
+            font-size: 9px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+
+            white-space: nowrap;
+        }
+
+        .appointment-table tbody td {
+            padding: 12px 15px;
+
+            color: #526578;
+
+            border-bottom: 1px solid #f0f3f6;
+
+            font-size: 10px;
+
+            vertical-align: middle;
+        }
+
+        .appointment-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .appointment-table tbody tr:hover {
+            background: #fafcff;
+        }
+
+        .patient-cell {
+            display: flex;
+            align-items: center;
+
+            gap: 9px;
+        }
+
+        .patient-avatar {
+            width: 31px;
+            height: 31px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background: #edf5fc;
+
+            color: #087cf0;
+
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .patient-name {
+            color: #344a5f;
+
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .patient-id {
+            margin-top: 2px;
+
+            color: #9aa6b1;
+
+            font-size: 8px;
+        }
+
+        .time-cell {
+            color: #344a5f;
+
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            display: inline-block;
+
+            padding: 4px 8px;
+
+            border-radius: 12px;
+
+            font-size: 8px;
+            font-weight: 600;
+        }
+
+        .status-confirmed {
+            background: #e9f8ef;
+            color: #198754;
+        }
+
+        .status-pending {
+            background: #fff5e5;
+            color: #c58212;
+        }
+
+        .status-completed {
+            background: #eef0f3;
+            color: #687785;
+        }
+
+        .action-btn {
+            width: 28px;
+            height: 28px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid #e1e7ec;
+
+            border-radius: 6px;
+
+            background: #ffffff;
+
+            color: #687a8b;
+
+            font-size: 12px;
+        }
+
+        .action-btn:hover {
+            border-color: #b7d8f7;
+            background: #f2f8fe;
+            color: #087cf0;
+        }
+
+
+        /* =====================================================
+           SCHEDULE
+        ===================================================== */
+
+        .schedule-list {
+            padding: 7px 18px 14px;
+        }
+
+        .schedule-item {
+            display: flex;
+
+            padding: 13px 0;
+
+            border-bottom: 1px solid #edf1f5;
+        }
+
+        .schedule-item:last-child {
+            border-bottom: none;
+        }
+
+        .schedule-time {
+            width: 65px;
+
+            flex-shrink: 0;
+
+            color: #344a5f;
+
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .schedule-line {
+            position: relative;
+
+            width: 15px;
+
+            margin-right: 12px;
+        }
+
+        .schedule-line::before {
+            content: "";
+
+            position: absolute;
+
+            top: 4px;
+            left: 3px;
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #087cf0;
+        }
+
+        .schedule-line::after {
+            content: "";
+
+            position: absolute;
+
+            top: 14px;
+            left: 6px;
+
+            width: 1px;
+            height: 100%;
+
+            background: #dbe6ef;
+        }
+
+        .schedule-item:last-child
+        .schedule-line::after {
+            display: none;
+        }
+
+        .schedule-content strong {
+            display: block;
+
+            color: #40566a;
+
+            font-size: 10px;
+        }
+
+        .schedule-content span {
+            display: block;
+
+            margin-top: 3px;
+
+            color: #98a4ae;
+
+            font-size: 9px;
+        }
+
+
+        /* =====================================================
+           QUICK ACTIONS
+        ===================================================== */
+
+        .quick-actions {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 10px;
+
+            padding: 17px;
+        }
+
+        .quick-action {
+            min-height: 80px;
+
+            padding: 13px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            border: 1px solid #e4eaf0;
+
+            border-radius: 8px;
+
+            background: #ffffff;
+
+            color: #4a5f72;
+
+            transition: all 0.2s ease;
+        }
+
+        .quick-action:hover {
+            border-color: #b9dafa;
+
+            background: #f6fbff;
+
+            color: #087cf0;
+
+            transform: translateY(-1px);
+        }
+
+        .quick-action i {
+            margin-bottom: 7px;
+
+            color: #087cf0;
+
+            font-size: 17px;
+        }
+
+        .quick-action span {
+            font-size: 9px;
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           NOTIFICATIONS
+        ===================================================== */
+
+        .notification-list {
+            padding: 5px 18px 12px;
+        }
+
+        .notification-item {
+            display: flex;
+            gap: 10px;
+
+            padding: 12px 0;
+
+            border-bottom: 1px solid #edf1f5;
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        .notification-icon {
+            width: 29px;
+            height: 29px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 7px;
+
+            background: #edf6ff;
+            color: #087cf0;
+
+            font-size: 12px;
+        }
+
+        .notification-content strong {
+            display: block;
+
+            color: #43586b;
+
+            font-size: 10px;
+        }
+
+        .notification-content p {
+            margin: 3px 0 0;
+
+            color: #909ca7;
+
+            font-size: 9px;
+
+            line-height: 1.4;
+        }
+
+        .notification-time {
+            margin-top: 3px;
+
+            color: #b0bac2;
+
+            font-size: 8px;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .dashboard-footer {
+            padding: 18px 30px;
+
+            border-top: 1px solid #e5ebf0;
+
+            color: #96a2ad;
+
+            font-size: 9px;
+
+            text-align: center;
+        }
+
+
+        /* =====================================================
+           MOBILE MENU
+        ===================================================== */
+
+        .mobile-menu-btn {
+            display: none;
+
+            width: 34px;
+            height: 34px;
+
+            border: 1px solid #dfe6ec;
+
+            border-radius: 6px;
+
+            background: #ffffff;
+
+            color: #526679;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1100px) {
+
+            .sidebar {
+                width: 220px;
+            }
+
+            .main-wrapper {
+                margin-left: 220px;
+            }
+
+            .dashboard-content {
+                padding: 25px 20px;
+            }
+
+            .topbar {
+                padding: 0 20px;
+            }
+
+        }
+
+
+        @media (max-width: 991px) {
+
+            .sidebar {
+                left: -250px;
+                width: 250px;
+            }
+
+            .sidebar.show {
+                left: 0;
+            }
+
+            .main-wrapper {
+                margin-left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: inline-flex;
+
+                align-items: center;
+                justify-content: center;
+            }
+
+            .topbar {
+                gap: 12px;
+            }
+
+            .topbar-left {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+        }
+
+
+        @media (max-width: 767px) {
+
+            .topbar {
+                height: 65px;
+
+                padding: 0 15px;
+            }
+
+            .page-heading h1 {
+                font-size: 17px;
+            }
+
+            .page-heading p {
+                display: none;
+            }
+
+            .top-date {
+                display: none;
+            }
+
+            .topbar-right {
+                gap: 7px;
+            }
+
+            .dashboard-content {
+                padding: 18px 12px;
+            }
+
+            .welcome-banner {
+                padding: 20px;
+            }
+
+            .welcome-banner h2 {
+                font-size: 17px;
+            }
+
+            .welcome-banner p {
+                line-height: 1.5;
+            }
+
+            .stat-card {
+                padding: 16px;
+            }
+
+            .stat-number {
+                font-size: 23px;
+            }
+
+            .appointment-table {
+                min-width: 700px;
+            }
+
+            .table-responsive {
+                border-radius: 0;
+            }
+
+            .dashboard-footer {
+                padding: 15px;
+            }
+
+        }
+
+
+        @media (max-width: 450px) {
+
+            .welcome-banner::after {
+                display: none;
+            }
+
+            .top-icon {
+                width: 32px;
+                height: 32px;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
 </head>
+
+
 <body>
 
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside
+        class="sidebar"
+        id="sidebar">
+
+
+    <!-- Brand -->
+
+    <div class="sidebar-brand">
+
+        <div class="brand-logo">
+
+            <i class="bi bi-heart-pulse-fill"></i>
+
+        </div>
+
+        <div class="brand-name">
+
+            <strong>CarePlus</strong>
+
+            <span>Hospital Management</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Doctor Profile -->
+
+    <div class="doctor-profile">
+
+        <div class="doctor-profile-inner">
+
+            <div class="doctor-avatar">
+                DS
+            </div>
+
+            <div class="doctor-info">
+
+                <strong>
+                    Dr. Sarah Smith
+                </strong>
+
+                <span>
+                    Cardiologist
+                </span>
+
+                <div class="online-status">
+
+                    <span class="online-dot"></span>
+
+                    Available
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Navigation -->
+
+    <div class="sidebar-nav">
+
+
+        <div class="nav-label">
+            Main Menu
+        </div>
+
+
+        <a
+                href="#"
+                class="sidebar-link active">
+
+            <i class="bi bi-grid-1x2"></i>
+
+            Dashboard
+
+        </a>
+
+
+        <a
+                href="#appointments"
+                class="sidebar-link">
+
+            <i class="bi bi-calendar2-check"></i>
+
+            Appointments
+
+            <span class="sidebar-badge">
+                8
+            </span>
+
+        </a>
+
+
+        <a
+                href="#patients"
+                class="sidebar-link">
+
+            <i class="bi bi-people"></i>
+
+            My Patients
+
+        </a>
+
+
+        <a
+                href="#schedule"
+                class="sidebar-link">
+
+            <i class="bi bi-calendar-week"></i>
+
+            My Schedule
+
+        </a>
+
+
+        <div class="nav-label">
+            Clinical
+        </div>
+
+
+        <a
+                href="#"
+                class="sidebar-link">
+
+            <i class="bi bi-file-medical"></i>
+
+            Medical Records
+
+        </a>
+
+
+        <a
+                href="#"
+                class="sidebar-link">
+
+            <i class="bi bi-prescription2"></i>
+
+            Prescriptions
+
+        </a>
+
+
+        <a
+                href="#"
+                class="sidebar-link">
+
+            <i class="bi bi-clipboard2-pulse"></i>
+
+            Reports
+
+        </a>
+
+
+        <div class="nav-label">
+            Account
+        </div>
+
+
+        <a
+                href="#"
+                class="sidebar-link">
+
+            <i class="bi bi-person-circle"></i>
+
+            My Profile
+
+        </a>
+
+
+        <a
+                href="#"
+                class="sidebar-link">
+
+            <i class="bi bi-gear"></i>
+
+            Settings
+
+        </a>
+
+    </div>
+
+
+    <!-- Bottom -->
+
+    <div class="sidebar-bottom">
+
+        <a
+                href="/logout"
+                class="logout-link">
+
+            <i class="bi bi-box-arrow-left"></i>
+
+            Sign Out
+
+        </a>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN WRAPPER
+===================================================== -->
+
+<div class="main-wrapper">
+
+
+    <!-- =================================================
+         TOPBAR
+    ================================================== -->
+
+    <header class="topbar">
+
+
+        <div class="topbar-left">
+
+            <button
+                    class="mobile-menu-btn"
+                    id="mobileMenuBtn">
+
+                <i class="bi bi-list"></i>
+
+            </button>
+
+
+            <div class="page-heading">
+
+                <h1>
+                    Doctor Dashboard
+                </h1>
+
+                <p>
+                    Overview of your appointments and patients
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="topbar-right">
+
+
+            <button
+                    class="top-icon"
+                    title="Search">
+
+                <i class="bi bi-search"></i>
+
+            </button>
+
+
+            <button
+                    class="top-icon"
+                    title="Notifications">
+
+                <i class="bi bi-bell"></i>
+
+                <span class="notification-dot"></span>
+
+            </button>
+
+
+            <div class="top-date">
+
+                <i class="bi bi-calendar3 me-1"></i>
+
+                <span id="currentDate"></span>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =================================================
+         DASHBOARD CONTENT
+    ================================================== -->
+
+    <main class="dashboard-content">
+
+
+        <!-- =================================================
+             WELCOME
+        ================================================== -->
+
+        <section class="welcome-banner">
+
+            <span class="today-label">
+                Today's Overview
+            </span>
+
+            <h2>
+                Good evening, Dr. Sarah.
+            </h2>
+
+            <p>
+                You have
+                <strong>8 appointments</strong>
+                scheduled today, with your next consultation
+                at <strong>09:30 AM</strong>.
+            </p>
+
+        </section>
+
+
+
+        <!-- =================================================
+             STAT CARDS
+        ================================================== -->
+
+        <section class="mb-4">
+
+            <div class="row g-3">
+
+
+                <!-- Today's Appointments -->
+
+                <div class="col-6 col-xl-3">
+
+                    <div class="stat-card">
+
+                        <div class="stat-top">
+
+                            <div>
+
+                                <div class="stat-label">
+                                    Today's Appointments
+                                </div>
+
+                                <div class="stat-number">
+                                    08
+                                </div>
+
+                                <div class="stat-description">
+                                    3 remaining
+                                </div>
+
+                            </div>
+
+                            <div class="stat-icon icon-blue">
+
+                                <i class="bi bi-calendar2-check"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Patients -->
+
+                <div class="col-6 col-xl-3">
+
+                    <div class="stat-card">
+
+                        <div class="stat-top">
+
+                            <div>
+
+                                <div class="stat-label">
+                                    Total Patients
+                                </div>
+
+                                <div class="stat-number">
+                                    248
+                                </div>
+
+                                <div class="stat-description">
+                                    Assigned patients
+                                </div>
+
+                            </div>
+
+                            <div class="stat-icon icon-green">
+
+                                <i class="bi bi-people"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Pending -->
+
+                <div class="col-6 col-xl-3">
+
+                    <div class="stat-card">
+
+                        <div class="stat-top">
+
+                            <div>
+
+                                <div class="stat-label">
+                                    Pending Requests
+                                </div>
+
+                                <div class="stat-number">
+                                    05
+                                </div>
+
+                                <div class="stat-description">
+                                    Need your attention
+                                </div>
+
+                            </div>
+
+                            <div class="stat-icon icon-orange">
+
+                                <i class="bi bi-hourglass-split"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Completed -->
+
+                <div class="col-6 col-xl-3">
+
+                    <div class="stat-card">
+
+                        <div class="stat-top">
+
+                            <div>
+
+                                <div class="stat-label">
+                                    Completed Today
+                                </div>
+
+                                <div class="stat-number">
+                                    05
+                                </div>
+
+                                <div class="stat-description">
+                                    Consultations completed
+                                </div>
+
+                            </div>
+
+                            <div class="stat-icon icon-purple">
+
+                                <i class="bi bi-check2-circle"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             MAIN GRID
+        ================================================== -->
+
+        <div class="row g-4">
+
+
+            <!-- =================================================
+                 LEFT COLUMN
+            ================================================== -->
+
+            <div class="col-xl-8">
+
+
+                <!-- Appointments -->
+
+                <section
+                        class="content-card mb-4"
+                        id="appointments">
+
+
+                    <div class="card-header-custom">
+
+                        <div class="card-title-area">
+
+                            <h3>
+                                Today's Appointments
+                            </h3>
+
+                            <p>
+                                Your scheduled patient consultations
+                            </p>
+
+                        </div>
+
+                        <a
+                                href="#"
+                                class="view-all">
+
+                            View All
+                            <i class="bi bi-arrow-right ms-1"></i>
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="table-responsive">
+
+                        <table class="table appointment-table">
+
+                            <thead>
+
+                            <tr>
+
+                                <th>
+                                    Patient
+                                </th>
+
+                                <th>
+                                    Time
+                                </th>
+
+                                <th>
+                                    Service
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
+                            </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+
+                            <!-- Patient 1 -->
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="patient-cell">
+
+                                        <div class="patient-avatar">
+                                            AM
+                                        </div>
+
+                                        <div>
+
+                                            <div class="patient-name">
+                                                Amit Mehta
+                                            </div>
+
+                                            <div class="patient-id">
+                                                PAT-10241
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+
+                                        <span class="time-cell">
+                                            09:30 AM
+                                        </span>
+
+                                </td>
+
+
+                                <td>
+                                    Cardiology
+                                </td>
+
+
+                                <td>
+
+                                        <span class="status-badge status-confirmed">
+                                            Confirmed
+                                        </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                            class="action-btn"
+                                            title="View patient">
+
+                                        <i class="bi bi-eye"></i>
+
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <!-- Patient 2 -->
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="patient-cell">
+
+                                        <div class="patient-avatar">
+                                            PS
+                                        </div>
+
+                                        <div>
+
+                                            <div class="patient-name">
+                                                Priya Shah
+                                            </div>
+
+                                            <div class="patient-id">
+                                                PAT-10242
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+
+                                        <span class="time-cell">
+                                            10:15 AM
+                                        </span>
+
+                                </td>
+
+
+                                <td>
+                                    Consultation
+                                </td>
+
+
+                                <td>
+
+                                        <span class="status-badge status-confirmed">
+                                            Confirmed
+                                        </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                            class="action-btn"
+                                            title="View patient">
+
+                                        <i class="bi bi-eye"></i>
+
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <!-- Patient 3 -->
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="patient-cell">
+
+                                        <div class="patient-avatar">
+                                            RK
+                                        </div>
+
+                                        <div>
+
+                                            <div class="patient-name">
+                                                Rahul Kulkarni
+                                            </div>
+
+                                            <div class="patient-id">
+                                                PAT-10243
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+
+                                        <span class="time-cell">
+                                            11:00 AM
+                                        </span>
+
+                                </td>
+
+
+                                <td>
+                                    Cardiology
+                                </td>
+
+
+                                <td>
+
+                                        <span class="status-badge status-pending">
+                                            Pending
+                                        </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                            class="action-btn"
+                                            title="Review">
+
+                                        <i class="bi bi-arrow-right"></i>
+
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <!-- Patient 4 -->
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="patient-cell">
+
+                                        <div class="patient-avatar">
+                                            NS
+                                        </div>
+
+                                        <div>
+
+                                            <div class="patient-name">
+                                                Neha Sharma
+                                            </div>
+
+                                            <div class="patient-id">
+                                                PAT-10244
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+
+                                        <span class="time-cell">
+                                            12:30 PM
+                                        </span>
+
+                                </td>
+
+
+                                <td>
+                                    Follow-up
+                                </td>
+
+
+                                <td>
+
+                                        <span class="status-badge status-completed">
+                                            Completed
+                                        </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                            class="action-btn"
+                                            title="View record">
+
+                                        <i class="bi bi-file-medical"></i>
+
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <!-- Patient 5 -->
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="patient-cell">
+
+                                        <div class="patient-avatar">
+                                            VK
+                                        </div>
+
+                                        <div>
+
+                                            <div class="patient-name">
+                                                Vikram Kumar
+                                            </div>
+
+                                            <div class="patient-id">
+                                                PAT-10245
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+
+                                        <span class="time-cell">
+                                            02:00 PM
+                                        </span>
+
+                                </td>
+
+
+                                <td>
+                                    Consultation
+                                </td>
+
+
+                                <td>
+
+                                        <span class="status-badge status-confirmed">
+                                            Confirmed
+                                        </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                            class="action-btn"
+                                            title="View patient">
+
+                                        <i class="bi bi-eye"></i>
+
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- Patient Activity -->
+
+                <section
+                        class="content-card"
+                        id="patients">
+
+
+                    <div class="card-header-custom">
+
+                        <div class="card-title-area">
+
+                            <h3>
+                                Recent Patient Activity
+                            </h3>
+
+                            <p>
+                                Latest updates from your patients
+                            </p>
+
+                        </div>
+
+                        <a
+                                href="#"
+                                class="view-all">
+
+                            View Patients
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="notification-list">
+
+
+                        <div class="notification-item">
+
+                            <div class="notification-icon">
+
+                                <i class="bi bi-file-medical"></i>
+
+                            </div>
+
+                            <div class="notification-content">
+
+                                <strong>
+                                    Medical record updated
+                                </strong>
+
+                                <p>
+                                    Amit Mehta's medical record was updated
+                                    after today's consultation.
+                                </p>
+
+                                <div class="notification-time">
+                                    15 minutes ago
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="notification-item">
+
+                            <div class="notification-icon">
+
+                                <i class="bi bi-calendar-plus"></i>
+
+                            </div>
+
+                            <div class="notification-content">
+
+                                <strong>
+                                    New appointment request
+                                </strong>
+
+                                <p>
+                                    Rahul Kulkarni requested a cardiology
+                                    consultation.
+                                </p>
+
+                                <div class="notification-time">
+                                    1 hour ago
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="notification-item">
+
+                            <div class="notification-icon">
+
+                                <i class="bi bi-prescription2"></i>
+
+                            </div>
+
+                            <div class="notification-content">
+
+                                <strong>
+                                    Prescription reminder
+                                </strong>
+
+                                <p>
+                                    Follow-up prescription review is pending
+                                    for Neha Sharma.
+                                </p>
+
+                                <div class="notification-time">
+                                    2 hours ago
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 RIGHT COLUMN
+            ================================================== -->
+
+            <div class="col-xl-4">
+
+
+                <!-- Schedule -->
+
+                <section
+                        class="content-card mb-4"
+                        id="schedule">
+
+
+                    <div class="card-header-custom">
+
+                        <div class="card-title-area">
+
+                            <h3>
+                                Today's Schedule
+                            </h3>
+
+                            <p>
+                                Your consultation timeline
+                            </p>
+
+                        </div>
+
+                        <i
+                                class="bi bi-calendar-week"
+                                style="color:#087cf0;">
+                        </i>
+
+                    </div>
+
+
+                    <div class="schedule-list">
+
+
+                        <div class="schedule-item">
+
+                            <div class="schedule-time">
+                                09:30 AM
+                            </div>
+
+                            <div class="schedule-line"></div>
+
+                            <div class="schedule-content">
+
+                                <strong>
+                                    Amit Mehta
+                                </strong>
+
+                                <span>
+                                    Cardiology consultation
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="schedule-item">
+
+                            <div class="schedule-time">
+                                10:15 AM
+                            </div>
+
+                            <div class="schedule-line"></div>
+
+                            <div class="schedule-content">
+
+                                <strong>
+                                    Priya Shah
+                                </strong>
+
+                                <span>
+                                    General consultation
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="schedule-item">
+
+                            <div class="schedule-time">
+                                11:00 AM
+                            </div>
+
+                            <div class="schedule-line"></div>
+
+                            <div class="schedule-content">
+
+                                <strong>
+                                    Rahul Kulkarni
+                                </strong>
+
+                                <span>
+                                    Cardiology consultation
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="schedule-item">
+
+                            <div class="schedule-time">
+                                12:30 PM
+                            </div>
+
+                            <div class="schedule-line"></div>
+
+                            <div class="schedule-content">
+
+                                <strong>
+                                    Neha Sharma
+                                </strong>
+
+                                <span>
+                                    Follow-up consultation
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="schedule-item">
+
+                            <div class="schedule-time">
+                                02:00 PM
+                            </div>
+
+                            <div class="schedule-line"></div>
+
+                            <div class="schedule-content">
+
+                                <strong>
+                                    Vikram Kumar
+                                </strong>
+
+                                <span>
+                                    Cardiology consultation
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- Quick Actions -->
+
+                <section class="content-card mb-4">
+
+
+                    <div class="card-header-custom">
+
+                        <div class="card-title-area">
+
+                            <h3>
+                                Quick Actions
+                            </h3>
+
+                            <p>
+                                Frequently used options
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="quick-actions">
+
+
+                        <a
+                                href="#"
+                                class="quick-action">
+
+                            <i class="bi bi-person-plus"></i>
+
+                            <span>
+                                Add Patient
+                            </span>
+
+                        </a>
+
+
+                        <a
+                                href="#"
+                                class="quick-action">
+
+                            <i class="bi bi-calendar-plus"></i>
+
+                            <span>
+                                New Appointment
+                            </span>
+
+                        </a>
+
+
+                        <a
+                                href="#"
+                                class="quick-action">
+
+                            <i class="bi bi-file-earmark-medical"></i>
+
+                            <span>
+                                Medical Records
+                            </span>
+
+                        </a>
+
+
+                        <a
+                                href="#"
+                                class="quick-action">
+
+                            <i class="bi bi-prescription2"></i>
+
+                            <span>
+                                Prescription
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- Notifications -->
+
+                <section class="content-card">
+
+
+                    <div class="card-header-custom">
+
+                        <div class="card-title-area">
+
+                            <h3>
+                                Notifications
+                            </h3>
+
+                            <p>
+                                Recent alerts
+                            </p>
+
+                        </div>
+
+                        <a
+                                href="#"
+                                class="view-all">
+
+                            See All
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="notification-list">
+
+
+                        <div class="notification-item">
+
+                            <div class="notification-icon">
+
+                                <i class="bi bi-bell"></i>
+
+                            </div>
+
+                            <div class="notification-content">
+
+                                <strong>
+                                    Appointment reminder
+                                </strong>
+
+                                <p>
+                                    You have an appointment with
+                                    Priya Shah at 10:15 AM.
+                                </p>
+
+                                <div class="notification-time">
+                                    10 minutes ago
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="notification-item">
+
+                            <div class="notification-icon">
+
+                                <i class="bi bi-clock-history"></i>
+
+                            </div>
+
+                            <div class="notification-content">
+
+                                <strong>
+                                    Pending appointment
+                                </strong>
+
+                                <p>
+                                    One appointment request is waiting
+                                    for confirmation.
+                                </p>
+
+                                <div class="notification-time">
+                                    35 minutes ago
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="notification-item">
+
+                            <div class="notification-icon">
+
+                                <i class="bi bi-check-circle"></i>
+
+                            </div>
+
+                            <div class="notification-content">
+
+                                <strong>
+                                    Schedule updated
+                                </strong>
+
+                                <p>
+                                    Your schedule for tomorrow has
+                                    been updated.
+                                </p>
+
+                                <div class="notification-time">
+                                    2 hours ago
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================== -->
+
+    <footer class="dashboard-footer">
+
+        © 2026 CarePlus Hospital.
+        Doctor Dashboard · All Rights Reserved.
+
+    </footer>
+
+</div>
+
+
+
+<!-- =====================================================
+     BOOTSTRAP JS
+===================================================== -->
+
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+
+<script>
+
+    /* =====================================================
+       MOBILE SIDEBAR
+    ===================================================== */
+
+    const mobileMenuBtn =
+        document.getElementById("mobileMenuBtn");
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+
+    mobileMenuBtn.addEventListener(
+        "click",
+        function () {
+
+            sidebar.classList.toggle("show");
+
+        }
+    );
+
+
+    /* =====================================================
+       CLOSE SIDEBAR WHEN LINK CLICKED ON MOBILE
+    ===================================================== */
+
+    const sidebarLinks =
+        document.querySelectorAll(".sidebar-link");
+
+
+    sidebarLinks.forEach(function (link) {
+
+        link.addEventListener(
+            "click",
+            function () {
+
+                if (window.innerWidth <= 991) {
+
+                    sidebar.classList.remove("show");
+
+                }
+
+            }
+        );
+
+    });
+
+
+    /* =====================================================
+       ACTIVE SIDEBAR MENU
+    ===================================================== */
+
+    sidebarLinks.forEach(function (link) {
+
+        link.addEventListener(
+            "click",
+            function () {
+
+                sidebarLinks.forEach(function (item) {
+
+                    item.classList.remove("active");
+
+                });
+
+                this.classList.add("active");
+
+            }
+        );
+
+    });
+
+
+    /* =====================================================
+       CURRENT DATE
+    ===================================================== */
+
+    const currentDate =
+        document.getElementById("currentDate");
+
+
+    const today =
+        new Date();
+
+
+    currentDate.textContent =
+        today.toLocaleDateString(
+            "en-IN",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            }
+        );
+
+
+    /* =====================================================
+       CLOSE SIDEBAR WHEN CLICKING OUTSIDE
+    ===================================================== */
+
+    document.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                window.innerWidth <= 991 &&
+                sidebar.classList.contains("show") &&
+                !sidebar.contains(event.target) &&
+                !mobileMenuBtn.contains(event.target)
+            ) {
+
+                sidebar.classList.remove("show");
+
+            }
+
+        }
+    );
+
+</script>
+
+
 </body>
+
 </html>

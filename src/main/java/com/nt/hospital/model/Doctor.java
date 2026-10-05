@@ -17,6 +17,10 @@ public class Doctor {
     @JoinColumn(name = "user_id", unique = true, nullable = false)
     private User user;
 
+//    @ManyToOne
+//    @JoinColumn(name = "department_id")
+//    private Department department;
+
     private String specialization;
 
     private String qualification;

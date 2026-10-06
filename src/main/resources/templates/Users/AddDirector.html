@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Director | CarePlus</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #f5f7fb;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 15px;
+        }
+
+        .form-card {
+            width: 100%;
+            max-width: 700px;
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, #1677ff, #438cf5);
+            color: white;
+            padding: 28px 30px;
+        }
+
+        .form-header-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,.18);
+            border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 25px;
+        }
+
+        .form-header h2 {
+            margin: 0;
+            font-size: 25px;
+            font-weight: 600;
+        }
+
+        .form-header p {
+            margin: 5px 0 0;
+            opacity: .9;
+            font-size: 14px;
+        }
+
+        .form-body {
+            padding: 32px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1677ff;
+            margin-bottom: 20px;
+
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            font-size: 14px;
+            color: #374151;
+        }
+
+        .form-control,
+        .form-select {
+            padding: 11px 13px;
+            border-radius: 9px;
+            border: 1px solid #dfe3e8;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #1677ff;
+            box-shadow: 0 0 0 3px rgba(22,119,255,.10);
+        }
+
+        .input-group-text {
+            background: #f8fafc;
+            border-color: #dfe3e8;
+            color: #64748b;
+        }
+
+        .form-footer {
+            border-top: 1px solid #edf0f4;
+            padding-top: 24px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            padding: 10px 22px;
+            border-radius: 9px;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #1677ff;
+            border-color: #1677ff;
+        }
+
+        .btn-primary:hover {
+            background: #0d63dc;
+            border-color: #0d63dc;
+        }
+
+        .required {
+            color: #dc2626;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+            color: #1e40af;
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 576px) {
+
+            .form-body {
+                padding: 22px;
+            }
+
+            .form-header {
+                padding: 23px;
+            }
+
+            .form-header h2 {
+                font-size: 21px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="main-container">
+
+    <div class="form-card">
+
+
+        <!-- =========================
+             HEADER
+        ========================== -->
+
+        <div class="form-header">
+
+            <div class="form-header-content">
+
+                <div class="header-icon">
+
+                    <i class="bi bi-person-badge"></i>
+
+                </div>
+
+                <div>
+
+                    <h2>Add Department Director</h2>
+
+                    <p>
+                        Create a new director user account
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             FORM BODY
+        ========================== -->
+
+        <div class="form-body">
+
+
+            <!-- INFORMATION -->
+
+            <div class="info-box">
+
+                <i class="bi bi-info-circle me-2"></i>
+
+                Director ID will be generated automatically.
+                The role will be assigned by the administrator.
+
+            </div>
+
+
+            <!-- =========================
+                 SUCCESS MESSAGE
+            ========================== -->
+
+            <div th:if="${success}"
+                 class="alert alert-success alert-dismissible fade show">
+
+                <i class="bi bi-check-circle me-2"></i>
+
+                <span th:text="${success}">
+<!--                    Director added successfully.-->
+                </span>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert">
+                </button>
+
+            </div>
+
+
+            <!-- =========================
+                 ERROR MESSAGE
+            ========================== -->
+
+            <div th:if="${error}"
+                 class="alert alert-danger alert-dismissible fade show">
+
+                <i class="bi bi-exclamation-triangle me-2"></i>
+
+                <span th:text="${error}">
+<!--                    Director could not be added.-->
+                </span>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert">
+                </button>
+
+            </div>
+
+
+            <!-- =========================
+                 FORM
+            ========================== -->
+
+            <form action="/admin/add-director"
+                  method="post">
+
+
+                <!-- PERSONAL INFORMATION -->
+
+                <div class="section-title">
+
+                    <i class="bi bi-person"></i>
+
+                    Personal Information
+
+                </div>
+
+
+                <!-- NAME -->
+
+                <div class="mb-4">
+
+                    <label for="name"
+                           class="form-label">
+
+                        Director Name
+                        <span class="required">*</span>
+
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+
+                            <i class="bi bi-person"></i>
+
+                        </span>
+
+                        <input type="text"
+                               id="name"
+                               name="name"
+                               class="form-control"
+                               placeholder="Enter director name"
+                               required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="mb-4">
+
+                    <label for="email"
+                           class="form-label">
+
+                        Email Address
+                        <span class="required">*</span>
+
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+
+                            <i class="bi bi-envelope"></i>
+
+                        </span>
+
+                        <input type="email"
+                               id="email"
+                               name="email"
+                               class="form-control"
+                               placeholder="Enter director email"
+                               required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CONTACT -->
+
+                <div class="mb-4">
+
+                    <label for="contact"
+                           class="form-label">
+
+                        Contact Number
+                        <span class="required">*</span>
+
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+
+                            <i class="bi bi-telephone"></i>
+
+                        </span>
+
+                        <input type="tel"
+                               id="contact"
+                               name="contact"
+                               class="form-control"
+                               placeholder="Enter 10 digit contact number"
+                               pattern="[0-9]{10}"
+                               maxlength="10"
+                               required>
+
+                    </div>
+
+                    <small class="text-muted">
+
+                        Enter a valid 10 digit mobile number.
+
+                    </small>
+
+                </div>
+
+
+                <!-- =========================
+                     ACCOUNT INFORMATION
+                ========================== -->
+
+                <div class="section-title mt-4">
+
+                    <i class="bi bi-shield-lock"></i>
+
+                    Account Information
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="mb-4">
+
+                    <label for="password"
+                           class="form-label">
+
+                        Password
+                        <span class="required">*</span>
+
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+
+                            <i class="bi bi-lock"></i>
+
+                        </span>
+
+                        <input type="password"
+                               id="password"
+                               name="password"
+                               class="form-control"
+                               placeholder="Create password"
+                               minlength="6"
+                               required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="mb-4">
+
+                    <label for="status"
+                           class="form-label">
+
+                        Account Status
+                        <span class="required">*</span>
+
+                    </label>
+
+                    <select id="status"
+                            name="status"
+                            class="form-select"
+                            required>
+
+                        <option value="">
+                            Select account status
+                        </option>
+
+                        <option value="ACTIVE">
+                            Active
+                        </option>
+
+                        <option value="INACTIVE">
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- =========================
+                     BUTTONS
+                ========================== -->
+
+                <div class="form-footer">
+
+                    <div class="d-flex justify-content-between">
+
+                        <a href="/admin/dashboard"
+                           class="btn btn-outline-secondary">
+
+                            <i class="bi bi-arrow-left me-1"></i>
+
+                            Cancel
+
+                        </a>
+
+
+                        <button type="submit"
+                                class="btn btn-primary">
+
+                            <i class="bi bi-person-plus me-1"></i>
+
+                            Add Director
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+
+</html>

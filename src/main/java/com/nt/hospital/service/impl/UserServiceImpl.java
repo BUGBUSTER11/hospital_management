@@ -38,4 +38,14 @@ public class UserServiceImpl implements UserService {
         return null;
 
     }
+
+    @Override
+    public boolean addDirector(User user) {
+        if(userRepositry.existsByEmail(user.getEmail())){
+            return false;
+        }
+        user.setRole("DIRECTOR");
+         userRepositry.save(user);
+         return true;
+    }
 }

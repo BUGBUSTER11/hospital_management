@@ -6,4 +6,6 @@ public interface UserService {
     User loginUser(String email, String password);
 
     User getUserIdAndRoleByEmail(String email);
+
+    boolean addDirector(User user);
 }

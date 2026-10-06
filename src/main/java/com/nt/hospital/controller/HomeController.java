@@ -39,4 +39,15 @@ public String userLoginPage(){
     }
 
 
+    //click on Users Buttons so that can perform operation
+    @GetMapping("/Admin/usersDashboardPage")
+    public String getUserDashboardPage() {
+        return "Users/userDashboard";
+    }
+
+
+   @GetMapping("/admin/create-Director")
+    public String AddDirectorPage(){
+        return "Users/AddDirector";
+   }
 }

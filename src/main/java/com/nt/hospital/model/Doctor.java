@@ -34,10 +34,15 @@ public class Doctor {
 
     private LocalDate joiningDate;
 
+    // Doctor.java
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
+
     public Doctor() {
     }
 
-    public Doctor(int doctorId, User user, String specialization, String qualification, String licenseNumber, int experience, BigDecimal consultationFee, LocalDate joiningDate) {
+    public Doctor(int doctorId, User user, String specialization, String qualification, String licenseNumber, int experience, BigDecimal consultationFee, LocalDate joiningDate, Department department) {
         this.doctorId = doctorId;
         this.user = user;
         this.specialization = specialization;
@@ -46,6 +51,7 @@ public class Doctor {
         this.experience = experience;
         this.consultationFee = consultationFee;
         this.joiningDate = joiningDate;
+        this.department = department;
     }
 
     public int getDoctorId() {
@@ -91,6 +97,14 @@ public class Doctor {
 
     public int getExperience() {
         return experience;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     public void setExperience(int experience) {

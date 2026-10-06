@@ -7,7 +7,10 @@ import jakarta.persistence.*;
 public class Department {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    private String departmentCode;
 
     private String departmentName;
 
@@ -26,9 +29,10 @@ public class Department {
     public Department() {
     }
 
-    public Department(String id, String departmentName, String description,
+    public Department(int id, String departmentCode, String departmentName, String description,
                       String location, String status , User director, long phone) {
         this.id = id;
+        this.departmentCode = departmentCode;
         this.departmentName = departmentName;
         this.description = description;
         this.location = location;
@@ -37,13 +41,22 @@ public class Department {
         this.phone = phone;
     }
 
-    public String getId() {
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getDepartmentCode() {
+        return departmentCode;
     }
+
+    public void setDepartmentCode(String departmentCode) {
+        this.departmentCode = departmentCode;
+    }
+
 
     public String getDepartmentName() {
         return departmentName;
@@ -96,6 +109,7 @@ public class Department {
     @Override
     public String toString() {
         return "Department [departmentId=" + id
+                + ", departmentCode=" + departmentCode
                 + ", departmentName=" + departmentName
                 + ", description=" + description
                 + ", location=" + location

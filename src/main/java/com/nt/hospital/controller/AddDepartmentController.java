@@ -54,4 +54,11 @@ public class AddDepartmentController {
         return "/Admin/addDepartment";
     }
 
+    @GetMapping("/Department/addDoctorInDepartment")
+    public String addDoctorInDepartment(Model model) {
+
+        List<Department> departments = departmentService.getDepartment();
+        model.addAttribute("departments" , departments);
+        return "/Department/addDoctorInDepartment";
+    }
 }

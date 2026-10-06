@@ -18,4 +18,8 @@ public interface AddDepartmentService {
     List<Department> getActiveDepartments();
 
     List<Department> getInActiveDepartments();
+
+    List<Department> getDepartment();
+
+    Department getDepartmentById(int id);
 }

@@ -285,6 +285,38 @@
 
                         </div>
 
+                        <!--departments list to add the dr into the department-->
+
+                        <!-- Department -->
+                        <div class="mb-3">
+
+                            <label for="departmentId"
+                                   class="form-label">
+                                Department
+                            </label>
+
+                            <select class="form-select"
+                                    id="departmentId"
+                                    name="departmentId"
+                                    required>
+
+                                <option value="">
+                                    Select Department
+                                </option>
+
+                                <option th:each="department : ${departments}"
+                                        th:value="${department.id}"
+                                        th:text="${department.departmentName}">
+                                </option>
+
+                            </select>
+
+                            <div class="invalid-feedback">
+                                Please select a department.
+                            </div>
+
+                        </div>
+
                         <!-- Buttons -->
                         <div class="d-flex justify-content-between mt-4">
 
@@ -300,6 +332,10 @@
 
 
                         </div>
+
+
+
+
 
                     </form>
 

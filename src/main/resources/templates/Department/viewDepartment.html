@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${department.departmentName} + ' | CarePlus'">
+        Department Details | CarePlus
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7fb;
+            color: #1f2937;
+            min-height: 100vh;
+        }
+
+        .main {
+            margin-left: 236px;
+            padding: 30px;
+        }
+
+        /* ================= HEADER ================= */
+
+        .page-header {
+            background: linear-gradient(
+                    135deg,
+                    #1976f3,
+                    #4285e8
+            );
+
+            color: white;
+            border-radius: 15px;
+            padding: 28px;
+            margin-bottom: 25px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            font-size: 15px;
+            opacity: 0.95;
+        }
+
+        .back-btn {
+            background-color: white;
+            color: #1976f3;
+            padding: 11px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* ================= DEPARTMENT INFO ================= */
+
+        .department-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .department-card h2 {
+            font-size: 21px;
+            margin-bottom: 20px;
+            color: #1e293b;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .info-box {
+            background-color: #f8fafc;
+            border-radius: 9px;
+            padding: 16px;
+        }
+
+        .info-box label {
+            display: block;
+            color: #64748b;
+            font-size: 12px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        .info-box span {
+            font-size: 15px;
+            color: #1e293b;
+        }
+
+        /* ================= DOCTORS ================= */
+
+        .doctors-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .doctors-header {
+            padding: 22px 25px;
+            border-bottom: 1px solid #e2e8f0;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .doctors-header h2 {
+            font-size: 21px;
+        }
+
+        .doctor-count {
+            background-color: #e8f1ff;
+            color: #1976f3;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        thead {
+            background-color: #f8fafc;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            font-size: 13px;
+            color: #475569;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        td {
+            padding: 16px 15px;
+            font-size: 14px;
+            color: #334155;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        tbody tr:hover {
+            background-color: #f8fbff;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .doctor-name {
+            font-weight: bold;
+            color: #1e293b;
+        }
+
+        .doctor-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+
+            background-color: #e8f1ff;
+            color: #1976f3;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-right: 8px;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+
+            padding: 6px 10px;
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-active {
+            background-color: #e9f8f0;
+            color: #159447;
+        }
+
+        .status-inactive {
+            background-color: #fff0f0;
+            color: #e63946;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: currentColor;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty-state {
+            text-align: center;
+            padding: 55px 20px;
+            color: #64748b;
+        }
+
+        .empty-state .icon {
+            font-size: 45px;
+            margin-bottom: 12px;
+        }
+
+        .empty-state h3 {
+            color: #334155;
+            margin-bottom: 7px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .main {
+                margin-left: 70px;
+                padding: 20px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .main {
+                margin-left: 0;
+                padding: 15px;
+            }
+
+            .page-header h1 {
+                font-size: 25px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<main class="main">
+
+
+    <!-- ================= PAGE HEADER ================= -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1 th:text="${department.departmentName}">
+                Cardiology
+            </h1>
+
+            <p>
+                Department details and assigned doctors
+            </p>
+
+        </div>
+
+        <a href="/admin/departments"
+           class="back-btn">
+            ← Back to Departments
+        </a>
+
+    </div>
+
+
+    <!-- ================= DEPARTMENT INFORMATION ================= -->
+
+    <div class="department-card">
+
+        <h2>
+            Department Information
+        </h2>
+
+
+        <div class="info-grid">
+
+
+            <div class="info-box">
+
+                <label>
+                    Department ID
+                </label>
+
+                <span th:text="${department.id}">
+                    1
+                </span>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <label>
+                    Department Name
+                </label>
+
+                <span th:text="${department.departmentName}">
+                    Cardiology
+                </span>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <label>
+                    Location
+                </label>
+
+                <span th:text="${department.location}">
+                    First Floor
+                </span>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <label>
+                    Phone
+                </label>
+
+                <span th:text="${department.phone}">
+                    9876543210
+                </span>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <label>
+                    Director
+                </label>
+
+                <span th:if="${department.director != null}"
+                      th:text="${department.director.name}">
+                    Director Name
+                </span>
+
+                <span th:if="${department.director == null}">
+                    Not Assigned
+                </span>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <label>
+                    Description
+                </label>
+
+                <span th:text="${department.description}">
+                    Department description
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= DOCTORS ================= -->
+
+    <div class="doctors-card">
+
+
+        <div class="doctors-header">
+
+            <h2>
+                Doctors in this Department
+            </h2>
+
+            <span class="doctor-count"
+                  th:text="${#lists.size(doctors)} + ' Doctors'">
+                0 Doctors
+            </span>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+
+            <!-- DOCTORS EXIST -->
+
+            <table th:if="${doctors != null and !doctors.isEmpty()}">
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Doctor Name
+                    </th>
+
+                    <th>
+                        Email
+                    </th>
+
+                    <th>
+                        Phone
+                    </th>
+
+                    <th>
+                        Specialization
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                <tr th:each="doctor : ${doctors}">
+
+
+                    <td th:text="${doctor.id}">
+                        1
+                    </td>
+
+
+                    <td>
+
+                        <span class="doctor-icon">
+                            ♙
+                        </span>
+
+                        <span class="doctor-name"
+                              th:text="${doctor.name}">
+                            Dr. John
+                        </span>
+
+                    </td>
+
+
+                    <td th:text="${doctor.email}">
+                        doctor@gmail.com
+                    </td>
+
+
+                    <td th:text="${doctor.phone}">
+                        9876543210
+                    </td>
+
+
+                    <td th:text="${doctor.specialization}">
+                        Cardiologist
+                    </td>
+
+
+                    <td>
+
+                        <span class="status status-active"
+                              th:if="${doctor.status == 'ACTIVE'}">
+
+                            <span class="status-dot"></span>
+
+                            Active
+
+                        </span>
+
+
+                        <span class="status status-inactive"
+                              th:if="${doctor.status == 'INACTIVE'}">
+
+                            <span class="status-dot"></span>
+
+                            Inactive
+
+                        </span>
+
+                    </td>
+
+
+                </tr>
+
+
+                </tbody>
+
+            </table>
+
+
+            <!-- NO DOCTORS -->
+
+            <div class="empty-state"
+                 th:if="${doctors == null or doctors.isEmpty()}">
+
+                <div class="icon">
+                    ♙
+                </div>
+
+                <h3>
+                    No Doctors Assigned
+                </h3>
+
+                <p>
+                    There are currently no doctors assigned
+                    to this department.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>
+

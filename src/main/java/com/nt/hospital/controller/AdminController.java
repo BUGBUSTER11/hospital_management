@@ -46,6 +46,11 @@ public class AdminController {
 
         user.setRole("DOCTOR");
 
+        //list of departments
+        List<Department> departments = departmentService.getAllDepartmets();
+        model.addAttribute("departments",departments);
+
+
 
         boolean isRegister = doctorService.addDoctor(user);
 
@@ -71,11 +76,13 @@ public class AdminController {
 // Complete Doctor profill
     @PostMapping("/admin/add-doctor-details")
     public String completeDroctor(@Validated @ModelAttribute Doctor doctor,
-                                  BindingResult result,
+                                  BindingResult result, @RequestParam int departmentId,
                                   HttpSession doctorSession,
                                   Model model) {
 
         User user = (User) doctorSession.getAttribute("addDoctor");
+
+
 
         if (user == null) {
 
@@ -85,8 +92,10 @@ public class AdminController {
             return "Admin/addDoctor";
         }
 
+        Department department = addDepartmentService.getDepartmentById(departmentId);
 
         doctor.setUser(user);
+        doctor.setDepartment(department);
 
         boolean isCompleted = doctorService.completeDroctor(doctor);
 
@@ -375,6 +384,26 @@ public class AdminController {
         model.addAttribute("inactiveDoctors", inactiveDoctors);
 
         return "Admin/InActiveDoctors";
+    }
+
+    @GetMapping("/admin/showDepartmentDirector")
+    public String showAllDepartmentsDirector(Model model) {
+
+        // Get all departments from database
+        List<Department> departments =
+                departmentService.getAllDepartmets();
+
+        // Calculate total
+        long totalDepartments =
+                departments.size();
+
+        // Send department list to HTML
+        model.addAttribute("departments", departments);
+
+        // Send count to HTML
+        model.addAttribute("totalDepartments", totalDepartments);
+
+        return "Department/showDepartmentDirector";
     }
 
 

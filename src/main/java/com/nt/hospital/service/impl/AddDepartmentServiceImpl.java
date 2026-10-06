@@ -55,9 +55,9 @@ public class AddDepartmentServiceImpl implements AddDepartmentService {
 
 
         // Save Department
-       addDepartmentRepository.save(department);
+        addDepartmentRepository.save(department);
 
-       return true;
+        return true;
     }
 
     @Override
@@ -74,5 +74,15 @@ public class AddDepartmentServiceImpl implements AddDepartmentService {
     public List<Department> getInActiveDepartments() {
 
         return addDepartmentRepository.findByStatus("INACTIVE");
+    }
+
+    @Override
+    public List<Department> getDepartment() {
+        return addDepartmentRepository.findAll();
+    }
+
+    @Override
+    public Department getDepartmentById(int id) {
+        return addDepartmentRepository.findById(String.valueOf(id)).orElseThrow();
     }
 }
